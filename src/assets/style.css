@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,7 +9,22 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Montserrat';
 }
 body {
-  background-color: #f2f2f3;
+  background-color: #e5e5e5;
+}
+.appText {
+  @apply leading-normal text-base font-normal text-[#64686d];
+}
+.heading {
+  @apply leading-normal text-3xl font-bold text-[#626CE1];
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'roboto';
 }
