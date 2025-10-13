@@ -35,7 +35,7 @@ export default {
         {
           id: 1,
           rout: '/',
-          name: 'Главнаяf',
+          name: 'Главная',
         },
         {
           id: 2,
