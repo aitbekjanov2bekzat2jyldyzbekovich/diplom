@@ -18,7 +18,7 @@
         <h3 class="heading !text-lg">{{ user.name }}</h3>
         <span class="appText !text-sm !font-medium">{{ user.type }}</span>
       </div>
-      <button class="text-3xl text-[#626CE1] ml-auto ">
+      <button class="text-3xl text-[#E6A421] ml-auto ">
         <span>&#9660;</span>
       </button>
     </div>
