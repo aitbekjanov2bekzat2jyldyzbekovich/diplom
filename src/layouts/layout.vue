@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-4">
-    <header class="w-full h-20 bg-white shadow-lg sticky top-0 z-50">
+    <header class="w-full h-20 bg-[#fff] shadow-md  border-b sticky top-0 z-50">
       <div class="container mx-auto px-4  h-full">
         <headerV />
       </div>

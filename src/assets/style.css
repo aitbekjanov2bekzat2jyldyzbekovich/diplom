@@ -15,10 +15,10 @@ body {
   background-color: #e5e5e5;
 }
 .appText {
-  @apply leading-loose text-base font-semibold text-[#64686d];
+  @apply leading-relaxed text-base font-medium text-[#000];
 }
 .heading {
-  @apply leading-relaxed text-3xl font-bold text-[#E6A421] tracking-wide;
+  @apply leading-tight text-5xl font-bold text-[#E6A421] tracking-wide;
 }
 h1,
 h2,

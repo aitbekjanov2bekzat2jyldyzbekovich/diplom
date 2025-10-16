@@ -1,9 +1,9 @@
 <template>
   <div class="z-10 relative w-full h-screen flex items-center justify-center">
-    <div class="w-[40%] flex flex-col gap-4">
-      <h1 class="heading text-center">{{ heading }}</h1>
-      <p class="appText !text-white">{{ text }}</p>
-      <div class="flex gap-14">
+    <div class="w-[50%] flex flex-col gap-12">
+      <h1 class="heading text-center !text-[#fff]">{{ heading }}</h1>
+      <p class="appText !text-[#fff] text-center">{{ text }}</p>
+      <div class="flex gap-14 justify-center w-full ">
         <buttonV v-for="i in btn">{{ i.name }}</buttonV>
       </div>
     </div>

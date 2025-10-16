@@ -8,11 +8,16 @@
       <mainIntro />
     </section>
     <section>
+      <aboutApp />
+    </section>
+    <section>
       <createdCours />
     </section>
+    
   </div>
 </template>
 <script>
+import aboutApp from '@/components/aboutApp.vue'
 import bgImage from '@/assets/images/intro.jpg'
 import mainIntro from '@/components/mainIntro.vue'
 import createdCours from '@/components/createdCours.vue'
@@ -25,6 +30,7 @@ export default {
   components: {
     mainIntro,
     createdCours,
+    aboutApp,
   },
 }
 </script>
