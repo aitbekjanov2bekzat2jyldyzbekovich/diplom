@@ -1,7 +1,7 @@
 <template>
   <div class="w-full flex justify-between items-center h-full">
     <div class="flex items-center gap-1 heading !text-lg !text-[#336799]">
-      <img :src="img" alt="logo" />
+      <component :is="img" />
       <h3>{{ name }}</h3>
     </div>
     <nav>
@@ -26,11 +26,13 @@
 </template>
 
 <script>
+import { markRaw } from 'vue'
+import logo from '@/assets/objects/logo.svg'
 export default {
   data() {
     return {
       name: 'Колледж ИЯиПКС',
-      img: '/logo.svg',
+      img: markRaw(logo),
       nav: [
         {
           id: 1,
@@ -45,7 +47,7 @@ export default {
         {
           id: 3,
           rout: '/about-app',
-          name: 'О LMS'
+          name: 'О сайте',
         },
         {
           id: 4,
@@ -55,7 +57,7 @@ export default {
       ],
       user: {
         name: 'Пользователь',
-        img: '/avatar.png',
+        img: '/images/avatar.png',
         type: 'Неизвестно',
       },
     }
