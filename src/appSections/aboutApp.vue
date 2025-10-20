@@ -1,12 +1,9 @@
 <template>
-  <div class="flex flex-col gap-14">
-    <div>
-      <h2 class="heading !text-4xl">{{ heading }}</h2>
-    </div>
+  <section-layout :title="heading">
     <div class="grid gap-4 grid-cols-2 w-full">
       <div
         v-for="i in info"
-        class="bg-[#fff] p-8 rounded-2xl shadow-md border flex flex-col gap-5 items-center "
+        class="bg-[#fff] p-8 rounded-2xl shadow-md border flex flex-col gap-5 items-center"
       >
         <div class="w-28 h-28">
           <component :is="i.icon" class="fill-[#E6A421]" />
@@ -20,7 +17,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section-layout>
 </template>
 
 <script>

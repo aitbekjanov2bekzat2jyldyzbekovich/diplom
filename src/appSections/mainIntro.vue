@@ -10,7 +10,7 @@
   </div>
 </template>
 <script>
-import ButtonV from './buttonV.vue';
+import ButtonV from '@/components/buttonV.vue';
 
 export default {
   data() {

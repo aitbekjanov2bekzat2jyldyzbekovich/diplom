@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import headerV from '@/components/headerV.vue'
+import headerV from '@/appSections/headerV.vue'
 export default {
   components: {
     headerV,

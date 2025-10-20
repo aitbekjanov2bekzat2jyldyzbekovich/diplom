@@ -13,12 +13,16 @@
     <section>
       <createdCours />
     </section>
+    <section>
+      <instruction />
+    </section>
   </div>
 </template>
 <script>
-import aboutApp from '@/components/aboutApp.vue'
-import mainIntro from '@/components/mainIntro.vue'
-import createdCours from '@/components/createdCours.vue'
+import aboutApp from '@/appSections/aboutApp.vue'
+import mainIntro from '@/appSections/mainIntro.vue'
+import instruction from '@/appSections/instruction.vue'
+import createdCours from '@/appSections/createdCours.vue'
 export default {
   data() {
     return {
@@ -26,6 +30,7 @@ export default {
     }
   },
   components: {
+    instruction,
     mainIntro,
     createdCours,
     aboutApp,

@@ -13,10 +13,10 @@
     <swiper-slide
       v-for="(item, index) in cours"
       :key="index"
-      class="bg-white rounded-lg shadow-md border"
+      class="bg-white rounded-2xl shadow-md border my-3"
     >
       <div class="w-full h-52 mb-10">
-        <img :src="item.img" alt="coursImg" class="w-full h-full object-cover rounded-lg" />
+        <img :src="item.img" alt="coursImg" class="w-full h-full object-cover rounded-2xl" />
       </div>
 
       <div class="p-3 flex flex-col gap-5">
@@ -111,5 +111,8 @@ export default {
   width: 1rem !important;
   height: 2rem !important;
   color: #336799 !important;
+}
+:deep(.swiper-pagination-bullet-active) {
+  background-color: #336799;
 }
 </style>

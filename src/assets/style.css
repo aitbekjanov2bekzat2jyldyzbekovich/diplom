@@ -5,26 +5,23 @@
 @tailwind utilities;
 
 * {
-  font-family: 'Inter';
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Montserrat';
 }
 body {
   background-color: #e5e5e5;
 }
-.appText {
-  @apply leading-relaxed text-base font-medium text-[#000];
+@layer components {
+  .appText {
+    @apply leading-relaxed text-base font-medium text-[#000];
+    font-family: 'Montserrat';
+  }
 }
-.heading {
-  @apply leading-tight text-5xl font-bold text-[#E6A421] tracking-wide;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'roboto';
+
+@layer components {
+  .heading {
+    @apply leading-tight text-5xl font-bold text-[#E6A421] tracking-wide;
+    font-family: 'Roboto';
+  }
 }
