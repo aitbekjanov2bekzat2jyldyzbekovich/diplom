@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col gap-28">
+  <div class="flex flex-col gap-28 mb-28">
     <section>
       <div
-        class="bg-fixed w-full h-screen bg-cover bg-center absolute z-0 left-0 top-[-15px] brightness-[30%]"
+        class="bg-fixed w-full h-dvh bg-cover bg-center absolute z-0 left-0 top-[-0] brightness-[30%]"
         :style="{ backgroundImage: `url(${bg})` }"
       ></div>
       <mainIntro />
