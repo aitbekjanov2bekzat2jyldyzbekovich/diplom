@@ -12,7 +12,7 @@
     </main>
   </div>
 
-  <footer class="w-full bg-[#E6A421] shadow-top ">
+  <footer class="w-full bg-[#E6A421] shadow-top">
     <div class="container mx-auto px-4">
       <footerV />
     </div>

@@ -7,7 +7,7 @@
       ></div>
       <mainIntro />
     </section>
-    <section>
+    <section id="about-app">
       <aboutApp />
     </section>
     <section>
