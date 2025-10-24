@@ -7,7 +7,11 @@
     <nav>
       <ul class="flex items-center gap-10 appText !font-semibold">
         <li v-for="i in nav">
-          <router-Link :to="i.rout" class="hover:text-[#E6A421] transition-v">
+          <router-Link
+            :to="i.rout"
+            class="hover:text-[#E6A421] transition-v"
+            :class="{ 'text-[#E6A421]': $route.meta.mainRout === i.active }"
+          >
             {{ i.name }}</router-Link
           >
         </li>
@@ -33,21 +37,25 @@ export default {
           id: 1,
           rout: '/',
           name: 'Главная',
+          active: '',
         },
         {
           id: 2,
           rout: '/cours',
           name: 'Курсы',
+          active: 'cours',
         },
         {
           id: 3,
           rout: '/#about-app',
           name: 'О сайте',
+          active: 'aboutApp',
         },
         {
           id: 4,
           rout: '/login',
           name: 'Войти',
+          active: 'login',
         },
       ],
     }

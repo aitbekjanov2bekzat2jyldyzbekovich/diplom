@@ -12,7 +12,7 @@
           <h3 class="heading !text-2xl">{{ i.title }}</h3>
         </div>
         <div class="appText" v-html="i.text" />
-        <div v-show="i.message" class="border p-2 border-blue-500 rounded-md cursor-none">
+        <div v-if="i.message" class="border p-2 border-blue-500 rounded-md cursor-none">
           <span class="appText !font-bold !text-blue-500"> {{ i.message }} </span>
         </div>
       </div>

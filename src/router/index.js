@@ -7,17 +7,25 @@ const router = createRouter({
       path: '/',
       name: 'main',
       component: () => import('@/views/Main.vue'),
-      meta: { breadcrumb: 'Главная' },
+      meta: { mainRout: 'main' },
     },
     {
       path: '/cours',
       name: 'cours',
       component: () => import('@/views/Cours.vue'),
+      meta: { mainRout: 'cours' },
     },
     {
       path: '/login',
       name: 'login',
       component: () => import('@/views/Cours.vue'),
+      meta: { mainRout: 'login' },
+    },
+    {
+      path: '/cours/:name',
+      name: 'test',
+      component: () => import('@/views/Test.vue'),
+      meta: { mainRout: 'cours' },
     },
   ],
 
@@ -31,6 +39,13 @@ const router = createRouter({
 
     return { top: 0 }
   },
+})
+router.afterEach((to) => {
+  if (to.path === '/' && to.hash === '#about-app') {
+    to.meta.mainRout = 'aboutApp'
+  } else if (to.path === '/') {
+    to.meta.mainRout = 'main'
+  }
 })
 
 export default router
