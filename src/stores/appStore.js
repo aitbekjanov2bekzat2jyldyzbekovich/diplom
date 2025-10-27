@@ -2,6 +2,13 @@ import { defineStore } from 'pinia'
 
 export const useAppStore = defineStore('app', {
   state: () => ({
-    message: 'подключено',
+    sizeWindow: window.innerWidth,
   }),
+  actions: {
+    resizeWindow() {
+      window.addEventListener('resize', () => {
+        this.sizeWindow = window.innerWidth
+      })
+    },
+  },
 })

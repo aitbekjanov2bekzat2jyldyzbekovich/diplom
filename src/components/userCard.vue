@@ -1,13 +1,17 @@
 <template>
   <div
-    class="flex items-center gap-2 border p-2 w-64 rounded-lg cursor-pointer"
+    class="flex items-center gap-2 border p-2 max-lg:p-1 max rounded-lg cursor-pointer"
     @click="openStatus = !openStatus"
   >
-    <img class="w-12 h-12 rounded-full" :src="user.img" alt="avatar" />
+    <img
+      class="w-12 h-12 max-lg:-z-10 max-lg:h-10 max-md:h-9 max-md:w-9 rounded-full"
+      :src="user.img"
+      alt="avatar"
+    />
 
     <div>
-      <h3 class="heading !text-lg">{{ user.name }}</h3>
-      <span class="appText !text-sm !font-medium">{{ user.type }}</span>
+      <h3 class="heading text-lg max-lg:text-lg max-md:text-base max-sm:text-sm">{{ user.name }}</h3>
+      <span class="appText lg:text-sm md:text-sm sm:text-xs font-medium">{{ user.type }}</span>
     </div>
     <button
       class="text-[#E6A421] font-bold text-xl ml-auto transition-v"
@@ -25,7 +29,7 @@
     leave-to-class="opacity-0 translate-y-1"
   >
     <div class="w-full bg-white absolute shadow-md rounded-md p-2" v-show="openStatus">
-      <ul class="appText">
+      <ul class="appText font-semibold">
         <li v-for="i in nav" class="hover:border-b hover:border-[#E6A421] transition-v">
           <router-link
             :to="i.rout"

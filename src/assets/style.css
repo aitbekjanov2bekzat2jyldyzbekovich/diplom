@@ -14,14 +14,14 @@ body {
 }
 @layer components {
   .appText {
-    @apply leading-relaxed text-base font-medium text-[#000];
+    @apply max-lg:text-sm max-md:text-xs text-base  leading-relaxed  font-medium text-[#000];
     font-family: 'Montserrat';
   }
 }
 
 @layer components {
   .heading {
-    @apply leading-tight text-5xl font-bold text-[#E6A421] tracking-wide;
+    @apply max-lg:text-4xl  max-md:text-3xl max-sm:text-2xl leading-tight  text-5xl   font-bold text-[#E6A421] tracking-wide;
     font-family: 'Roboto';
   }
 }
