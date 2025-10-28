@@ -10,7 +10,9 @@
     />
 
     <div>
-      <h3 class="heading text-lg max-lg:text-lg max-md:text-base max-sm:text-sm">{{ user.name }}</h3>
+      <h3 class="heading text-lg max-lg:text-lg max-md:text-base max-sm:text-sm">
+        {{ user.name }}
+      </h3>
       <span class="appText lg:text-sm md:text-sm sm:text-xs font-medium">{{ user.type }}</span>
     </div>
     <button
@@ -100,7 +102,7 @@ export default {
     }
   },
   watch: {
-    '$route.path': {
+    '$route.fullPath': {
       handler() {
         this.openStatus = false
       },

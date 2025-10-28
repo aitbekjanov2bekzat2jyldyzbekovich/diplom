@@ -8,5 +8,8 @@ export default {
   components: {
     layout,
   },
+  mounted() {
+    this.appStore.resizeWindow()
+  },
 }
 </script>

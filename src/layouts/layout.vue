@@ -4,7 +4,7 @@
       <headerV />
     </div>
   </header>
-
+  
   <aside
     v-if="this.$route.name !== 'main' && this.$route.name !== 'login'"
     class="w-96 h- px-4 bg-white"
