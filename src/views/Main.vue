@@ -13,12 +13,13 @@
     <section>
       <createdCours />
     </section>
-    <section>
+    <section id="instruction">
       <instruction />
     </section>
   </div>
 </template>
 <script>
+import { nextTick } from 'vue'
 import aboutApp from '@/appSections/aboutApp.vue'
 import mainIntro from '@/appSections/mainIntro.vue'
 import instruction from '@/appSections/instruction.vue'
@@ -34,6 +35,15 @@ export default {
     mainIntro,
     createdCours,
     aboutApp,
+  },
+  mounted() {
+    // Вызывается, когда компонент и его шаблон смонтированы
+    nextTick(() => {
+      // Ждём, пока DOM обновится, потом снимаем лоадер
+      setTimeout(() => {
+        this.loaderStatus = false
+      }, 0)
+    })
   },
 }
 </script>

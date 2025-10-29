@@ -31,13 +31,17 @@ const router = createRouter({
 
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
-      return {
-        el: to.hash,
-        behavior: 'smooth',
-      }
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const el = document.querySelector(to.hash)
+          if (el) {
+            resolve({ el, behavior: 'smooth' })
+          } else {
+            resolve({ left: 0, top: 0 })
+          }
+        }, 200) // ждем рендер компонента
+      })
     }
-
-    return { top: 0 }
   },
 })
 router.afterEach((to) => {

@@ -32,5 +32,5 @@ body {
 }
 
 .transition-v {
-  @apply transition duration-300 ease-out;
+  @apply transition duration-500 ease-out;
 }

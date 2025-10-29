@@ -1,17 +1,15 @@
 <template>
-  <div class=" relative w-full h-dvh flex items-center justify-center">
+  <div class="relative w-full h-dvh flex items-center justify-center">
     <div class="w-[50%] flex flex-col gap-12">
       <h1 class="heading text-center !text-[#fff]">{{ heading }}</h1>
       <p class="appText !text-[#fff] text-center">{{ text }}</p>
-      <div class="flex gap-14 justify-center w-full ">
-        <buttonV v-for="i in btn">{{ i.name }}</buttonV>
+      <div class="flex gap-14 justify-center w-full max-sm:flex-col max-sm:gap-3  ">
+        <buttonV v-for="i in btn" @click="this.appStore.toRout(i.rout)">{{ i.name }}</buttonV>
       </div>
     </div>
   </div>
 </template>
 <script>
-import ButtonV from '@/components/buttonV.vue';
-
 export default {
   data() {
     return {
@@ -22,11 +20,12 @@ export default {
         {
           id: 1,
           name: 'Создать курс',
-          rout: '/creatCours',
+          rout: '/cours/creatCours',
         },
         {
           id: 2,
           name: 'Найти курсы',
+          rout: '/cours/recomend-ai',
         },
       ],
     }

@@ -1,5 +1,5 @@
 <template>
-  <layout />
+  <layout v-if="this.appStore.sizeWindow > 300" />
 </template>
 
 <script>
