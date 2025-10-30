@@ -1,9 +1,7 @@
 <template>
   <section-layout :title="title">
     <created-cours-swiper />
-    <div class="ml-auto">
-      <buttonV>{{ btn }}</buttonV>
-    </div>
+   
   </section-layout>
 </template>
 

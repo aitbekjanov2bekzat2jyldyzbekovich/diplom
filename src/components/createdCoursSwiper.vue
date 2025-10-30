@@ -1,118 +1,132 @@
 <template>
-  <swiper
-    :modules="[Navigation, Pagination]"
-    navigation
-    :pagination="{
-      clickable: true,
-      dynamicBullets: true,
-    }"
-    :slides-per-view="4"
-    :space-between="10"
-    class="w-full h-auto"
-  >
-    <swiper-slide
-      v-for="(item, index) in cours"
-      :key="index"
-      class="bg-white rounded-2xl shadow-md border my-3"
+  <div class="relative">
+    <swiper
+      :modules="[Navigation]"
+      :navigation="{
+        nextEl: '.custom-next',
+        prevEl: '.custom-prev',
+      }"
+      :slides-per-view="slide"
+      :slides-per-group="slide"
+      :space-between="10"
+      class="w-full h-auto"
     >
-      <div class="w-full h-52 mb-10">
-        <img :src="item.img" alt="coursImg" class="w-full h-full object-cover rounded-2xl" />
-      </div>
+      <swiper-slide v-for="(item, index) in cours" :key="index">
+        <card :item="item" />
+      </swiper-slide>
+    </swiper>
 
-      <div class="p-3 flex flex-col gap-5">
-        <h3 class="heading text-center !text-2xl">{{ item.title }}</h3>
-        <p class="appText text-center !font-bold">{{ item.date }}</p>
-        <p class="appText h-32 overflow-hidden">
-          {{ item.about }}
-        </p>
-        <div class="flex justify-between">
-          <buttonV>&#9733;</buttonV>
-          <buttonV>Подробнее...</buttonV>
-        </div>
-      </div>
-    </swiper-slide>
-  </swiper>
+    <button
+      v-if="this.appStore.sizeWindow > 484"
+      class="custom-prev absolute left-0 top-1/2 -translate-y-1/2 bg-white text-[#E6A421] rounded-full w-10 h-10 flex items-center justify-center z-10 cursor-pointer transition-v hover:text-white shadow-lg hover:bg-[#E6A421] disabled:hidden"
+    >
+      <i class="pi pi-arrow-left" />
+    </button>
+    <button
+      v-if="this.appStore.sizeWindow > 484"
+      class="custom-next absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer transition-v hover:text-white bg-white shadow-lg hover:bg-[#E6A421] text-[#E6A421] rounded-full w-10 h-10 flex items-center justify-center z-10 disabled:hidden"
+    >
+      <i class="pi pi-arrow-right" />
+    </button>
+  </div>
 </template>
 
 <script>
+import card from '@/components/coursCard.vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation, Pagination } from 'swiper/modules'
+import { Navigation } from 'swiper/modules'
 
-// Swiper стили
 import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
 
 export default {
   components: {
     Swiper,
     SwiperSlide,
+    card,
   },
   data() {
     return {
+      slide: 4,
+
       cours: [
-        {
+          {
           id: 1,
           title: 'информатика изучение о области окружности.',
           date: 'Авг 08. 2024 до Сен 8. 2025',
           img: '/images/ImgnotFound.jpg',
-          about: `Текст о курсе должен быть структурированным, понятным и сфокусированным на ценности для обучающегося. Он должен включать информацию о том, что студент получит в результате (например, конкретный план по снижению долга или понимание своего стиля), а также описывать содержание курса, включая материалы, задания и цели. Для создания эффективного текста используйте простые предложения, избегайте "стоп-слов" и используйте глаголы действия для привлечения внимания`,
         },
         {
           id: 1,
           title: 'информатика изучение о области окружности.',
           date: 'Авг 08. 2024 до Сен 8. 2025',
           img: '/images/ImgnotFound.jpg',
-          about: `Текст о курсе должен быть структурированным, понятным и сфокусированным на ценности для обучающегося. Он должен включать информацию о том, что студент получит в результате (например, конкретный план по снижению долга или понимание своего стиля), а также описывать содержание курса, включая материалы, задания и цели. Для создания эффективного текста используйте простые предложения, избегайте "стоп-слов" и используйте глаголы действия для привлечения внимания`,
         },
         {
           id: 1,
           title: 'информатика изучение о области окружности.',
           date: 'Авг 08. 2024 до Сен 8. 2025',
           img: '/images/ImgnotFound.jpg',
-          about: `Текст о курсе должен быть структурированным, понятным и сфокусированным на ценности для обучающегося. Он должен включать информацию о том, что студент получит в результате (например, конкретный план по снижению долга или понимание своего стиля), а также описывать содержание курса, включая материалы, задания и цели. Для создания эффективного текста используйте простые предложения, избегайте "стоп-слов" и используйте глаголы действия для привлечения внимания`,
+        },
+            {
+          id: 1,
+          title: 'информатика изучение о области окружности.',
+          date: 'Авг 08. 2024 до Сен 8. 2025',
+          img: '/images/ImgnotFound.jpg',
         },
         {
           id: 1,
           title: 'информатика изучение о области окружности.',
           date: 'Авг 08. 2024 до Сен 8. 2025',
           img: '/images/ImgnotFound.jpg',
-          about: `Текст о курсе должен быть структурированным, понятным и сфокусированным на ценности для обучающегося. Он должен включать информацию о том, что студент получит в результате (например, конкретный план по снижению долга или понимание своего стиля), а также описывать содержание курса, включая материалы, задания и цели. Для создания эффективного текста используйте простые предложения, избегайте "стоп-слов" и используйте глаголы действия для привлечения внимания`,
+        },
+        {
+          id: 1,
+          title: 'информатика изучение о области окружности.',
+          date: 'Авг 08. 2024 до Сен 8. 2025',
+          img: '/images/ImgnotFound.jpg',
         },
                {
           id: 1,
           title: 'информатика изучение о области окружности.',
           date: 'Авг 08. 2024 до Сен 8. 2025',
           img: '/images/ImgnotFound.jpg',
-          about: `Текст о курсе должен быть структурированным, понятным и сфокусированным на ценности для обучающегося. Он должен включать информацию о том, что студент получит в результате (например, конкретный план по снижению долга или понимание своего стиля), а также описывать содержание курса, включая материалы, задания и цели. Для создания эффективного текста используйте простые предложения, избегайте "стоп-слов" и используйте глаголы действия для привлечения внимания`,
         },
-               {
+        {
           id: 1,
           title: 'информатика изучение о области окружности.',
           date: 'Авг 08. 2024 до Сен 8. 2025',
           img: '/images/ImgnotFound.jpg',
-          about: `Текст о курсе должен быть структурированным, понятным и сфокусированным на ценности для обучающегося. Он должен включать информацию о том, что студент получит в результате (например, конкретный план по снижению долга или понимание своего стиля), а также описывать содержание курса, включая материалы, задания и цели. Для создания эффективного текста используйте простые предложения, избегайте "стоп-слов" и используйте глаголы действия для привлечения внимания`,
+        },
+        {
+          id: 1,
+          title: 'информатика изучение о области окружности.',
+          date: 'Авг 08. 2024 до Сен 8. 2025',
+          img: '/images/ImgnotFound.jpg',
         },
       ],
     }
   },
+  methods: {
+    swiperSize() {
+      if (this.appStore.sizeWindow < 485) {
+        this.slide = 1
+      } else if (this.appStore.sizeWindow < 1025) {
+        this.slide = 2
+      } else if (this.appStore.sizeWindow < 1281) {
+        this.slide = 3
+      } else {
+        this.slide = 4
+      }
+    },
+  },
   setup() {
     return {
       Navigation,
-      Pagination,
     }
+  },
+  mounted() {
+    this.swiperSize()
+    window.addEventListener('resize', this.swiperSize)
   },
 }
 </script>
-
-<style scoped>
-:deep(.swiper-button-next),
-:deep(.swiper-button-prev) {
-  width: 1rem !important;
-  height: 2rem !important;
-  color: #336799 !important;
-}
-:deep(.swiper-pagination-bullet-active) {
-  background-color: #336799;
-}
-</style>
