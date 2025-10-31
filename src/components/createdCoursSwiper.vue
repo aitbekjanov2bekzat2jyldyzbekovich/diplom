@@ -12,7 +12,7 @@
       class="w-full h-auto"
     >
       <swiper-slide v-for="(item, index) in cours" :key="index">
-        <card :item="item" />
+        <card :item="item" class="my-3" />
       </swiper-slide>
     </swiper>
 
@@ -39,6 +39,9 @@ import { Navigation } from 'swiper/modules'
 import 'swiper/css'
 
 export default {
+  props: {
+    cours: Array,
+  },
   components: {
     Swiper,
     SwiperSlide,
@@ -47,68 +50,10 @@ export default {
   data() {
     return {
       slide: 4,
-
-      cours: [
-          {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-            {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-               {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-      ],
     }
   },
   methods: {
     swiperSize() {
-      this.$emit('sendItem')
       if (this.appStore.sizeWindow < 485) {
         this.slide = 1
       } else if (this.appStore.sizeWindow < 1025) {
