@@ -108,6 +108,7 @@ export default {
   },
   methods: {
     swiperSize() {
+      this.$emit('sendItem')
       if (this.appStore.sizeWindow < 485) {
         this.slide = 1
       } else if (this.appStore.sizeWindow < 1025) {
