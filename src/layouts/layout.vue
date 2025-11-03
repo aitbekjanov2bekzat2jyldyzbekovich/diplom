@@ -6,7 +6,7 @@
         <headerV />
       </div>
     </header>
-
+    <alertMessage />
     <aside
       v-if="this.$route.name !== 'main' && this.$route.name !== 'login'"
       class="w-96 h- px-4 bg-white"
@@ -31,11 +31,13 @@
 import footerV from '@/appSections/footerV.vue'
 import headerV from '@/appSections/headerV.vue'
 import loader from '@/components/loader.vue'
+import alertMessage from '@/components/alertMessage.vue'
 export default {
   components: {
     headerV,
     footerV,
     loader,
+    alertMessage,
   },
   data() {
     return {

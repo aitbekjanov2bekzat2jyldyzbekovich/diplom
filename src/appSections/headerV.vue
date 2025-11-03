@@ -18,6 +18,7 @@
         <li v-for="i in nav">
           <router-Link
             :to="i.rout"
+            @click="i.method"
             class="hover:text-[#E6A421] transition-v"
             :class="{ 'text-[#E6A421]': $route.meta.mainRout === i.active }"
           >
@@ -51,6 +52,15 @@ export default {
         id: 1,
         rout: '/',
         name: 'Главная',
+        method: async () => {
+          if (this.$route.hash) {
+            window.history.replaceState(null, '', window.location.pathname)
+            window.location.reload()
+          } else {
+            await this.$router.push('/')
+            await window.location.reload()
+          }
+        },
         active: '',
       },
       {

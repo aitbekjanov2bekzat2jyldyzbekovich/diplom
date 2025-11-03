@@ -36,6 +36,7 @@
                   :to="item.rout"
                   class="appText p-2 font-bold w-full flex items-center hover:text-[#E6A421] transition-v"
                   :class="{ 'text-[#E6A421]': $route.meta.mainRout === item.active }"
+                  @click="item.method"
                 >
                   {{ item.name }}
                 </router-link>
