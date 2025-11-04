@@ -19,7 +19,10 @@
         <buttonV class="text-lg" @click="this.appStore.toRout(`/cours/${item.id}`)">{{
           btn
         }}</buttonV>
-        <buttonV class="text-lg">
+        <buttonV
+          class="text-lg"
+          @click="this.appStore.message(`Добавлено в избранное ${item.id}`, 'green')"
+        >
           <i class="pi pi-bookmark-fill" />
         </buttonV>
       </div>

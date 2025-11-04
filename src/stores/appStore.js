@@ -10,10 +10,17 @@ export const useAppStore = defineStore('app', {
     resizeWindow() {
       window.addEventListener('resize', () => {
         this.sizeWindow = window.innerWidth
+        
       })
     },
     toRout(path) {
       router.push(path)
+    },
+    message(message, type) {
+      this.alert.push({
+        message: message,
+        type: type,
+      })
     },
   },
 })

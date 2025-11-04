@@ -16,7 +16,7 @@
       <span class="appText lg:text-sm md:text-sm sm:text-xs font-medium">{{ user.type }}</span>
     </div>
     <button
-      class="text-[#E6A421] font-bold text-xl ml-auto transition-v"
+      class="text-[#E6A421] font-bold text-xl transition-v"
       :class="{ 'rotate-180': openStatus }"
     >
       <i class="pi pi-chevron-down" />
@@ -35,7 +35,7 @@
         <li v-for="i in nav" class="hover:border-b hover:border-[#E6A421] transition-v">
           <router-link
             :to="i.rout"
-            class="w-full flex items-center gap-5 py-2 hover:text-[#E6A421] transition-v"
+            class="w-full flex items-center gap-5 py-2 hover:text-[#E6A421] transition-v justify-start"
           >
             <span v-html="i.icon" />
             <span>{{ i.name }}</span>

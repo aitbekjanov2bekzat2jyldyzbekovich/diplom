@@ -45,14 +45,10 @@ export default {
     }
   },
   methods: {
-    async loaderOff() {
-      try {
-        setTimeout(() => {
-          this.status = false
-        }, 1000)
-      } catch {
-        this.status = true
-      }
+    loaderOff() {
+      setTimeout(() => {
+        this.status = false
+      }, 1000)
     },
   },
   mounted() {
