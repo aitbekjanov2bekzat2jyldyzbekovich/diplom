@@ -9,7 +9,7 @@
     </header>
 
     <aside
-      v-if="this.$route.name !== 'main' && this.$route.name !== 'login'"
+      v-if="this.$route.name !== 'main' && this.$route.name !== 'auth'"
       class="w-96 h- px-4 bg-white"
     >
       sidbar

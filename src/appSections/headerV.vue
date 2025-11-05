@@ -77,9 +77,9 @@ export default {
       },
       {
         id: 4,
-        rout: '/login',
+        rout: '/auth/sign-in',
         name: 'Войти',
-        active: 'login',
+        active: 'auth',
       },
     ]
     return {
