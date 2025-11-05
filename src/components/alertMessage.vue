@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div
-      class="flex fixed z-50 flex-col bottom-3 left-1/2 -translate-x-1/2 gap-3 bg-black-100 p-2 max-[306px]:p-0"
+      class="flex fixed z-50 flex-col bottom-3 left-1/2 -translate-x-1/2 gap-3 bg-black-100 w-[400px] max-[438px]:w-72"
       v-if="this.appStore.alert.length"
     >
       <transition-group name="fade">
@@ -9,7 +9,7 @@
           v-for="(i, index) in this.appStore.alert"
           :key="index"
           :class="[
-            'w-96 p-2 bg-white border-l-8 rounded-xl shadow-lg max-[390px]:w-80  max-[330px]:w-64',
+            ' p-2 bg-white border-l-8 rounded-xl shadow-lg ',
             {
               'border-[#26A243] shadow-[#26a24383] ': i.type === 'green',
             },

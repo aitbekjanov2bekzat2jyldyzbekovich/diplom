@@ -29,7 +29,7 @@
             <i class="pi pi-lock" />
           </button>
           <div>
-            <h3 class="heading text-2xl">{{ btn }}: {{ cours.length }}</h3>
+            <h3 class="heading text-xl">{{ btn }}: {{ cours.length }}</h3>
           </div>
           <div
             class="grid grid-cols-4 gap-3 max-xl:grid-cols-3 max-lg:grid-cols-2 max-[480px]:grid-cols-1"

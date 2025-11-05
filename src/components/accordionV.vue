@@ -25,11 +25,20 @@
           </svg>
         </span>
       </button>
-      <div
-        v-html="i.body"
-        class="w-full p-4 border rounded-xl border-[#E6A421] shadow-md"
-        v-show="activeIndex === index"
-      />
+      <transition
+        enter-active-class="transition-v"
+        leave-active-class="transition-v"
+        enter-from-class="max-h-0 opacity-0"
+        enter-to-class="max-h-40 opacity-100"
+        leave-from-class="max-h-40 opacity-100"
+        leave-to-class="max-h-0 opacity-0"
+      >
+        <div
+          v-html="i.body"
+          class="w-full p-4 border rounded-xl border-[#E6A421] shadow-md overflow-hidden"
+          v-show="activeIndex === index"
+        />
+      </transition>
     </div>
   </div>
 </template>

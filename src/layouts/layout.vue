@@ -1,4 +1,5 @@
 <template>
+  <alertMessage />
   <loader v-if="status" />
   <div v-else>
     <header class="w-full h-20 bg-[#fff] shadow-md border-b sticky top-0 z-50">
@@ -6,7 +7,7 @@
         <headerV />
       </div>
     </header>
-    <alertMessage />
+
     <aside
       v-if="this.$route.name !== 'main' && this.$route.name !== 'login'"
       class="w-96 h- px-4 bg-white"

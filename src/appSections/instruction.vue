@@ -1,13 +1,13 @@
 <template>
   <section-layout :title="title">
-    <div class="bg-[#fff] border rounded-2xl shadow-md flex">
-      <div class="w-1/2 border-r-2 border-r-[#E6A421] border-dashed p-8">
+    <div class="bg-[#fff] border rounded-2xl shadow-md flex" data-aos="zoom-in">
+      <div
+        class="w-1/2 border-r-2 border-r-[#E6A421] border-dashed p-8 max-sm:w-full max-sm:border-none"
+      >
         <accordion-v :items="accordion" />
-        <div>
-          <h3></h3>
-        </div>
       </div>
       <div
+        v-if="this.appStore.sizeWindow > 639"
         class="w-1/2 p-8 flex items-center justify-center border-l-2 border-l-[#E6A421] border-dashed"
       >
         <component :is="icon" class="fill-[#E6A421] w-96" />
