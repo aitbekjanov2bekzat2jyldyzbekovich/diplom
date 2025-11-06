@@ -1,30 +1,37 @@
 <template>
-  <div class="w-full h-screen flex items-center justify-center" data-aos="zoom-in">
-    <div class="w-full bg-[#fff] border rounded-2xl shadow-md flex justify-between overflow-hidden">
-      <div class="w-1/2 px-48 py-7 bg-[#E6A421] flex items-center justify-center flex-col gap-8">
-        <img :src="avatar" alt="avatar" class=" w-14 h-14"/>
-
-        <h2 class="heading text-[#fff] text-3xl leading-10 text-center">{{ title }}</h2>
-      </div>
-      <div class="w-1/2 p-7 flex flex-col items-center justify-center gap-10">
-        <form action="" class="flex-col flex gap-10 w-full items-center">
-          <div v-for="i in forms" class="flex flex-col gap-1">
-            <label :for="i.inputId" class="appText font-semibold">{{ i.label }}</label>
-            <input
-              :type="i.type"
-              :id="i.inputId"
-              :placeholder="i.placeHolder"
-              class="bg-[#F2F2F2] w-96 p-4 appText outline-[#E6A421] rounded-md"
-            />
+  <div class="w-full h-screen pt-14">
+    <section-layout :title="title">
+      <div class="w-full flex items-center justify-center pt-14">
+        <div
+          class="bg-[#fff] border rounded-2xl shadow-md flex flex-col gap-10 px-7 py-10"
+          data-aos="zoom-in"
+        >
+          <form class="flex-col flex gap-10 items-center w-96">
+            <div v-for="i in forms" class="flex flex-col gap-1 w-full">
+              <label :for="i.inputId" class="appText font-semibold">{{ i.label }}</label>
+              <input
+                :type="i.type"
+                :id="i.inputId"
+                :placeholder="i.placeHolder"
+                class="bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
+                v-model="i.value"
+              />
+            </div>
+          </form>
+          <div class="flex flex-col items-center gap-4">
+            <buttonV class="w-full" @click="this.appStore.login(forms[0].value, forms[1].value)">{{
+              log
+            }}</buttonV>
+            <div class="flex justify-between items-center w-full">
+              <button class="appText hover:text-[#E6A421] transition-v">{{ btn }}</button>
+              <router-link :to="rout.link" class="appText hover:text-[#E6A421] transition-v">{{
+                rout.name
+              }}</router-link>
+            </div>
           </div>
-        </form>
-        <buttonV class="w-96">{{ log }}</buttonV>
-        <button class="appText hover:text-[#E6A421] transition-v">{{ btn }}</button>
-        <router-link :to="rout.link" class="appText hover:text-[#E6A421] transition-v">{{
-          rout.name
-        }}</router-link>
+        </div>
       </div>
-    </div>
+    </section-layout>
   </div>
 </template>
 
@@ -32,8 +39,8 @@
 export default {
   data() {
     return {
-      title: 'Добро пожаловать! Пожалуйста, войдите в свой аккаунт',
-      avatar: '/images/avatar.png',
+      title: 'Войти в профиль',
+
       forms: [
         {
           id: 1,
@@ -41,6 +48,7 @@ export default {
           placeHolder: 'Введите свой Email',
           inputId: 'signInEmail',
           label: 'Email *',
+          value: '',
         },
         {
           id: 2,
@@ -49,6 +57,7 @@ export default {
           inputId: 'signInPassword',
           label: 'Password *',
           status: false,
+          value: '',
         },
       ],
       btn: 'Забыли пароль?',
@@ -56,7 +65,7 @@ export default {
         link: '/auth/sign-up',
         name: 'У вас нет аккаунта?',
       },
-      log: 'Авторизоваться',
+      log: 'Войти',
     }
   },
 }

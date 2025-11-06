@@ -14,7 +14,7 @@
     >
       sidbar
     </aside>
-    <div class="relative w-full">
+    <div class="relative w-full ">
       <main class="container mx-auto px-4">
         <router-view />
       </main>
