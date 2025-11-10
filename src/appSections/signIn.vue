@@ -13,9 +13,16 @@
                 :type="i.type"
                 :id="i.inputId"
                 :placeholder="i.placeHolder"
-                class="bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
-                v-model="i.value"
+                :class="[
+                  'bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md',
+                  { ' border-2 border-red-500': this.appStore.error[i.type] },
+                ]"
+                v-model="this.appStore.vallue[i.type]"
               />
+
+              <span v-if="this.appStore.error[i.type]" class="text-red-500 text-sm appText">
+                {{ this.appStore.error[i.type] }}
+              </span>
             </div>
           </form>
           <div class="flex flex-col items-center gap-4">
@@ -48,7 +55,6 @@ export default {
           placeHolder: 'Введите свой Email',
           inputId: 'signInEmail',
           label: 'Email *',
-          value: '',
         },
         {
           id: 2,
@@ -57,7 +63,6 @@ export default {
           inputId: 'signInPassword',
           label: 'Password *',
           status: false,
-          value: '',
         },
       ],
       btn: 'Забыли пароль?',

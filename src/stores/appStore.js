@@ -8,20 +8,22 @@ export const useAppStore = defineStore('app', {
     sizeWindow: window.innerWidth,
     alert: [],
     user: null,
-    error: null,
-    val: {},
+    error: {
+      email: '',
+      password: '',
+    },
+    vallue: {
+      email: '',
+      password: '',
+    },
   }),
   actions: {
-    async login(email, password) {
-      this.error = null
+    async login() {
       try {
-        const res = await signInWithEmailAndPassword(auth, email, password)
+        const res = await signInWithEmailAndPassword(auth, this.vallue.email, this.vallue.password)
         this.user = res.user
         console.log(res)
-      } catch (err) {
-        this.error = err.message
-        console.log(err.message)
-      }
+      } catch {}
     },
     resizeWindow() {
       window.addEventListener('resize', () => {
@@ -37,6 +39,8 @@ export const useAppStore = defineStore('app', {
         type: type,
       })
     },
-    validate(email, password) {},
+    validate(err) {
+      console.log(err)
+    },
   },
 })
