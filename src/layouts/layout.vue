@@ -1,6 +1,9 @@
 <template>
   <alertMessage />
-  <loader v-if="status" />
+  <div v-if="status" class="w-full bg-[#fff] h-screen flex justify-center items-center">
+    <loader class="!fill-[#E6A421]" />
+  </div>
+
   <div v-else>
     <header class="w-full h-20 bg-[#fff] shadow-md border-b sticky top-0 z-50">
       <div class="container mx-auto px-4 h-full">
@@ -14,7 +17,7 @@
     >
       sidbar
     </aside>
-    <div class="relative w-full ">
+    <div class="relative w-full">
       <main class="container mx-auto px-4">
         <router-view />
       </main>

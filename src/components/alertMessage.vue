@@ -12,7 +12,7 @@
             ' p-2 bg-white border-l-8 rounded-xl shadow-lg ',
             {
               'border-[#26A243] shadow-[#26a24383] ': i.type === 'green',
-              'border-red-500 shadow-[#f8030393] ': i.type === 'red',
+              'border-red-500 shadow-[#f8030393]': i.type === 'red',
             },
           ]"
         >
@@ -21,6 +21,7 @@
               'appText  font-semibold',
               {
                 'text-[#26A243]': i.type === 'green',
+                'text-red-500': i.type === 'red',
               },
             ]"
           >
