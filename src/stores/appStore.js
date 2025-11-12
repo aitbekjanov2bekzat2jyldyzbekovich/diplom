@@ -19,6 +19,11 @@ export const useAppStore = defineStore('app', {
     },
   }),
   actions: {
+    clearForm() {
+      Object.keys(this.vallue).forEach((key) => {
+        this.vallue[key] = ''
+      })
+    },
     validate(err) {
       this.error.email = ''
       this.error.password = ''
@@ -31,6 +36,7 @@ export const useAppStore = defineStore('app', {
           this.message('Пользователь не найден', 'red')
           this.vallue.email = ''
           this.vallue.password = ''
+          this.clearForm()
           break
 
         case 'auth/missing-password':
@@ -39,18 +45,16 @@ export const useAppStore = defineStore('app', {
           break
         case 'auth/too-many-requests':
           this.message('Слишком много попыток, попробуйте позже', 'red')
-          this.vallue.email = ''
-          this.vallue.password = ''
+          this.clearForm()
           break
         case 'auth/network-request-failed':
           this.message('Проверьте интернет-соединение', 'red')
+          this.clearForm()
           break
 
         default:
           this.message(`code: ${err}`, 'red')
-          Object.keys(this.vallue).forEach((key) => {
-            this.vallue[key] = ''
-          })
+          this.clearForm()
           break
       }
     },
@@ -59,7 +63,9 @@ export const useAppStore = defineStore('app', {
         this.loader = true
         const res = await signInWithEmailAndPassword(auth, this.vallue.email, this.vallue.password)
         this.user = res.user
-        if (this.user) {
+        console.log(res.user)
+
+        if (res.user.uid) {
           this.toRout('/')
         }
       } catch (err) {

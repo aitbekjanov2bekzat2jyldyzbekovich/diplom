@@ -3,11 +3,11 @@
     <section-layout :title="title">
       <div class="w-full flex items-center justify-center pt-14">
         <div
-          class="bg-[#fff] border rounded-2xl shadow-md flex flex-col gap-10 px-7 py-10"
+          class="bg-[#fff] border rounded-2xl shadow-md flex flex-col gap-10 px-7 py-10 max-[500px]:w-full"
           data-aos="zoom-in"
         >
           <form
-            class="flex-col flex gap-10 items-center w-96"
+            class="flex-col flex gap-10 items-center w-96 max-[500px]:w-full"
             @submit.prevent
             @keydown.enter="login"
           >
@@ -28,11 +28,10 @@
                 {{ this.appStore.error[i.type] }}
               </span>
               <button
+                type="button"
                 v-if="i.inputId === 'signInPassword'"
                 class="absolute right-1 top-1/2 heading text-lg font-bold outline-none"
                 @click="openEye"
-                @keydown.enter.prevent
-               
               >
                 <i v-if="!i.show" class="pi pi-eye-slash" />
                 <i v-else class="pi pi-eye" />
@@ -100,10 +99,10 @@ export default {
       this.forms[1].type = this.forms[1].type === 'password' ? 'text' : 'password'
       this.forms[1].show = !this.forms[1].show ? true : false
     },
-    login() {
-      this.forms[1].type = this.forms[1].type = 'password'
+    async login() {
+      this.forms[1].type = 'password'
       this.forms[1].show = false
-      this.appStore.login()
+      await this.appStore.login()
     },
   },
 }
