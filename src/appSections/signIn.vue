@@ -70,7 +70,7 @@ export default {
           model: 'email',
           placeHolder: 'Введите свой Email',
           inputId: 'signInEmail',
-          label: 'Email *',
+          label: 'Электронный адрес:',
         },
         {
           id: 2,
@@ -78,7 +78,7 @@ export default {
           model: 'password',
           placeHolder: 'Введите свой пароль',
           inputId: 'signInPassword',
-          label: 'Password *',
+          label: 'Пароль:',
           show: false,
         },
       ],
