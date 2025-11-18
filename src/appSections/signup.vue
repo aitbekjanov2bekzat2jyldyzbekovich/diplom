@@ -1,4 +1,30 @@
-<template></template>
+<template>
+  <section-layout :title="title" class="pt-14 h-screen">
+    <div class="w-full h-full flex items-center justify-center">
+      <div class="w-full bg-[#fff] border rounded-2xl shadow-md px-7 py-10">
+        <form @submit.prevent class="grid grid-cols-2 w-full mb-10 gap-10">
+          <div v-for="i in defualtForms" class="flex flex-col gap-2 relative">
+            <label :for="i.inputId" class="appText font-semibold">{{ i.label }}</label>
+            <input
+              :id="i.inputId"
+              :placeholder="i.placeHolder"
+              :type="i.type"
+              class="bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
+              v-model="this.appStore.vallue[i.model]"
+            />
+            <button
+              v-if="i.type === 'password'"
+              class="absolute right-1 top-1/2 heading text-lg font-bold outline-none"
+            >
+              <i v-if="!i.show" class="pi pi-eye-slash" /> <i v-else class="pi pi-eye" />
+            </button>
+          </div>
+        </form>
+        <buttonV @click="findStudent">{{ btn }}</buttonV>
+      </div>
+    </div>
+  </section-layout>
+</template>
 
 <script>
 export default {
@@ -23,17 +49,47 @@ export default {
         label: 'Пароль:',
         show: false,
       },
-    ],
-    userForm: [
       {
-        id: 1,
+        id: 3,
         type: 'text',
         model: 'userName',
-        placeHolder: 'Введите имя',
+        placeHolder: 'Введите свое имя',
         label: 'Имя:',
-        
+        inputId: 'userName',
+      },
+      {
+        id: 4,
+        type: 'text',
+        model: 'userSurname',
+        placeHolder: 'Введите свое фамилие',
+        label: 'Фамилия:',
+        inputId: 'userSurname',
       },
     ],
+    btn: 'Зарегистрироваться',
+    students: [],
   }),
+  methods: {
+    async getStudent() {
+      const res = await fetch('/db/students.json')
+      this.students = await res.json()
+    },
+    findStudent() {
+      const name = this.appStore.vallue.userName.toLowerCase()
+      const surname = this.appStore.vallue.userSurname.toLowerCase()
+
+      this.appStore.student = this.students.filter(
+        (i) => i.name.toLowerCase() === name && i.surname.toLowerCase() === surname,
+      )
+      if (this.appStore.student.length ) {
+        alert('fgfgfg')
+      } else {
+        alert('ytn')
+      }
+    },
+  },
+  mounted() {
+    this.getStudent()
+  },
 }
 </script>

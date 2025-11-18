@@ -9,6 +9,7 @@ export const useAppStore = defineStore('app', {
     sizeWindow: window.innerWidth,
     alert: [],
     user: null,
+    student: [],
     error: {
       email: '',
       password: '',
@@ -16,6 +17,10 @@ export const useAppStore = defineStore('app', {
     vallue: {
       email: '',
       password: '',
+      userSurname: '',
+      userName: '',
+      newPassword: '',
+      newEmail: '',
     },
   }),
   actions: {
