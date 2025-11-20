@@ -1,6 +1,12 @@
 import { defineStore } from 'pinia'
-import { auth } from '@/firebase/firebase'
-import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth, fdb } from '@/firebase/firebase'
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  onAuthStateChanged,
+} from 'firebase/auth'
+import { doc, setDoc, getDoc } from 'firebase/firestore'
 import router from '@/router'
 
 export const useAppStore = defineStore('app', {
@@ -8,8 +14,8 @@ export const useAppStore = defineStore('app', {
     loader: false,
     sizeWindow: window.innerWidth,
     alert: [],
-    user: null,
-    student: [],
+
+
     error: {
       email: '',
       password: '',
@@ -24,6 +30,7 @@ export const useAppStore = defineStore('app', {
     },
   }),
   actions: {
+    
     clearForm() {
       Object.keys(this.vallue).forEach((key) => {
         this.vallue[key] = ''

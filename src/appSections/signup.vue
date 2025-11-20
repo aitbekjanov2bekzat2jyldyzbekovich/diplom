@@ -1,5 +1,7 @@
 <template>
+  <foundStudent :status="status"/>
   <section-layout :title="title" class="pt-14 h-screen">
+    
     <div class="w-full h-full flex items-center justify-center">
       <div class="w-full bg-[#fff] border rounded-2xl shadow-md px-7 py-10">
         <form @submit.prevent class="grid grid-cols-2 w-full mb-10 gap-10">
@@ -27,6 +29,7 @@
 </template>
 
 <script>
+import foundStudent from '@/components/foundStudent.vue'
 export default {
   data: () => ({
     title: 'Зарегистрироваться',
@@ -34,23 +37,6 @@ export default {
     defualtForms: [
       {
         id: 1,
-        type: 'email',
-        model: 'newEmail',
-        placeHolder: 'Введите  Email',
-        inputId: 'signUpEmail',
-        label: 'Электронный адрес: ',
-      },
-      {
-        id: 2,
-        type: 'password',
-        model: 'newPassword',
-        placeHolder: 'Придумайте пароль',
-        inputId: 'signUpPassword',
-        label: 'Пароль:',
-        show: false,
-      },
-      {
-        id: 3,
         type: 'text',
         model: 'userName',
         placeHolder: 'Введите свое имя',
@@ -58,17 +44,38 @@ export default {
         inputId: 'userName',
       },
       {
-        id: 4,
+        id: 2,
         type: 'text',
         model: 'userSurname',
         placeHolder: 'Введите свое фамилие',
         label: 'Фамилия:',
         inputId: 'userSurname',
       },
+      {
+        id: 3,
+        type: 'email',
+        model: 'newEmail',
+        placeHolder: 'Введите  Email',
+        inputId: 'signUpEmail',
+        label: 'Электронный адрес: ',
+      },
+      {
+        id: 4,
+        type: 'password',
+        model: 'newPassword',
+        placeHolder: 'Придумайте пароль',
+        inputId: 'signUpPassword',
+        label: 'Пароль:',
+        show: false,
+      },
     ],
     btn: 'Зарегистрироваться',
     students: [],
+    status: true,
   }),
+  components: {
+    foundStudent,
+  },
   methods: {
     async getStudent() {
       const res = await fetch('/db/students.json')
@@ -78,13 +85,13 @@ export default {
       const name = this.appStore.vallue.userName.toLowerCase()
       const surname = this.appStore.vallue.userSurname.toLowerCase()
 
-      this.appStore.student = this.students.filter(
+      const student = this.students.filter(
         (i) => i.name.toLowerCase() === name && i.surname.toLowerCase() === surname,
       )
-      if (this.appStore.student.length ) {
-        alert('fgfgfg')
+      if (student.length === 1) {
+      } else if (student.length > 1) {
       } else {
-        alert('ytn')
+        alert('ошибка')
       }
     },
   },

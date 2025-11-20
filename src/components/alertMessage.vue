@@ -13,6 +13,7 @@
             {
               'border-[#26A243] shadow-[#26a24383] ': i.type === 'green',
               'border-red-500 shadow-[#f8030393]': i.type === 'red',
+              'border-blue-500 shadow-[#1747ca71]': i.type === 'blue',
             },
           ]"
         >
@@ -22,6 +23,7 @@
               {
                 'text-[#26A243]': i.type === 'green',
                 'text-red-500': i.type === 'red',
+                'text-blue-500': i.type === 'blue',
               },
             ]"
           >
