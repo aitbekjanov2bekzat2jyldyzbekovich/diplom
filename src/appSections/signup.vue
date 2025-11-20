@@ -1,7 +1,5 @@
 <template>
-  <foundStudent :status="status"/>
   <section-layout :title="title" class="pt-14 h-screen">
-    
     <div class="w-full h-full flex items-center justify-center">
       <div class="w-full bg-[#fff] border rounded-2xl shadow-md px-7 py-10">
         <form @submit.prevent class="grid grid-cols-2 w-full mb-10 gap-10">
@@ -22,14 +20,25 @@
             </button>
           </div>
         </form>
-        <buttonV @click="findStudent">{{ btn }}</buttonV>
+        <div class="flex flex-col gap-3">
+          <span class="appText  font-semibold">{{ label }}</span>
+          <div class="mb-10 flex gap-24">
+            <button
+              v-for="i in choosed"
+              class="py-2 border px-10 heading text-base border-[#E6A421] rounded-2xl hover:bg-[#E6A421] hover:text-[#fff] transition-v"
+            >
+              {{ i }}
+            </button>
+          </div>
+        </div>
+
+        <buttonV>{{ btn }}</buttonV>
       </div>
     </div>
   </section-layout>
 </template>
 
 <script>
-import foundStudent from '@/components/foundStudent.vue'
 export default {
   data: () => ({
     title: 'Зарегистрироваться',
@@ -53,6 +62,14 @@ export default {
       },
       {
         id: 3,
+        type: 'text',
+        model: 'grop',
+        placeHolder: 'Введите свою группу',
+        label: 'Группа:',
+        inputId: 'group',
+      },
+      {
+        id: 4,
         type: 'email',
         model: 'newEmail',
         placeHolder: 'Введите  Email',
@@ -60,7 +77,7 @@ export default {
         label: 'Электронный адрес: ',
       },
       {
-        id: 4,
+        id: 5,
         type: 'password',
         model: 'newPassword',
         placeHolder: 'Придумайте пароль',
@@ -69,34 +86,9 @@ export default {
         show: false,
       },
     ],
+    choosed: ['Студент', 'От коледжа'],
     btn: 'Зарегистрироваться',
-    students: [],
-    status: true,
+    label: 'Вы студент или от коледжа?',
   }),
-  components: {
-    foundStudent,
-  },
-  methods: {
-    async getStudent() {
-      const res = await fetch('/db/students.json')
-      this.students = await res.json()
-    },
-    findStudent() {
-      const name = this.appStore.vallue.userName.toLowerCase()
-      const surname = this.appStore.vallue.userSurname.toLowerCase()
-
-      const student = this.students.filter(
-        (i) => i.name.toLowerCase() === name && i.surname.toLowerCase() === surname,
-      )
-      if (student.length === 1) {
-      } else if (student.length > 1) {
-      } else {
-        alert('ошибка')
-      }
-    },
-  },
-  mounted() {
-    this.getStudent()
-  },
 }
 </script>
