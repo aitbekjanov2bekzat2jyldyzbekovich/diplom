@@ -13,6 +13,8 @@ export const useAppStore = defineStore('app', {
     error: {
       email: '',
       password: '',
+      userSurname: '',
+      userName: '',
     },
     vallue: {
       email: '',
@@ -68,8 +70,6 @@ export const useAppStore = defineStore('app', {
         this.loader = true
         const res = await signInWithEmailAndPassword(auth, this.vallue.email, this.vallue.password)
         this.user = res.user
-        console.log(res.user)
-
         if (res.user.uid) {
           this.toRout('/')
         }

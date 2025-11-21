@@ -9,9 +9,15 @@
               :id="i.inputId"
               :placeholder="i.placeHolder"
               :type="i.type"
-              class="bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
+              :class="[
+                'bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md',
+                { ' border-2 border-red-500': this.appStore.error[i.model] },
+              ]"
               v-model="this.appStore.vallue[i.model]"
             />
+            <span v-if="this.appStore.error[i.model]" class="text-red-500 text-sm appText">
+              {{ this.appStore.error[i.model] }}
+            </span>
             <button
               v-if="i.type === 'password'"
               class="absolute right-1 top-1/2 heading text-lg font-bold outline-none"
@@ -21,7 +27,7 @@
           </div>
         </form>
         <div class="flex flex-col gap-3">
-          <span class="appText  font-semibold">{{ label }}</span>
+          <span class="appText font-semibold">{{ label }}</span>
           <div class="mb-10 flex gap-24">
             <button
               v-for="i in choosed"
@@ -32,7 +38,7 @@
           </div>
         </div>
 
-        <buttonV>{{ btn }}</buttonV>
+        <buttonV @click="getDataUser">{{ btn }}</buttonV>
       </div>
     </div>
   </section-layout>
@@ -60,16 +66,9 @@ export default {
         label: 'Фамилия:',
         inputId: 'userSurname',
       },
+
       {
         id: 3,
-        type: 'text',
-        model: 'grop',
-        placeHolder: 'Введите свою группу',
-        label: 'Группа:',
-        inputId: 'group',
-      },
-      {
-        id: 4,
         type: 'email',
         model: 'newEmail',
         placeHolder: 'Введите  Email',
@@ -77,7 +76,7 @@ export default {
         label: 'Электронный адрес: ',
       },
       {
-        id: 5,
+        id: 4,
         type: 'password',
         model: 'newPassword',
         placeHolder: 'Придумайте пароль',
@@ -90,5 +89,23 @@ export default {
     btn: 'Зарегистрироваться',
     label: 'Вы студент или от коледжа?',
   }),
+  methods: {
+    getDataUser() {
+      if (this.appStore.userSurname !== ' '  && this.appStore.userName !== ' ') {
+        alert('true')
+      } else if (!this.appStore.vallue.userName) {
+        this.appStore.error.userName = 'Введите свое имя!'
+        this.appStore.vallue.userName = ''
+      } else if (!this.appStore.vallue.userSurname) {
+        this.appStore.error.userSurname = 'Введите свою фамилию!'
+        this.appStore.vallue.userSurname = ''
+      } else {
+        this.appStore.error.userSurname = 'Введите свою фамилию!'
+        this.appStore.vallue.userSurname = ''
+        this.appStore.error.userName = 'Введите свое имя!'
+        this.appStore.vallue.userName = ''
+      }
+    },
+  },
 }
 </script>
