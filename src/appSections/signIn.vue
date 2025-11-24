@@ -9,7 +9,7 @@
           <form
             class="flex-col flex gap-10 items-center w-96 max-[500px]:w-full"
             @submit.prevent
-            @keydown.enter="login"
+            @keydown.enter="this.appStore.login()"
           >
             <div v-for="i in forms" class="flex flex-col gap-1 w-full relative">
               <label :for="i.inputId" class="appText font-semibold">{{ i.label }}</label>
@@ -19,19 +19,21 @@
                 :placeholder="i.placeHolder"
                 :class="[
                   'bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md',
-                  { ' border-2 border-red-500': this.appStore.error[i.type] },
+                  { ' border-2 border-red-500': this.appStore.error[i.error] },
                 ]"
                 v-model="this.appStore.vallue[i.model]"
               />
 
-              <span v-if="this.appStore.error[i.type]" class="text-red-500 text-sm appText">
-                {{ this.appStore.error[i.type] }}
+              <span v-if="this.appStore.error[i.error]" class="text-red-500 text-sm appText">
+                {{ this.appStore.error[i.error] }}
               </span>
               <button
                 type="button"
                 v-if="i.inputId === 'signInPassword'"
                 class="absolute right-1 top-1/2 heading text-lg font-bold outline-none"
-                @click="openEye"
+                @click="
+                  ((i.show = !i.show), (i.type = i.type === 'password' ? 'text' : 'password'))
+                "
               >
                 <i v-if="!i.show" class="pi pi-eye-slash" />
                 <i v-else class="pi pi-eye" />
@@ -39,7 +41,7 @@
             </div>
           </form>
           <div class="flex flex-col items-center gap-4">
-            <buttonV class="w-full flex justify-center items-center" @click="login()">
+            <buttonV class="w-full flex justify-center items-center" @click="this.appStore.login()">
               <span v-if="!this.appStore.loader">{{ log }}</span>
               <loader v-else />
             </buttonV>
@@ -71,6 +73,7 @@ export default {
           placeHolder: 'Введите свой Email',
           inputId: 'signInEmail',
           label: 'Электронный адрес:',
+          error: 'email',
         },
         {
           id: 2,
@@ -80,6 +83,7 @@ export default {
           inputId: 'signInPassword',
           label: 'Пароль:',
           show: false,
+          error: 'password',
         },
       ],
       btn: 'Забыли пароль?',
@@ -94,16 +98,6 @@ export default {
     loader,
   },
 
-  methods: {
-    openEye() {
-      this.forms[1].type = this.forms[1].type === 'password' ? 'text' : 'password'
-      this.forms[1].show = !this.forms[1].show ? true : false
-    },
-    async login() {
-      this.forms[1].type = 'password'
-      this.forms[1].show = false
-      await this.appStore.login()
-    },
-  },
+ 
 }
 </script>
