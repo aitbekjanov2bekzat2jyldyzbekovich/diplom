@@ -47,7 +47,7 @@
         </div>
 
         <buttonV @click="getDataUser" class="flex justify-center items-center">
-          <span v-if="!this.appStore.loader">{{ btn }}</span>
+          <span v-if="!this.appStore.loader.auth">{{ btn }}</span>
           <loader v-else />
         </buttonV>
       </div>
@@ -111,15 +111,14 @@ export default {
   },
   methods: {
     getDataUser() {
-      if (!this.appStore.loader) {
+      if (!this.appStore.loader.auth) {
         const name = (this.appStore.vallue?.userName ?? this.appStore.userName ?? '').trim()
         const surname = (
           this.appStore.vallue?.userSurname ??
           this.appStore.userSurname ??
           ''
         ).trim()
-        this.appStore.error.userName = ''
-        this.appStore.error.userSurname = ''
+        this.appStore.clearError()
         if (name !== '' && surname !== '') {
           this.appStore.signUp()
         } else if (name === '') {

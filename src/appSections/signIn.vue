@@ -42,14 +42,14 @@
           </form>
           <div class="flex flex-col items-center gap-4">
             <buttonV class="w-full flex justify-center items-center" @click="this.appStore.login()">
-              <span v-if="!this.appStore.loader">{{ log }}</span>
+              <span v-if="!this.appStore.loader.auth">{{ log }}</span>
               <loader v-else />
             </buttonV>
             <div class="flex justify-between items-center w-full">
               <button class="appText hover:text-[#E6A421] transition-v">{{ btn }}</button>
-              <router-link :to="rout.link" class="appText hover:text-[#E6A421] transition-v">{{
-                rout.name
-              }}</router-link>
+              <router-link :to="rout.link" class="appText hover:text-[#E6A421] transition-v">
+                {{ rout.name }}
+              </router-link>
             </div>
           </div>
         </div>
@@ -97,7 +97,5 @@ export default {
   components: {
     loader,
   },
-
- 
 }
 </script>

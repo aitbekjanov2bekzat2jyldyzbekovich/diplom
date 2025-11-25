@@ -14,6 +14,7 @@
               'border-[#26A243] shadow-[#26a24383] ': i.type === 'green',
               'border-red-500 shadow-[#f8030393]': i.type === 'red',
               'border-yellow-500 shadow-[#e2df0d71]': i.type === 'yellow',
+              'border-blue-500 shadow-[#020da569]': i.type === 'blue',
             },
           ]"
         >
@@ -24,6 +25,7 @@
                 'text-[#26A243]': i.type === 'green',
                 'text-red-500': i.type === 'red',
                 'text-yellow-500': i.type === 'yellow',
+                'text-blue-500': i.type === 'blue',
               },
             ]"
           >
