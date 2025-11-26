@@ -6,6 +6,8 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   onAuthStateChanged,
+  deleteUser,
+  getAuth,
 } from 'firebase/auth'
 
 import router from '@/router'
@@ -63,8 +65,9 @@ export const useAppStore = defineStore('app', {
     },
     async login() {
       if (!this.loader.auth) {
-        this.loader = true
+        this.loader.auth = true
         try {
+          this.loader.auth = true
           const res = await signInWithEmailAndPassword(
             auth,
             this.vallue.email,
@@ -77,7 +80,7 @@ export const useAppStore = defineStore('app', {
         } catch (err) {
           this.validate(err.code)
         } finally {
-          this.loader = false
+          this.loader.auth = false
         }
       }
     },
@@ -85,7 +88,7 @@ export const useAppStore = defineStore('app', {
     async createUserProfile(user) {
       const userRef = doc(fdb, 'users', user.uid)
       const snap = await getDoc(userRef)
-
+      this.loader.isEmail = true
       // Если профиль уже существует — ничего не делаем
       if (snap.exists()) return
 
@@ -98,8 +101,12 @@ export const useAppStore = defineStore('app', {
         photoURL: user.photoURL || '',
       })
 
-      console.log('Профиль создан')
+      this.loader.isEmail = false
+      this.statusEmail = false
+      document.body.style.overflow = ''
+      this.message(`Ваш профиль созданно: ${user.uid}`, 'green')
     },
+
     initAuthListener() {
       onAuthStateChanged(auth, async (user) => {
         if (!user) {
@@ -110,39 +117,23 @@ export const useAppStore = defineStore('app', {
         await user.reload()
 
         if (!user.emailVerified) {
+          this.closeIsEmail()
           this.statusEmail = true
           document.body.style.overflow = 'hidden'
-          return
+          this.message('Подвердите свой email!', 'blue')
+        } else {
+          await this.createUserProfile(user)
         }
-
-        this.statusEmail = false
-        document.body.style.overflow = 'auto'
       })
     },
-    async checkEmailVerification() {
-      const user = auth.currentUser
-      await user.reload()
-      try {
-        this.loader.isEmail = true
-        if (user.emailVerified) {
-          this.statusEmail = false
-          this.createUserProfile(user)
-        } else {
-          this.message('Ваш email ещё не подтверждён. Пожалуйста, проверьте почту.', 'red')
-        }
-      } catch (err) {
-        this.validate(err)
-      } finally {
-        this.loader.isEmail = false
-      }
-    },
+
     async resendVerification() {
       const user = auth.currentUser
       if (user) {
         try {
           this.loader.user = true
           await sendEmailVerification(user)
-          this.message('Письмо отправлено повторно!', 'green')
+          this.message('Письмо отправлено повторно на ваш email!', 'green')
         } catch (err) {
           this.validate(err.code)
         } finally {
@@ -151,6 +142,34 @@ export const useAppStore = defineStore('app', {
       } else {
         this.message('Пользователь не найден!', 'red')
       }
+    },
+
+    async closeIsEmail() {
+      const auth = getAuth()
+      const user = auth.currentUser
+
+      // Сохраняем email пользователя на момент вызова
+      const initialEmail = user ? user.email : null
+
+      setTimeout(async () => {
+        // Проверяем, что пользователь всё ещё тот же и email не подтверждён
+        const currentUser = auth.currentUser
+        if (!currentUser) return // уже вышел
+        if (currentUser.emailVerified) return // подтвердил email
+        if (currentUser.email !== initialEmail) return // это уже другой пользователь
+
+        this.clearError()
+        this.clearForm()
+        this.statusEmail = false
+        this.message()
+
+        try {
+          await deleteUser(currentUser)
+          this.message('Попытайтесь снова!', 'red')
+        } catch (error) {
+          this.validate(error)
+        }
+      }, 60000)
     },
 
     validate(err) {
@@ -213,7 +232,7 @@ export const useAppStore = defineStore('app', {
     },
     clearForm() {
       Object.keys(this.vallue).forEach((key) => {
-        this.vallue[key] = ''
+        this.vallue[key] = this.vallue[key] === 'Студент' ? 'Студент' : ''
       })
     },
     clearError() {

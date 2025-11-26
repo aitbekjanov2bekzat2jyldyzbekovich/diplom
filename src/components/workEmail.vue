@@ -11,7 +11,7 @@
         <span v-if="!this.appStore.loader.user">{{ btn }}</span>
         <loader v-else />
       </buttonV>
-      <buttonV @click="this.appStore.checkEmailVerification()" class="flex justify-center items-center">
+      <buttonV @click="this.appStore.initAuthListener()" class="flex justify-center items-center">
         <span v-if="!this.appStore.loader.isEmail">{{ btn2 }}</span>
         <loader v-else />
       </buttonV>

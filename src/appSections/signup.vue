@@ -37,8 +37,10 @@
           <div class="mb-10 flex gap-24">
             <button
               v-for="i in choosed"
-              class="py-2 border px-10 heading text-base border-[#E6A421] rounded-2xl hover:bg-[#E6A421] hover:text-[#fff] transition-v"
-              :class="{ 'bg-[#E6A421] text-[#fff]': this.appStore.vallue.type === i }"
+              :class="[
+                'py-2 border px-10 heading text-base border-[#E6A421] rounded-2xl hover:bg-[#E6A421] hover:text-[#fff] transition-v',
+                { 'bg-[#E6A421] text-white': this.appStore.vallue.type === i },
+              ]"
               @click="this.appStore.vallue.type = i"
             >
               {{ i }}

@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAppStore } from '@/stores/appStore'
+import { getAuth } from 'firebase/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,7 +37,7 @@ const router = createRouter({
       path: '/cours/:name',
       name: 'test',
       component: () => import('@/views/Test.vue'),
-      meta: { mainRout: 'cours' },
+      meta: { mainRout: 'cours', requiresAuth: true, requiresVerifiedEmail: true },
     },
   ],
 
@@ -60,6 +62,26 @@ router.afterEach((to) => {
   } else if (to.path === '/') {
     to.meta.mainRout = 'main'
   }
+})
+router.beforeEach(async (to, from, next) => {
+  const appStore = useAppStore()
+  const auth = getAuth()
+  const user = auth.currentUser
+
+  if (to.meta.requiresAuth) {
+    if (!user) {
+      appStore.message('Сначала войдите в систему', 'yellow')
+      return next({ path: '/auth/sign-in' })
+    }
+
+    await user.reload() // актуализируем данные пользователя
+
+    if (to.meta.requiresVerifiedEmail && !user.emailVerified) {
+      return next({ path: '/auth/sign-in' }) // или страница "подтвердите email"
+    }
+  }
+
+  next()
 })
 
 export default router
