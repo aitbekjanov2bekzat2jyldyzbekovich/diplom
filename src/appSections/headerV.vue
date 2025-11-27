@@ -15,7 +15,7 @@
     </div>
     <nav v-if="this.appStore.sizeWindow > 500">
       <ul class="flex items-center gap-10 max-lg:gap-5 max-md:gap-3 appText font-semibold">
-        <li v-for="i in nav">
+        <li v-for="i in filteredNav">
           <router-Link
             :to="i.rout"
             @click="i.method"
@@ -92,6 +92,15 @@ export default {
         img,
       },
     }
+  },
+  computed: {
+    filteredNav() {
+      const isLoggedIn = !!this.appStore.userProfile
+      return this.nav.filter((item) => {
+        if (item.name === 'Войти' && isLoggedIn) return false
+        return true
+      })
+    },
   },
 }
 </script>

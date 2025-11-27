@@ -113,6 +113,7 @@ export default {
   },
   methods: {
     getDataUser() {
+      sessionStorage.removeItem('data')
       if (!this.appStore.loader.auth) {
         const name = (this.appStore.vallue?.userName ?? this.appStore.userName ?? '').trim()
         const surname = (
@@ -122,6 +123,13 @@ export default {
         ).trim()
         this.appStore.clearError()
         if (name !== '' && surname !== '') {
+          sessionStorage.setItem(
+            'data',
+            JSON.stringify({
+              name: name,
+              surname: surname,
+            }),
+          )
           this.appStore.signUp()
         } else if (name === '') {
           this.appStore.error.userName = 'Введите свое имя!'

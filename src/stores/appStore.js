@@ -8,6 +8,7 @@ import {
   onAuthStateChanged,
   deleteUser,
   getAuth,
+  signOut,
 } from 'firebase/auth'
 
 import router from '@/router'
@@ -21,7 +22,6 @@ export const useAppStore = defineStore('app', {
     },
     sizeWindow: window.innerWidth,
     alert: [],
-    user: null,
 
     error: {
       email: '',
@@ -39,6 +39,7 @@ export const useAppStore = defineStore('app', {
       type: 'Студент',
     },
     statusEmail: false,
+    userProfile: null,
   }),
   actions: {
     async signUp() {
@@ -73,9 +74,10 @@ export const useAppStore = defineStore('app', {
             this.vallue.email,
             this.vallue.password,
           )
-          this.user = res.user
+
           if (res.user.uid) {
             this.toRout('/')
+            this.message('Вы вошли в учетную запись', 'green')
           }
         } catch (err) {
           this.validate(err.code)
@@ -84,33 +86,66 @@ export const useAppStore = defineStore('app', {
         }
       }
     },
-
+    async logout() {
+      try {
+        await signOut(auth)
+        this.toRout('/auth/sign-in')
+        this.message('Вы вышли из учетного записа', 'green')
+        this.userProfile = null
+      } catch (error) {
+        this.validate(error)
+      }
+    },
     async createUserProfile(user) {
       const userRef = doc(fdb, 'users', user.uid)
       const snap = await getDoc(userRef)
+      const dataUser = JSON.parse(sessionStorage.getItem('data'))
       this.loader.isEmail = true
       // Если профиль уже существует — ничего не делаем
       if (snap.exists()) return
 
       // Если нет — создаём
       await setDoc(userRef, {
-        uid: user.uid,
-        email: user.email,
+        uid: user.uid || 'notFound',
+        email: user.email || 'notFound',
         createdAt: new Date(),
-        displayName: user.displayName || '',
-        photoURL: user.photoURL || '',
+        name: dataUser.name || 'notFound',
+        surname: dataUser.surname || 'notFound',
+        createrIs: this.vallue.type || 'notFound',
+        aboutPerson: null || 'notFound',
+        skills: null || 'notFound',
+        test: null || 'notFound',
+        chat: [],
       })
 
       this.loader.isEmail = false
       this.statusEmail = false
       document.body.style.overflow = ''
-      this.message(`Ваш профиль созданно: ${user.uid}`, 'green')
+      this.toRout('/')
+      this.message(`Добро пожаловать вы вошли учетный запись ${user.uid}`, 'green')
     },
 
+    async getUserProfile(uid) {
+      const userRef = doc(fdb, 'users', uid)
+      const snap = await getDoc(userRef)
+
+      if (snap.exists()) {
+        return snap.data()
+      } else {
+        console.error('Профиль не найден')
+        return null
+      }
+    },
     initAuthListener() {
       onAuthStateChanged(auth, async (user) => {
         if (!user) {
           console.error('Пользователь не найден')
+          this.message(
+            'Пожалуйста, выполните авторизацию, чтобы продолжить использование сервиса.',
+            'yellow',
+          )
+
+          this.userProfile = null
           return
         }
 
@@ -124,6 +159,8 @@ export const useAppStore = defineStore('app', {
         } else {
           await this.createUserProfile(user)
         }
+
+        this.userProfile = await this.getUserProfile(user.uid)
       })
     },
 

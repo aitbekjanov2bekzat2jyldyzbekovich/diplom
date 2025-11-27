@@ -14,15 +14,19 @@ const router = createRouter({
     {
       path: '/auth/:id',
       name: 'auth',
+      redirect: '',
       component: () => import('../views/Auth.vue'),
       meta: { mainRout: 'auth' },
       beforeEnter: (to, from, next) => {
         const validIds = ['sign-in', 'sign-up']
-        if (validIds.includes(to.params.id)) {
-          next()
-        } else {
-          next({ name: 'NotFound' }) // перенаправляем на 404
-        }
+        if (!validIds.includes(to.params.id)) return next({ name: 'NotFound' })
+
+        const auth = getAuth()
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+          unsubscribe() // сразу отписываемся
+          if (user) return next({ name: 'NotFound' }) // редирект если залогинен
+          next() // иначе пропускаем
+        })
       },
     },
     {
@@ -70,7 +74,10 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.meta.requiresAuth) {
     if (!user) {
-      appStore.message('Сначала войдите в систему', 'yellow')
+      appStore.message(
+        'Пожалуйста, выполните авторизацию, чтобы продолжить использование сервиса.',
+        'yellow',
+      )
       return next({ path: '/auth/sign-in' })
     }
 
@@ -81,6 +88,10 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
+  const authPages = ['/auth/sign-in', '/auth/sign-up']
+  if (user && authPages.includes(to.path)) {
+    return next({ path: '/' })
+  }
   next()
 })
 
