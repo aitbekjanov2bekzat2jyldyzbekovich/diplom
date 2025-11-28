@@ -31,7 +31,7 @@
           </div>
           <nav>
             <ul class="flex flex-col gap-1">
-              <li v-for="item in filteredNav" :key="item.id" class="border-b border-[#E6A421] rounded">
+              <li v-for="item in nav" :key="item.id" class="border-b border-[#E6A421] rounded">
                 <router-link
                   :to="item.rout"
                   class="appText p-2 font-bold w-full flex items-center hover:text-[#E6A421] transition-v"
@@ -62,15 +62,7 @@ export default {
     name: String,
     img: [String, Object],
   },
-  computed: {
-    filteredNav() {
-      const isLoggedIn = !!this.appStore.userProfile
-      return this.nav.filter((item) => {
-        if (item.name === 'Войти' && isLoggedIn) return false
-        return true
-      })
-    },
-  },
+
   methods: {
     menuOpen() {
       this.status = true

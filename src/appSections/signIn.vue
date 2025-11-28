@@ -1,4 +1,5 @@
 <template>
+  <resetPassword />
   <div class="w-full h-screen pt-14">
     <section-layout :title="title">
       <div class="w-full flex items-center justify-center pt-14">
@@ -46,7 +47,9 @@
               <loader v-else />
             </buttonV>
             <div class="flex justify-between items-center w-full">
-              <button class="appText hover:text-[#E6A421] transition-v">{{ btn }}</button>
+              <button class="appText hover:text-[#E6A421] transition-v" @click="openResetPassword">
+                {{ btn }}
+              </button>
               <router-link :to="rout.link" class="appText hover:text-[#E6A421] transition-v">
                 {{ rout.name }}
               </router-link>
@@ -60,6 +63,7 @@
 
 <script>
 import loader from '@/components/loader.vue'
+import resetPassword from '@/components/resetPassword.vue'
 export default {
   data() {
     return {
@@ -96,6 +100,16 @@ export default {
   },
   components: {
     loader,
+    resetPassword,
+  },
+
+  methods: {
+    openResetPassword() {
+      document.body.style.overflow = 'hidden'
+      this.appStore.vallue.resetPassword = this.appStore.vallue.email
+      this.appStore.error.resetPassword = ''
+      this.appStore.resetPasswordStatus = !this.appStore.resetPasswordStatus
+    },
   },
 }
 </script>

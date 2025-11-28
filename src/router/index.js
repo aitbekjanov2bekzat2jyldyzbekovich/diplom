@@ -19,14 +19,19 @@ const router = createRouter({
       meta: { mainRout: 'auth' },
       beforeEnter: (to, from, next) => {
         const validIds = ['sign-in', 'sign-up']
-        if (!validIds.includes(to.params.id)) return next({ name: 'NotFound' })
+        const appStore = useAppStore()
 
-        const auth = getAuth()
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-          unsubscribe() // сразу отписываемся
-          if (user) return next({ name: 'NotFound' }) // редирект если залогинен
-          next() // иначе пропускаем
-        })
+        // Проверяем корректный id
+        if (!validIds.includes(to.params.id)) {
+          return next({ name: 'NotFound' })
+        }
+
+        // Если пользователь уже залогинен — запрещаем доступ к авторизации
+        if (appStore.userProfile) {
+          return next({ name: 'home' }) // или любой другой маршрут
+        }
+
+        next()
       },
     },
     {
@@ -88,10 +93,7 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
-  const authPages = ['/auth/sign-in', '/auth/sign-up']
-  if (user && authPages.includes(to.path)) {
-    return next({ path: '/' })
-  }
+
   next()
 })
 

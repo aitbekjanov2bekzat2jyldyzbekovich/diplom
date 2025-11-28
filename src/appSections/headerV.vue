@@ -2,7 +2,7 @@
   <div class="w-full flex justify-between items-center h-full">
     <burgerMenu
       v-if="appStore.sizeWindow < 501"
-      :nav="menu.nav"
+      :nav="filteredNav"
       :name="menu.name"
       :img="menu.img"
     />

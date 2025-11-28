@@ -9,6 +9,7 @@ import {
   deleteUser,
   getAuth,
   signOut,
+  sendPasswordResetEmail,
 } from 'firebase/auth'
 
 import router from '@/router'
@@ -19,6 +20,7 @@ export const useAppStore = defineStore('app', {
       auth: false,
       user: false,
       isEmail: false,
+      resetPassword: false,
     },
     sizeWindow: window.innerWidth,
     alert: [],
@@ -28,6 +30,7 @@ export const useAppStore = defineStore('app', {
       password: '',
       userSurname: '',
       userName: '',
+      resetPassword: '',
     },
     vallue: {
       email: '',
@@ -37,9 +40,11 @@ export const useAppStore = defineStore('app', {
       newPassword: '',
       newEmail: '',
       type: 'Студент',
+      resetPassword: '',
     },
     statusEmail: false,
     userProfile: null,
+    resetPasswordStatus: false,
   }),
   actions: {
     async signUp() {
@@ -84,6 +89,19 @@ export const useAppStore = defineStore('app', {
         } finally {
           this.loader.auth = false
         }
+      }
+    },
+    async resetPassword() {
+      try {
+        this.loader.resetPassword = true
+        await sendPasswordResetEmail(auth, this.vallue.resetPassword)
+        this.message('Письмо восстановлением  отправлен на ваш email!', 'green')
+        this.resetPasswordStatus = false
+      } catch (err) {
+        this.validate(err.code)
+      } finally {
+        this.loader.resetPassword = false
+        this.clearForm()
       }
     },
     async logout() {
@@ -198,7 +216,6 @@ export const useAppStore = defineStore('app', {
         this.clearError()
         this.clearForm()
         this.statusEmail = false
-        this.message()
 
         try {
           await deleteUser(currentUser)
@@ -214,8 +231,17 @@ export const useAppStore = defineStore('app', {
       switch (err) {
         case 'auth/invalid-email':
           this.error.email = 'Введите корректный email!'
+          this.error.newEmail
+          this.error.resetPassword = 'Введите корректный email!'
           this.vallue.email = ''
           this.vallue.newEmail = ''
+          break
+        case 'auth/missing-email':
+          this.error.email = 'Email не найдено '
+          this.error.resetPassword = 'Email не найдено'
+          this.vallue.email = ''
+          this.vallue.newEmail = ''
+
           break
         case 'auth/email-already-in-use':
           this.message('Этот email уже зарегистрирован', 'yellow')

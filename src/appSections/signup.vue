@@ -1,11 +1,11 @@
 <template>
-  <section-layout :title="title" class="pt-14 h-screen">
+  <section-layout :title="title" class="pt-14 h-screen max-[470px]:mb-14 max-[420px]:mb-20">
     <div class="w-full h-full flex items-center justify-center">
       <div class="w-full bg-[#fff] border rounded-2xl shadow-md px-7 py-10" data-aos="zoom-in">
         <form
           @submit.prevent
           @keydown.enter="getDataUser()"
-          class="grid grid-cols-2 w-full mb-10 gap-10"
+          class="grid grid-cols-2 w-full mb-10 gap-10 max-[470px]:grid-cols-1"
         >
           <div v-for="i in defualtForms" class="flex flex-col gap-2 relative">
             <label :for="i.inputId" class="appText font-semibold">{{ i.label }}</label>
@@ -34,7 +34,7 @@
         </form>
         <div class="flex flex-col gap-3">
           <span class="appText font-semibold">{{ label }}</span>
-          <div class="mb-10 flex gap-24">
+          <div class="mb-10 flex gap-24 max-[510px]:justify-between max-[510px]:gap-0 max-[420px]:flex-col max-[420px]:gap-2">
             <button
               v-for="i in choosed"
               :class="[
