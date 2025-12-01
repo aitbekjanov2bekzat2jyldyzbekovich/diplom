@@ -34,7 +34,9 @@
         </form>
         <div class="flex flex-col gap-3">
           <span class="appText font-semibold">{{ label }}</span>
-          <div class="mb-10 flex gap-24 max-[510px]:justify-between max-[510px]:gap-0 max-[420px]:flex-col max-[420px]:gap-2">
+          <div
+            class="mb-10 flex gap-24 max-[510px]:justify-between max-[510px]:gap-0 max-[420px]:flex-col max-[420px]:gap-2"
+          >
             <button
               v-for="i in choosed"
               :class="[
@@ -128,6 +130,7 @@ export default {
             JSON.stringify({
               name: name,
               surname: surname,
+              type: this.appStore.vallue.type,
             }),
           )
           this.appStore.signUp()

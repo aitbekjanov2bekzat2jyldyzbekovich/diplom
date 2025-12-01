@@ -20,8 +20,8 @@ export default {
         this.appStore.clearError()
         this.appStore.clearForm()
       },
-
-      deep: true,
+      immediate: true, // сразу срабатывает при монтировании
+      // deep: true здесь не нужен, так как $route.path — это строка
     },
   },
 }

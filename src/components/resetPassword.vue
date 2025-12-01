@@ -1,12 +1,14 @@
 <template>
   <div
-    class="fixed inset-0 bg-black bg-opacity-90 z-40 flex items-center h-screen justify-center"
+    class="fixed inset-0 bg-black bg-opacity-90 z-40 flex items-center h-screen justify-center  max-[480px]:px-4"
     v-if="this.appStore.resetPasswordStatus"
     @click="closeResetPassword()"
+    data-aos="zoom-in"
+    data-aos-duration="500"
   >
-    <div class="bg-[#fff] border rounded-2xl shadow-md px-7 py-10" @click.stop>
-      <div class="w-96">
-        <h3 class="heading text-xl mb-10">{{ title }}</h3>
+    <div class="bg-[#fff] border rounded-2xl shadow-md px-7 py-10 max-[480px]:w-full" @click.stop>
+      <div class="w-96 max-[480px]:w-full">
+        <h3 class="heading text-xl mb-10 max-[335px]:text-base">{{ title }}</h3>
 
         <p class="appText mb-10">{{ text }}</p>
 
@@ -52,7 +54,7 @@ export default {
       error: 'resetPassword',
       value: 'resetPassword',
       id: 'resetPasswordInput',
-      label: 'Email',
+      label: 'Электронный адрес:',
     },
     btn: 'Восстановить пароль',
   }),

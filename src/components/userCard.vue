@@ -1,5 +1,10 @@
 <template>
+  <div v-if="this.appStore.loader.profile">
+    <loader />
+  </div>
+
   <div
+    v-else
     class="flex items-center gap-2 border p-2 max-lg:p-1 max rounded-lg cursor-pointer"
     @click="openStatus = !openStatus"
   >
@@ -61,6 +66,7 @@
 </template>
 
 <script>
+import loader from './loader.vue'
 export default {
   data() {
     return {
@@ -104,6 +110,9 @@ export default {
       ],
       btn: 'Выйти',
     }
+  },
+  components: {
+    loader,
   },
   watch: {
     '$route.fullPath': {

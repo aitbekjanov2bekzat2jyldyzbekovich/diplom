@@ -1,6 +1,6 @@
 <template>
   <alertMessage />
-  <div v-if="status" class="w-full bg-[#fff] h-screen flex justify-center items-center">
+  <div v-if="this.appStore.loader.page" class="w-full bg-[#fff] h-screen flex justify-center items-center">
     <loader class="!fill-[#E6A421]" />
   </div>
 
@@ -42,21 +42,6 @@ export default {
     footerV,
     loader,
     alertMessage,
-  },
-  data() {
-    return {
-      status: true,
-    }
-  },
-  methods: {
-    loaderOff() {
-      setTimeout(() => {
-        this.status = false
-      }, 1000)
-    },
-  },
-  mounted() {
-    this.loaderOff()
   },
 }
 </script>

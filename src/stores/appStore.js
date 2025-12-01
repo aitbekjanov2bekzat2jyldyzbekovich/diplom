@@ -21,6 +21,8 @@ export const useAppStore = defineStore('app', {
       user: false,
       isEmail: false,
       resetPassword: false,
+      page: false,
+      profile: false,
     },
     sizeWindow: window.innerWidth,
     alert: [],
@@ -57,7 +59,7 @@ export const useAppStore = defineStore('app', {
             this.vallue.newPassword,
           )
           await sendEmailVerification(res.user)
-          this.message('Письмо с подтверждением отправлено!', 'blue')
+          this.message('Подтверждающее письмо отправлено!', 'blue')
         } catch (err) {
           this.validate(err.code)
         } finally {
@@ -82,7 +84,7 @@ export const useAppStore = defineStore('app', {
 
           if (res.user.uid) {
             this.toRout('/')
-            this.message('Вы вошли в учетную запись', 'green')
+            this.message('Вы успешно вошли в учётную запись', 'green')
           }
         } catch (err) {
           this.validate(err.code)
@@ -95,7 +97,7 @@ export const useAppStore = defineStore('app', {
       try {
         this.loader.resetPassword = true
         await sendPasswordResetEmail(auth, this.vallue.resetPassword)
-        this.message('Письмо восстановлением  отправлен на ваш email!', 'green')
+        this.message('Письмо для восстановления отправлено на ваш email!', 'blue')
         this.resetPasswordStatus = false
       } catch (err) {
         this.validate(err.code)
@@ -108,7 +110,7 @@ export const useAppStore = defineStore('app', {
       try {
         await signOut(auth)
         this.toRout('/auth/sign-in')
-        this.message('Вы вышли из учетного записа', 'green')
+        this.message('Вы вышли из учётной записи', 'green')
         this.userProfile = null
       } catch (error) {
         this.validate(error)
@@ -119,28 +121,29 @@ export const useAppStore = defineStore('app', {
       const snap = await getDoc(userRef)
       const dataUser = JSON.parse(sessionStorage.getItem('data'))
       this.loader.isEmail = true
-      // Если профиль уже существует — ничего не делаем
+
       if (snap.exists()) return
 
-      // Если нет — создаём
       await setDoc(userRef, {
-        uid: user.uid || 'notFound',
-        email: user.email || 'notFound',
+        uid: user.uid || null,
+        email: user.email || null,
         createdAt: new Date(),
-        name: dataUser.name || 'notFound',
-        surname: dataUser.surname || 'notFound',
-        createrIs: this.vallue.type || 'notFound',
-        aboutPerson: null || 'notFound',
-        skills: null || 'notFound',
-        test: null || 'notFound',
-        chat: [],
+        name: dataUser.name || null,
+        surname: dataUser.surname || null,
+        createrIs: dataUser.type || null,
+        aboutPerson: null,
+        skills: null,
+        avatar: null,
       })
 
       this.loader.isEmail = false
       this.statusEmail = false
       document.body.style.overflow = ''
       this.toRout('/')
-      this.message(`Добро пожаловать вы вошли учетный запись ${user.uid}`, 'green')
+      this.message(
+        `Добро пожаловать! Вы вошли в только что созданную учётную запись  ${user.uid}`,
+        'green',
+      )
     },
 
     async getUserProfile(uid) {
@@ -156,6 +159,7 @@ export const useAppStore = defineStore('app', {
     },
     initAuthListener() {
       onAuthStateChanged(auth, async (user) => {
+        this.loader.profile = true
         if (!user) {
           console.error('Пользователь не найден')
           this.message(
@@ -164,6 +168,7 @@ export const useAppStore = defineStore('app', {
           )
 
           this.userProfile = null
+          this.loader.profile = false
           return
         }
 
@@ -174,11 +179,13 @@ export const useAppStore = defineStore('app', {
           this.statusEmail = true
           document.body.style.overflow = 'hidden'
           this.message('Подвердите свой email!', 'blue')
+          this.loader.profile = false
         } else {
           await this.createUserProfile(user)
         }
 
         this.userProfile = await this.getUserProfile(user.uid)
+        this.loader.profile = false
       })
     },
 
@@ -203,15 +210,13 @@ export const useAppStore = defineStore('app', {
       const auth = getAuth()
       const user = auth.currentUser
 
-      // Сохраняем email пользователя на момент вызова
       const initialEmail = user ? user.email : null
 
       setTimeout(async () => {
-        // Проверяем, что пользователь всё ещё тот же и email не подтверждён
         const currentUser = auth.currentUser
-        if (!currentUser) return // уже вышел
-        if (currentUser.emailVerified) return // подтвердил email
-        if (currentUser.email !== initialEmail) return // это уже другой пользователь
+        if (!currentUser) return
+        if (currentUser.emailVerified) return
+        if (currentUser.email !== initialEmail) return
 
         this.clearError()
         this.clearForm()
@@ -231,17 +236,18 @@ export const useAppStore = defineStore('app', {
       switch (err) {
         case 'auth/invalid-email':
           this.error.email = 'Введите корректный email!'
-          this.error.newEmail
+          this.error.newEmail = 'Введите корректный email!'
           this.error.resetPassword = 'Введите корректный email!'
           this.vallue.email = ''
           this.vallue.newEmail = ''
+          this.valiue.resetPassword = ''
           break
         case 'auth/missing-email':
           this.error.email = 'Email не найдено '
           this.error.resetPassword = 'Email не найдено'
           this.vallue.email = ''
           this.vallue.newEmail = ''
-
+          this.valiue.resetPassword = ''
           break
         case 'auth/email-already-in-use':
           this.message('Этот email уже зарегистрирован', 'yellow')
@@ -271,7 +277,10 @@ export const useAppStore = defineStore('app', {
           this.message('Проверьте интернет-соединение!', 'yellow')
           this.clearForm()
           break
-
+        case 'auth/user-disabled':
+          this.message('Ваш аккаунт отключён администратором.', 'red')
+          this.clearForm()
+          break
         default:
           this.message(`code: ${err}!`, 'red')
           this.clearForm()

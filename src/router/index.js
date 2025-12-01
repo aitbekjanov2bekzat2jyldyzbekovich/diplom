@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAppStore } from '@/stores/appStore'
 import { getAuth } from 'firebase/auth'
+import { auth } from '@/firebase/firebase'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,26 +15,28 @@ const router = createRouter({
     {
       path: '/auth/:id',
       name: 'auth',
-      redirect: '',
       component: () => import('../views/Auth.vue'),
       meta: { mainRout: 'auth' },
-      beforeEnter: (to, from, next) => {
+      beforeEnter: async (to, from, next) => {
         const validIds = ['sign-in', 'sign-up']
-        const appStore = useAppStore()
 
-        // Проверяем корректный id
         if (!validIds.includes(to.params.id)) {
           return next({ name: 'NotFound' })
         }
+        const user = await new Promise((resolve) => {
+          const unsubscribe = auth.onAuthStateChanged((u) => {
+            unsubscribe()
+            resolve(u)
+          })
+        })
 
-        // Если пользователь уже залогинен — запрещаем доступ к авторизации
-        if (appStore.userProfile) {
-          return next({ name: 'home' }) // или любой другой маршрут
+        if (user && user.emailVerified) {
+          return next('/')
         }
-
         next()
       },
     },
+
     {
       path: '/cours',
       name: 'cours',
@@ -60,7 +63,7 @@ const router = createRouter({
           } else {
             resolve({ left: 0, top: 0 })
           }
-        }, 200) // ждем рендер компонента
+        }, 200)
       })
     }
   },
@@ -86,13 +89,18 @@ router.beforeEach(async (to, from, next) => {
       return next({ path: '/auth/sign-in' })
     }
 
-    await user.reload() // актуализируем данные пользователя
+    try {
+      await user.reload()
+    } catch (error) {
+      appStore.validate(error)
+      return next({ path: '/auth/sign-in' })
+    }
 
     if (to.meta.requiresVerifiedEmail && !user.emailVerified) {
-      return next({ path: '/auth/sign-in' }) // или страница "подтвердите email"
+      appStore.message('Пожалуйста, подтвердите ваш email.', 'yellow')
+      return next({ path: '/auth/sign-in' })
     }
   }
-
 
   next()
 })
