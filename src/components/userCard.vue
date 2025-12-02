@@ -10,15 +10,34 @@
   >
     <img
       class="w-12 h-12 max-lg:-z-10 max-lg:h-10 max-md:h-9 max-md:w-9 rounded-full"
+      :src="this.appStore.userProfile.avatar"
+      alt="avatar"
+      v-if="this.appStore.userProfile && this.appStore.userProfile.avatar"
+    />
+    <img
+      class="w-12 h-12 max-lg:-z-10 max-lg:h-10 max-md:h-9 max-md:w-9 rounded-full"
       :src="user.img"
       alt="avatar"
+      v-else
     />
-
-    <div>
-      <h3 class="heading text-lg max-lg:text-lg max-md:text-base max-sm:text-sm">
+    <div class="overflow-hidden">
+      <h3
+        class="w-32 heading text-lg max-lg:text-lg max-md:text-base max-sm:text-sm"
+        v-if="this.appStore.userProfile && this.appStore.userProfile.name"
+      >
+        {{ this.appStore.userProfile.name }}
+      </h3>
+      <h3 class="heading text-lg max-lg:text-lg max-md:text-base max-sm:text-sm" v-else>
         {{ user.name }}
       </h3>
-      <span class="appText lg:text-sm md:text-sm sm:text-xs font-medium">{{ user.type }}</span>
+      <span
+        class="appText lg:text-sm md:text-sm sm:text-xs font-medium"
+        v-if="this.appStore.userProfile && this.appStore.userProfile.createrIs"
+        >{{ this.appStore.userProfile.createrIs }}</span
+      >
+      <span class="appText lg:text-sm md:text-sm sm:text-xs font-medium" v-else>{{
+        user.type
+      }}</span>
     </div>
     <button
       class="text-[#E6A421] font-bold text-xl transition-v"
