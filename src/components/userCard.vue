@@ -99,7 +99,7 @@ export default {
         {
           id: 1,
           name: 'Профиль',
-          rout: '/cours/profile',
+          rout: '/cours/my-profile',
           icon: '<i class="pi pi-user "/>',
         },
         {

@@ -65,7 +65,7 @@ export default {
       },
       {
         id: 2,
-        rout: '/cours',
+        rout: '/cours/recommendation',
         name: 'Курсы',
         active: 'cours',
       },

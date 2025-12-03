@@ -37,18 +37,23 @@ const router = createRouter({
       },
     },
 
-    {
-      path: '/cours',
-      name: 'cours',
-      component: () => import('@/views/Cours.vue'),
-      meta: { mainRout: 'cours' },
-    },
-
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/views/NotFound.vue') },
     {
       path: '/cours/:name',
       name: 'test',
       component: () => import('@/views/Test.vue'),
+      meta: { mainRout: 'cours', requiresAuth: true, requiresVerifiedEmail: true },
+    },
+    {
+      path: '/cours/recommendation',
+      name: 'recommendation',
+      component: () => import('@/views/recommendation.vue'),
+      meta: { mainRout: 'cours' },
+    },
+    {
+      path: '/cours/my-profile',
+      name: 'myProfile',
+      component: () => import('@/views/MyProfile.vue'),
       meta: { mainRout: 'cours', requiresAuth: true, requiresVerifiedEmail: true },
     },
   ],

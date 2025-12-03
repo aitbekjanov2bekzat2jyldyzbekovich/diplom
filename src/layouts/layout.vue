@@ -7,27 +7,25 @@
     <loader class="!fill-[#E6A421]" />
   </div>
 
-  <div v-else>
+  <div v-else class="relative w-full">
     <header class="w-full h-20 bg-[#fff] shadow-md border-b sticky top-0 z-50">
       <div class="container mx-auto px-4 h-full">
         <headerV />
       </div>
     </header>
-
-    <div class="relative w-full">
-      <main
-        :class="[
-          'container mx-auto px-4',
-          { 'flex gap-3': this.$route.name !== 'main' && this.$route.name !== 'auth' },
-        ]"
+    <div class="flex gap-1">
+      <transition
+        enter-active-class="transition-all duration-300 "
+        leave-active-class="transition-all duration-300"
+        enter-from-class="-translate-x-5 opacity-0"
+        enter-to-class="translate-x-0 opacity-100"
+        leave-from-class="translate-x-0 opacity-100"
+        leave-to-class="-translate-x-5 opacity-0"
       >
-        <sidebar
-          v-if="this.$route.name !== 'main' && this.$route.name !== 'auth'"
-       
-        />
-        <div>
-          <router-view />
-        </div>
+        <sidebar v-if="this.$route.name !== 'main' && this.$route.name !== 'auth'" />
+      </transition>
+      <main class="container mx-auto px-4">
+        <router-view />
       </main>
     </div>
 
