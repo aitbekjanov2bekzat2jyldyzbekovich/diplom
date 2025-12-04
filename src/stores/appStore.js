@@ -134,6 +134,8 @@ export const useAppStore = defineStore('app', {
         aboutPerson: null,
         skills: null,
         avatar: null,
+        test: null,
+        group: null,
       })
 
       this.loader.isEmail = false

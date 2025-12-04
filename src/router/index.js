@@ -47,7 +47,7 @@ const router = createRouter({
     {
       path: '/cours/recommendation',
       name: 'recommendation',
-      component: () => import('@/views/recommendation.vue'),
+      component: () => import('@/views/Recommendation.vue'),
       meta: { mainRout: 'cours' },
     },
     {
@@ -91,13 +91,6 @@ router.beforeEach(async (to, from, next) => {
         'Пожалуйста, выполните авторизацию, чтобы продолжить использование сервиса.',
         'yellow',
       )
-      return next({ path: '/auth/sign-in' })
-    }
-
-    try {
-      await user.reload()
-    } catch (error) {
-      appStore.validate(error)
       return next({ path: '/auth/sign-in' })
     }
 

@@ -1,14 +1,14 @@
 <template>
   <transition
     enter-active-class="transition-all duration-300 delay-300"
-    leave-active-class="transition-all duration-300"
+    leave-active-class="transition-all duration-300 "
     enter-from-class="-translate-x-5 opacity-0"
     enter-to-class="translate-x-0 opacity-100"
     leave-from-class="translate-x-0 opacity-100"
     leave-to-class="-translate-x-5 opacity-0"
   >
     <aside
-      class="bg-[#fff] border rounded-2xl shadow-md  w-72 h-screen flex flex-col gap-3 py-4 overflow-hidden my-3 sticky top-[92px] max-sm:fixed max-sm:top-[-12px] max-sm:w-52 max-sm:z-50"
+      class="bg-[#fff] border rounded-2xl shadow-md w-72 h-screen flex flex-col gap-3 py-4 overflow-hidden my-3 sticky top-[92px] max-sm:fixed max-sm:top-[-12px] max-sm:w-52 max-sm:z-50"
       v-if="status"
     >
       <div class="px-3 flex items-center justify-end">
@@ -37,7 +37,7 @@
     </aside>
 
     <div
-      class="p-4 bg-[#fff] border rounded-2xl shadow-md my-3 sticky top-[92px] h-screen delay-300 animate-none max-sm:fixed max-sm:h-auto max-sm:top-[80px]"
+      class="p-4 bg-[#fff] border rounded-2xl shadow-md my-3 sticky top-[92px] h-screen z-30 delay-300 max-sm:fixed max-sm:h-auto max-sm:top-[80px]"
       v-else
     >
       <button

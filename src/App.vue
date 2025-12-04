@@ -10,7 +10,7 @@ export default {
   },
   mounted() {
     this.appStore.resizeWindow()
-   
+    this.appStore.initAuthListener()
   },
 }
 </script>

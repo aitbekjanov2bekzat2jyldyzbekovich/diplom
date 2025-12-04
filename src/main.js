@@ -19,9 +19,7 @@ app.use(createPinia())
 app.use(router)
 app.component('buttonV', buttonV)
 app.component('section-layout', sectonLayout)
-const appStore = useAppStore()
-app.config.globalProperties.appStore = appStore
-appStore.initAuthListener()
+app.config.globalProperties.appStore = useAppStore()
 AOS.init({
   duration: 1000, // продолжительность анимации (мс)
   easing: 'ease-in-out', // функция плавности
