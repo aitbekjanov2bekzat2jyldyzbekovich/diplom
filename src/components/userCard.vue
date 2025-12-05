@@ -117,7 +117,7 @@ export default {
         {
           id: 4,
           name: 'Создать',
-          rout: '/cours/createCours',
+          rout: '/cours/create-cours',
           icon: '<i class="pi pi-file-plus "/>',
         },
         {

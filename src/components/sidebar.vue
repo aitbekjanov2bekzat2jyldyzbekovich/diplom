@@ -1,6 +1,6 @@
 <template>
   <transition
-    enter-active-class="transition-all duration-300 delay-300"
+    enter-active-class="transition-all duration-300 "
     leave-active-class="transition-all duration-300 "
     enter-from-class="-translate-x-5 opacity-0"
     enter-to-class="translate-x-0 opacity-100"
@@ -37,7 +37,7 @@
     </aside>
 
     <div
-      class="p-4 bg-[#fff] border rounded-2xl shadow-md my-3 sticky top-[92px] h-screen z-30 delay-300 max-sm:fixed max-sm:h-auto max-sm:top-[80px]"
+      class="p-4 bg-[#fff] border rounded-full shadow-md my-3 fixed top-[92px] z-40 left-1 flex justify-center items-center"
       v-else
     >
       <button
@@ -66,6 +66,15 @@ export default {
       },
       {
         id: 2,
+        vall: 'Создать курс',
+        rout: {
+          to: '/cours/create-cours',
+          name: 'createCours',
+        },
+        icon: '<i class="pi pi-file-plus "/>',
+      },
+      {
+        id: 3,
         vall: 'Мой профиль',
         rout: {
           to: '/cours/my-profile',
