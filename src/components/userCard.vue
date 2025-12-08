@@ -133,6 +133,7 @@ export default {
   components: {
     loader,
   },
+ 
   watch: {
     '$route.fullPath': {
       handler() {

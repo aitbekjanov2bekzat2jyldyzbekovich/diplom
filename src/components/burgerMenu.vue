@@ -73,12 +73,14 @@ export default {
       document.body.style.overflow = '' // возвращаем прокрутку
     },
   },
+
   watch: {
     '$route.fullPath': {
       handler() {
         this.closeMenu()
       },
       immediate: true,
+      deep: true,
     },
   },
 }

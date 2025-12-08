@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-0 bg-black bg-opacity-90 z-40 flex items-center h-screen justify-center max-[480px]:p-4"
+    class="fixed inset-0 bg-black bg-opacity-90 z-[10000] flex items-center h-screen justify-center max-[480px]:p-4"
     data-aos="zoom-in"
     data-aos-duration="500"
     v-if="this.appStore.statusEmail"
@@ -32,5 +32,6 @@ export default {
   components: {
     loader,
   },
+
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div
-      class="flex fixed z-50 flex-col bottom-3 left-1/2 -translate-x-1/2 gap-3 bg-black-100 w-[400px] max-[438px]:w-72"
+      class="flex fixed z-[9999999] flex-col bottom-3 left-1/2 -translate-x-1/2 gap-3 bg-black-100 w-[400px] max-[438px]:w-72"
       v-if="this.appStore.alert.length"
     >
       <transition-group name="fade">

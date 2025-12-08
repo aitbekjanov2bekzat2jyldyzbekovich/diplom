@@ -1,4 +1,5 @@
 <template>
+  <workEmail />
   <alertMessage />
   <div
     v-if="this.appStore.loader.page"
@@ -38,6 +39,7 @@
 </template>
 
 <script>
+import workEmail from '@/components/workEmail.vue'
 import footerV from '@/appSections/footerV.vue'
 import headerV from '@/appSections/headerV.vue'
 import loader from '@/components/loader.vue'
@@ -50,6 +52,7 @@ export default {
     loader,
     alertMessage,
     sidebar,
+    workEmail,
   },
 }
 </script>

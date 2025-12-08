@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-0 bg-black bg-opacity-90 z-40 flex items-center h-screen justify-center  max-[480px]:px-4"
+    class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center h-screen justify-center max-[480px]:px-4"
     v-if="this.appStore.resetPasswordStatus"
     @click="closeResetPassword()"
     data-aos="zoom-in"
@@ -62,12 +62,15 @@ export default {
     closeResetPassword() {
       this.appStore.vallue.resetPassword = this.appStore.vallue.email
       this.appStore.clearError()
-      this.appStore.resetPasswordStatus = !this.appStore.resetPasswordStatus
-      document.body.style.overflow = 'auto'
+      this.appStore.resetPasswordStatus = false
+      document.body.style.overflow = ''
     },
   },
   components: {
     loader,
+  },
+  unmounted() {
+    this.closeResetPassword()
   },
 }
 </script>

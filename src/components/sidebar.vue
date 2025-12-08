@@ -8,7 +8,7 @@
     leave-to-class="-translate-x-5 opacity-0"
   >
     <aside
-      class="bg-[#fff] border rounded-2xl shadow-md w-72 h-screen flex flex-col gap-3 py-4 overflow-hidden my-3 sticky top-[92px] max-sm:fixed max-sm:top-[-12px] max-sm:w-52 max-sm:z-50"
+      class="bg-[#fff] border rounded-2xl shadow-md w-72 h-screen flex flex-col gap-3 py-4 overflow-hidden my-3 sticky top-[92px] max-sm:fixed max-sm:top-[-12px] max-sm:w-52 max-sm:z-50 z-40"
       v-if="status"
     >
       <div class="px-3 flex items-center justify-end">

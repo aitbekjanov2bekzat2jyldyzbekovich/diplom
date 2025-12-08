@@ -1,5 +1,4 @@
 <template>
-  <reworkProfile />
   <div class="flex">
     <div class="w-1/2 flex flex-col gap-5">
       <div class="w-96 h-96 rounded-3xl overflow-hidden">
@@ -59,8 +58,6 @@
 </template>
 
 <script>
-import reworkProfile from '@/components/reworkProfile.vue'
-
 export default {
   data: () => ({
     img: '/images/avatar.png',
@@ -69,8 +66,5 @@ export default {
     group: 'Группа',
     skills: 'Скилы',
   }),
-  components: {
-    reworkProfile,
-  },
 }
 </script>

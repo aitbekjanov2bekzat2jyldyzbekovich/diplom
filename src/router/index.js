@@ -91,6 +91,7 @@ router.beforeEach(async (to, from, next) => {
   const auth = getAuth()
   const user = auth.currentUser
 
+
   if (to.meta.requiresAuth) {
     if (!user) {
       appStore.message(
