@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { auth, fdb } from '@/firebase/firebase'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
+
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -49,6 +50,15 @@ export const useAppStore = defineStore('app', {
     resetPasswordStatus: false,
   }),
   actions: {
+    async updateProfile(data) {
+      const userRef = doc(fdb, 'users', this.userProfile.uid)
+      try {
+        await updateDoc(userRef, data)
+        console.log('Аватар обновлен!')
+      } catch (error) {
+        console.error('Ошибка при обновлении аватара:', error)
+      }
+    },
     async signUp() {
       if (!this.vallue.newPassword.includes(' ')) {
         this.loader.auth = true
