@@ -24,7 +24,9 @@ export const useAppStore = defineStore('app', {
       resetPassword: false,
       page: false,
       profile: false,
+      reworkImg: false,
     },
+
     sizeWindow: window.innerWidth,
     alert: [],
 
@@ -44,6 +46,11 @@ export const useAppStore = defineStore('app', {
       newEmail: '',
       type: 'Студент',
       resetPassword: '',
+      reworkImg: null,
+      reInputImg: null,
+    },
+    reWorkStatus: {
+      img: false,
     },
     statusEmail: false,
     userProfile: null,
@@ -51,12 +58,17 @@ export const useAppStore = defineStore('app', {
   }),
   actions: {
     async updateProfile(data) {
+      this.loader.reworkImg = true
       const userRef = doc(fdb, 'users', this.userProfile.uid)
       try {
         await updateDoc(userRef, data)
-        console.log('Аватар обновлен!')
+        this.message('Аватар обновлен!', 'green')
+        this.initAuthListener()
       } catch (error) {
-        console.error('Ошибка при обновлении аватара:', error)
+      this.vallue
+        this.validate(error.code)
+      } finally {
+        this.loader.reworkImg = false
       }
     },
     async signUp() {
@@ -293,6 +305,8 @@ export const useAppStore = defineStore('app', {
           this.message('Ваш аккаунт отключён администратором.', 'red')
           this.clearForm()
           break
+        case 'invalid-argument':
+          this.message('Изобрежение больше 1мб!', 'red')
         default:
           this.message(`code: ${err}!`, 'red')
           this.clearForm()

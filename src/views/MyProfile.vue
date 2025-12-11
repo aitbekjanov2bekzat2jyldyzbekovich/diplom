@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import reworkProfile from '@/components/reworkProfile.vue'
+import reworkProfile from '@/appSections/reworkProfile.vue'
 import headMyProfile from '@/appSections/headMyProfile.vue'
 import myProfileData from '@/appSections/myProfileData.vue'
 import pieChar from '@/components/pieChar.vue'
