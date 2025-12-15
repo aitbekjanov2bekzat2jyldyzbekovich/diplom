@@ -26,12 +26,14 @@
         <div v-if="this.appStore.userProfile.aboutPerson" class="w-full">
           <p class="appText">{{ this.appStore.userProfile.aboutPerson }}</p>
         </div>
-        <div
+        <label
+          @click="$emit('openrePanel', '')"
+          for="reworkAboutme"
           v-else
           class="w-full border-2 flex items-center justify-center rounded-xl h-28 border-dashed border-[#E6A421] cursor-pointer transition-v hover:bg-[#e6a4212d]"
         >
           <p class="appText font-semibold">Написать обо мне</p>
-        </div>
+        </label>
       </div>
       <ul class="flex flex-col gap-2">
         <li v-if="this.appStore.userProfile.createrIs === 'Студент'" class="flex gap-2">

@@ -2,8 +2,7 @@
   <div class="flex flex-col items-center gap-3 overflow-hidden rounded-2xl w-full">
     <div class="w-96 h-96 rounded-3xl overflow-hidden relative">
       <loader class="absolute top-1/2 left-1/2" v-if="this.appStore.loader.reworkImg" />
-
-      <img :src="this.appStore.value.reworkImg" alt="avatar" class="object-cover w-full h-full" />
+      <img :src="this.appStore.vallue.reworkImg" alt="avatar" class="object-cover w-full h-full" />
     </div>
     <label
       :for="img.id"
@@ -17,7 +16,7 @@
         :id="img.inputId"
         :placeholder="img.imgPlaceholder"
         class="bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
-        v-model="this.appStore.value.reInputImg"
+        v-model="this.appStore.vallue.reInputImg"
         @input="this.urlgetImage()"
       />
     </div>
@@ -35,7 +34,7 @@
       <buttonV
         class="bg-green-500"
         v-html="img.btn"
-        @click="this.appStore.updateProfile({ avatar: img.value })"
+        @click="this.appStore.updateProfile({ avatar: this.appStore.vallue.reworkImg })"
       />
       <buttonV class="bg-red-500" v-html="img.btn2" @click="clearGetImg()" />
     </div>
@@ -70,30 +69,32 @@ export default {
       const reader = new FileReader()
 
       reader.onload = () => {
-        this.appStore.value.reworkImg = reader.result // здесь твой base64
+        this.appStore.vallue.reworkImg = reader.result // здесь твой base64
       }
       this.appStore.reWorkStatus.img = true
       reader.readAsDataURL(file) // читаем как Base64
     },
     urlgetImage() {
-      const valid = /\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i.test(this.img.modelInput)
+      const valid = /\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i.test(this.appStore.vallue.reInputImg)
+
       if (valid) {
-        this.appStore.value.reworkImg = this.img.modelInput
         this.appStore.reWorkStatus.img = true
+        this.appStore.vallue.reworkImg = this.appStore.vallue.reInputImg
       } else {
-        this.appStore.value.reworkImg = this.appStore.userProfile.avatar
+        this.appStore.vallue.reworkImg = this.appStore.userProfile.avatar || '/images/avatar.png'
         this.appStore.reWorkStatus.img = false
       }
     },
     clearGetImg() {
-      this.appStore.value.reworkImg = this.appStore.userProfile.avatar || '/images/avatar.png'
+      this.appStore.vallue.reworkImg = this.appStore.userProfile.avatar || '/images/avatar.png'
       this.$refs.fileInput.value = ''
-      this.appStore.value.reInputImg = null
+      this.appStore.vallue.reInputImg = null
+      this.appStore.reWorkStatus.img = false
     },
   },
 
   mounted() {
-    this.appStore.value.reworkImg = this.appStore.userProfile.avatar || '/images/avatar.png'
+    this.clearGetImg()
   },
 }
 </script>

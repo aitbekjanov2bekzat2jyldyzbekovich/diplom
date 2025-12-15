@@ -62,11 +62,13 @@ export const useAppStore = defineStore('app', {
       const userRef = doc(fdb, 'users', this.userProfile.uid)
       try {
         await updateDoc(userRef, data)
-        this.message('Аватар обновлен!', 'green')
-        this.initAuthListener()
+        window.location.reload()
       } catch (error) {
-      this.vallue
         this.validate(error.code)
+        Object.keys(this.reWorkStatus).forEach((key) => {
+          this.reWorkStatus[key] = false
+        })
+        this.vallue.reworkImg = this.userProfile.avatar || '/images/avatar.png'
       } finally {
         this.loader.reworkImg = false
       }
@@ -306,7 +308,8 @@ export const useAppStore = defineStore('app', {
           this.clearForm()
           break
         case 'invalid-argument':
-          this.message('Изобрежение больше 1мб!', 'red')
+          this.clearForm()
+          this.message('Данные больше 1мб!', 'red')
         default:
           this.message(`code: ${err}!`, 'red')
           this.clearForm()

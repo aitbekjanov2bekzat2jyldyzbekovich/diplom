@@ -1,5 +1,5 @@
 <template>
-  <reworkProfile :status="isOpen" />
+  <reworkProfile :status="isOpen" @closePanel="closePanel" />
   <section-layout
     title="Мой профиль"
     class="mt-14 mb-4"
@@ -11,7 +11,7 @@
 
     <div class="bg-[#fff] border rounded-2xl shadow-md w-full p-10" data-aos="zoom-in">
       <h3 class="heading mb-14 text-lg">Персональные данные</h3>
-      <myProfileData />
+      <myProfileData @openrePanel="openPanel" />
     </div>
     <div class="bg-[#fff] border rounded-2xl shadow-md w-full p-10" data-aos="zoom-in">
       <h3 class="heading mb-14 text-lg">Дополнительные данные</h3>
@@ -36,13 +36,17 @@ export default {
   components: { headMyProfile, myProfileData, pieChar, loader, reworkProfile },
   data() {
     return {
-      isOpen: true,
+      isOpen: false,
     }
   },
   methods: {
     openPanel() {
       this.isOpen = true
       document.body.style.overflow = 'hidden'
+    },
+    closePanel() {
+      this.isOpen = false
+      document.body.style.overflow = ''
     },
   },
 }
