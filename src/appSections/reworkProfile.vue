@@ -17,7 +17,7 @@
           <buttonV class="bg-green-500">{{ btn1 }} все</buttonV>
           <buttonV class="bg-red-500">{{ btn3 }} все</buttonV>
         </div>
-        <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-20">
           <reworkAvatar />
           <reworkInputs />
         </div>

@@ -34,7 +34,14 @@
       <buttonV
         class="bg-green-500"
         v-html="img.btn"
-        @click="this.appStore.updateProfile({ avatar: this.appStore.vallue.reworkImg })"
+        @click="
+          this.appStore.updateProfile(
+            { avatar: this.appStore.vallue.reworkImg },
+            'reworkImg',
+            'reworkImg',
+            'img',
+          )
+        "
       />
       <buttonV class="bg-red-500" v-html="img.btn2" @click="clearGetImg()" />
     </div>

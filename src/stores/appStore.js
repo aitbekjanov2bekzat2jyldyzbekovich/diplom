@@ -48,6 +48,7 @@ export const useAppStore = defineStore('app', {
       resetPassword: '',
       reworkImg: null,
       reInputImg: null,
+      reaboutMe: '',
     },
     reWorkStatus: {
       img: false,
@@ -57,20 +58,20 @@ export const useAppStore = defineStore('app', {
     resetPasswordStatus: false,
   }),
   actions: {
-    async updateProfile(data) {
-      this.loader.reworkImg = true
+    async updateProfile(data, name, loader, status) {
+      this.loader[loader] = true
       const userRef = doc(fdb, 'users', this.userProfile.uid)
       try {
         await updateDoc(userRef, data)
         window.location.reload()
       } catch (error) {
         this.validate(error.code)
-        Object.keys(this.reWorkStatus).forEach((key) => {
-          this.reWorkStatus[key] = false
-        })
-        this.vallue.reworkImg = this.userProfile.avatar || '/images/avatar.png'
+
+        this.reWorkStatus[status] = false
+        this.vallue[name] =
+          name === 'reworkImg' ? this.userProfile.avatar || '/images/avatar.png' : ''
       } finally {
-        this.loader.reworkImg = false
+        this.loader[loader] = false
       }
     },
     async signUp() {
