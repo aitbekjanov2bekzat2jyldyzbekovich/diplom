@@ -25,6 +25,7 @@ export const useAppStore = defineStore('app', {
       page: false,
       profile: false,
       reworkImg: false,
+      reAboutMe: false,
     },
 
     sizeWindow: window.innerWidth,
@@ -52,6 +53,7 @@ export const useAppStore = defineStore('app', {
     },
     reWorkStatus: {
       img: false,
+      aboutMe: false,
     },
     statusEmail: false,
     userProfile: null,
@@ -66,7 +68,6 @@ export const useAppStore = defineStore('app', {
         window.location.reload()
       } catch (error) {
         this.validate(error.code)
-
         this.reWorkStatus[status] = false
         this.vallue[name] =
           name === 'reworkImg' ? this.userProfile.avatar || '/images/avatar.png' : ''
@@ -309,7 +310,6 @@ export const useAppStore = defineStore('app', {
           this.clearForm()
           break
         case 'invalid-argument':
-          this.clearForm()
           this.message('Данные больше 1мб!', 'red')
         default:
           this.message(`code: ${err}!`, 'red')
