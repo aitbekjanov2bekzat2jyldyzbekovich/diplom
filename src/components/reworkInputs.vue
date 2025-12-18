@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-wrap w-full">
-    <div class="w-1/2 flex gap-2 pr-2">
+  <div class="grid grid-cols-2 gap-4 w-full">
+    <div class="flex gap-2 h-max">
       <div class="w-full flex flex-col gap-2 relative">
         <div
           class="absolute top-0 left-0 w-full h-full flex items-center justify-center"
@@ -21,9 +21,50 @@
         <buttonV
           class="bg-green-500"
           v-html="btn"
-          @click="this.appStore.updateProfile({ aboutPerson: this.appStore.vallue.reaboutMe },'reaboutMe','reaboutMe',)"
+          @click="
+            this.appStore.updateProfile(
+              { aboutPerson: this.appStore.vallue.reaboutMe },
+              'reaboutMe',
+              'reAboutMe',
+              'aboutMe',
+            )
+          "
         />
         <buttonV class="bg-red-500" v-html="btn2" @click="clearForm('reaboutMe', 'aboutMe')" />
+      </div>
+    </div>
+    <div class="flex gap-2 h-max" v-for="i in inputs">
+      <div class="flex flex-col gap-2 w-full relative">
+        <div
+          class="absolute top-0 left-0 w-full h-full flex items-center justify-center"
+          v-if="this.appStore.loader[i.loader]"
+        >
+          <loader />
+        </div>
+        <label class="appText font-semibold" :for="`rf${i.id}`">{{ i.label }}</label>
+        <input
+          :id="`rf${i.id}`"
+          :type="i.type"
+          :placeholder="i.placeHolder"
+          class="w-full bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
+          v-model="this.appStore.vallue[i.val]"
+          @input="validSend(this.appStore.vallue[i.val], i.buttonStatus, i.val)"
+        />
+      </div>
+      <div class="flex items-end gap-2" v-if="this.appStore.reWorkStatus[i.buttonStatus]">
+        <buttonV
+          class="bg-green-500"
+          v-html="btn"
+          @click="
+            this.appStore.updateProfile(
+              { name: this.appStore.vallue[i.val] },
+              i.val,
+              i.loader,
+              i.buttonStatus,
+            )
+          "
+        />
+        <buttonV class="bg-red-500" v-html="btn2" @click="clearForm(i.val, i.buttonStatus)" />
       </div>
     </div>
   </div>
@@ -44,6 +85,18 @@ export default {
 
       btn: '<i class="pi pi-file-edit"/>',
       btn2: '<i class="pi pi-times"/>',
+
+      inputs: [
+        {
+          id: 1,
+          label: 'Ваше имя',
+          buttonStatus: 'firstname',
+          loader: 'firstname',
+          val: 'firstname',
+          placeHolder: 'Изменить имя',
+          type: 'text',
+        },
+      ],
     }
   },
   components: {
@@ -51,12 +104,22 @@ export default {
   },
   methods: {
     validSend(value, status, valName) {
-      if (value.length < 300 && value.trim() !== '') {
+      const maxWords = 50
+
+      const words = value.trim().split(/\s+/).filter(Boolean)
+
+      if (words.length === 0) {
+        this.appStore.reWorkStatus[status] = false
+        return
+      }
+
+      if (words.length <= maxWords) {
         this.appStore.reWorkStatus[status] = true
       } else {
-        this.appStore.vallue[valName] = this.appStore.vallue[valName].slice(0, -1)
-        this.appStore.reWorkStatus[status] = value < 1 ? false : true
-        this.appStore.message('Синактическая  ошибка, или количества слов привешает!', 'yellow')
+        // аккуратно обрезаем до лимита
+        this.appStore.vallue[valName] = words.slice(0, maxWords).join(' ')
+
+        this.appStore.message(`Ошибка: превышено количество слов (макс. ${maxWords})`, 'yellow')
       }
     },
     clearForm(valName, status) {
@@ -66,6 +129,7 @@ export default {
   },
   mounted() {
     this.appStore.vallue.reaboutMe = this.appStore.userProfile.aboutPerson || ''
+    this.appStore.vallue.firstname = this.appStore.userProfile.name || ''
   },
 }
 </script>

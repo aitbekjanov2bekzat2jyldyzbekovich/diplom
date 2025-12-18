@@ -26,6 +26,7 @@ export const useAppStore = defineStore('app', {
       profile: false,
       reworkImg: false,
       reAboutMe: false,
+      firstname: false,
     },
 
     sizeWindow: window.innerWidth,
@@ -50,10 +51,12 @@ export const useAppStore = defineStore('app', {
       reworkImg: null,
       reInputImg: null,
       reaboutMe: '',
+      firstname: '',
     },
     reWorkStatus: {
       img: false,
       aboutMe: false,
+      firstname: false,
     },
     statusEmail: false,
     userProfile: null,
@@ -311,6 +314,7 @@ export const useAppStore = defineStore('app', {
           break
         case 'invalid-argument':
           this.message('Данные больше 1мб!', 'red')
+          break
         default:
           this.message(`code: ${err}!`, 'red')
           this.clearForm()
