@@ -27,6 +27,9 @@ export const useAppStore = defineStore('app', {
       reworkImg: false,
       reAboutMe: false,
       firstname: false,
+      lastName: false,
+      group: false,
+      ollUpdateProfile: false,
     },
 
     sizeWindow: window.innerWidth,
@@ -52,17 +55,34 @@ export const useAppStore = defineStore('app', {
       reInputImg: null,
       reaboutMe: '',
       firstname: '',
+      lastName: '',
+      group: '',
     },
     reWorkStatus: {
       img: false,
       aboutMe: false,
       firstname: false,
+      lastName: false,
+      group: false,
     },
     statusEmail: false,
     userProfile: null,
     resetPasswordStatus: false,
   }),
   actions: {
+    async ollUpdateProfile(data) {
+      this.loader.ollUpdateProfile = true
+      const userRef = doc(fdb, 'users', this.userProfile.uid)
+      try {
+        await updateDoc(userRef, data)
+        window.location.reload()
+      } catch (error) {
+        this.validate(error.code)
+        window.location.reload()
+      } finally {
+        this.loader.ollUpdateProfile = false
+      }
+    },
     async updateProfile(data, name, loader, status) {
       this.loader[loader] = true
       const userRef = doc(fdb, 'users', this.userProfile.uid)

@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col items-center gap-3 overflow-hidden rounded-2xl w-full">
-    <div class="w-96 h-96 rounded-3xl overflow-hidden relative">
+    <div class="w-96 h-96 rounded-3xl overflow-hidden relative max-[540px]:w-full">
       <loader class="absolute top-1/2 left-1/2" v-if="this.appStore.loader.reworkImg" />
       <img :src="this.appStore.vallue.reworkImg" alt="avatar" class="object-cover w-full h-full" />
     </div>
@@ -9,13 +9,13 @@
       class="p-2 border border-[#E6A421] appText cursor-pointer font-semibold transiton-v hover:bg-[#E6A421] rounded-md mb-6"
       >{{ img.label }}</label
     >
-    <div class="flex flex-col gap-1 w-96">
+    <div class="flex flex-col gap-1 w-96 max-[540px]:w-full">
       <label :for="img.inputId" class="appText font-semibold">{{ img.imgInputLabel }}</label>
       <input
         type="text"
         :id="img.inputId"
         :placeholder="img.imgPlaceholder"
-        class="bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
+        class="bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md "
         v-model="this.appStore.vallue.reInputImg"
         @input="this.urlgetImage()"
       />

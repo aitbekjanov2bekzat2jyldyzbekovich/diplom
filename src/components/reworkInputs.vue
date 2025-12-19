@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 gap-4 w-full">
+  <div class="grid grid-cols-2 gap-4 w-full max-[540px]:grid-cols-1">
     <div class="flex gap-2 h-max">
       <div class="w-full flex flex-col gap-2 relative">
         <div
@@ -57,7 +57,7 @@
           v-html="btn"
           @click="
             this.appStore.updateProfile(
-              { name: this.appStore.vallue[i.val] },
+              { [i.upName]: this.appStore.vallue[i.val] },
               i.val,
               i.loader,
               i.buttonStatus,
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       textArea: {
-        label: 'О мне',
+        label: 'О мне:',
         id: 'reworkAboutme',
         placeHolder: 'Напишите коротко о себе....',
         status: false,
@@ -89,12 +89,33 @@ export default {
       inputs: [
         {
           id: 1,
-          label: 'Ваше имя',
+          label: 'Ваше имя:',
           buttonStatus: 'firstname',
           loader: 'firstname',
           val: 'firstname',
           placeHolder: 'Изменить имя',
           type: 'text',
+          upName: 'name',
+        },
+        {
+          id: 2,
+          label: 'Фамилия:',
+          buttonStatus: 'lastName',
+          loader: 'lastName',
+          val: 'lastName',
+          placeHolder: 'Изменить фамилию',
+          type: 'text',
+          upName: 'surname',
+        },
+        {
+          id: 3,
+          label: 'Группа:',
+          buttonStatus: 'group',
+          loader: 'group',
+          val: 'group',
+          placeHolder: 'Введите факультет группу!',
+          type: 'text',
+          upName: 'group',
         },
       ],
     }
@@ -130,6 +151,8 @@ export default {
   mounted() {
     this.appStore.vallue.reaboutMe = this.appStore.userProfile.aboutPerson || ''
     this.appStore.vallue.firstname = this.appStore.userProfile.name || ''
+    this.appStore.vallue.lastName = this.appStore.userProfile.surname || ''
+    this.appStore.vallue.group = this.appStore.userProfile.group || ''
   },
 }
 </script>
