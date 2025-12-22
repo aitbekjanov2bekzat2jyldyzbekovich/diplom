@@ -1,7 +1,7 @@
 <template>
-  <div class="flex">
-    <div class="w-1/2 flex flex-col gap-5">
-      <div class="w-96 h-96 rounded-3xl overflow-hidden">
+  <div class="flex max-[1150px]:flex-col max-[1150px]:items-center">
+    <div class="w-1/2 flex flex-col gap-5 max-[1150px]:items-center max-[1150px]:w-full">
+      <div class="w-96 h-96 rounded-3xl overflow-hidden max-[500px]:w-full">
         <img
           v-if="this.appStore.userProfile.avatar"
           :src="this.appStore.userProfile.avatar"
@@ -20,7 +20,7 @@
         }}</span>
       </div>
     </div>
-    <div class="w-1/2 flex flex-col gap-10">
+    <div class="w-1/2 flex flex-col gap-10 max-[1150px]:items-center max-[1150px]:w-full">
       <div class="flex gap-2 flex-col">
         <h5 class="heading text-lg">{{ aboutPerson }}:</h5>
         <div v-if="this.appStore.userProfile.aboutPerson" class="w-full">
