@@ -1,5 +1,6 @@
 <template>
   <reworkProfile :status="isOpen" @closePanel="closePanel" />
+  <interes />
   <section-layout
     title="Мой профиль"
     class="mt-14 mb-4"
@@ -26,6 +27,7 @@
 </template>
 
 <script>
+import interes from '@/components/interes.vue'
 import reworkProfile from '@/appSections/reworkProfile.vue'
 import headMyProfile from '@/appSections/headMyProfile.vue'
 import myProfileData from '@/appSections/myProfileData.vue'
@@ -33,7 +35,7 @@ import pieChar from '@/components/pieChar.vue'
 import loader from '@/components/loader.vue'
 
 export default {
-  components: { headMyProfile, myProfileData, pieChar, loader, reworkProfile },
+  components: { headMyProfile, myProfileData, pieChar, loader, reworkProfile, interes },
   data() {
     return {
       isOpen: false,
