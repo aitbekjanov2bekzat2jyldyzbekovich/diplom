@@ -35,24 +35,33 @@
           <p class="appText font-semibold">Написать обо мне</p>
         </label>
       </div>
-      <ul class="flex flex-col gap-2">
-        <li v-if="this.appStore.userProfile.createrIs === 'Студент'" class="flex gap-2">
+      <ul class="flex flex-col gap-2 w-full">
+        <li
+          v-if="this.appStore.userProfile.createrIs === 'Студент'"
+          class="flex gap-2 items-center max-[450px]:flex-col"
+        >
           <h5 class="heading text-lg">{{ group }}:</h5>
           <p class="appText">{{ this.appStore.userProfile.group || 'Нет данных' }}</p>
         </li>
-        <li class="flex gap-2">
+        <li class="flex gap-2 flex-wrap items-center max-[450px]:flex-col">
           <h5 class="heading text-lg">{{ email }}:</h5>
           <p class="appText">{{ this.appStore.userProfile.email || 'Нет данных' }}</p>
         </li>
-        <li v-if="this.appStore.userProfile.createrIs === 'Студент'" class="flex gap-2">
+        <li
+          v-if="this.appStore.userProfile.createrIs === 'Студент'"
+          class="flex gap-2 items-center max-[450px]:flex-col"
+        >
           <h5 class="heading text-lg">{{ skills }}:</h5>
           <div
+            class="flex flex-wrap gap-3"
             v-if="this.appStore.userProfile.skills"
             v-for="i in this.appStore.userProfile.skills"
           >
-            <p class="appText">{{ i.name }}</p>
+            <p class="appText p-1 border rounded-3xl border-[#E6A421]">{{ i }}</p>
           </div>
-          <button v-else class="appText font-bold">Добавить</button>
+          <button v-else class="appText font-bold" @click="$emit('openInteres', '')">
+            Добавить
+          </button>
         </li>
       </ul>
     </div>
@@ -66,7 +75,7 @@ export default {
     aboutPerson: 'Обо мне',
     email: 'Email',
     group: 'Группа',
-    skills: 'Скилы',
+    skills: 'Интересы',
   }),
 }
 </script>

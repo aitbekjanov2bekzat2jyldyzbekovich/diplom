@@ -1,6 +1,9 @@
 <template>
   <reworkProfile :status="isOpen" @closePanel="closePanel" />
-  <interes />
+  <div v-if="isOpenInteres">
+    <interes @closeInteres="closeInteres" />
+  </div>
+
   <section-layout
     title="Мой профиль"
     class="mt-14 mb-4"
@@ -12,7 +15,7 @@
 
     <div class="bg-[#fff] border rounded-2xl shadow-md w-full p-10" data-aos="zoom-in">
       <h3 class="heading mb-14 text-lg">Персональные данные</h3>
-      <myProfileData @openrePanel="openPanel" />
+      <myProfileData @openrePanel="openPanel" @openInteres="openInteres" />
     </div>
     <div class="bg-[#fff] border rounded-2xl shadow-md w-full p-10" data-aos="zoom-in">
       <h3 class="heading mb-14 text-lg">Дополнительные данные</h3>
@@ -39,6 +42,7 @@ export default {
   data() {
     return {
       isOpen: false,
+      isOpenInteres: false,
     }
   },
   methods: {
@@ -48,6 +52,14 @@ export default {
     },
     closePanel() {
       this.isOpen = false
+      document.body.style.overflow = ''
+    },
+    openInteres() {
+      this.isOpenInteres = true
+      document.body.style.overflow = 'hidden'
+    },
+    closeInteres() {
+      this.isOpenInteres = false
       document.body.style.overflow = ''
     },
   },
