@@ -7,6 +7,8 @@
         :type="input.type"
         :id="input.id"
         :placeholder="input.placeHolder"
+        v-model="this.appStore.vallue[input.model]"
+        @input="this.appStore.validSend(this.appStore.vallue[input.model], 'nan', input.model)"
       />
     </div>
     <div class="flex flex-col gap-1">
@@ -15,6 +17,10 @@
         class="w-full bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md h-96"
         :id="textArea.id"
         :placeholder="textArea.placeHolder"
+        @input="
+          this.appStore.validSend(this.appStore.vallue[textArea.model], 'nan', textArea.model)
+        "
+        v-model="this.appStore.vallue[textArea.model]"
       />
     </div>
   </div>
@@ -29,11 +35,13 @@ export default {
         id: 'c1',
         placeHolder: 'Введите название курса',
         type: 'text',
+        model: 'coursName',
       },
       textArea: {
         id: 'c2',
         label: 'О курсе:',
         placeHolder: 'Введите информацию о курсе',
+        model: 'aboutCours',
       },
     }
   },

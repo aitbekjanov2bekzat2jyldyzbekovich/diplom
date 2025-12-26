@@ -11,7 +11,7 @@
         <label :for="textArea.id" class="appText font-semibold">{{ textArea.label }}</label>
         <textarea
           v-model="this.appStore.vallue.reaboutMe"
-          @input="validSend(this.appStore.vallue.reaboutMe, 'aboutMe', 'reaboutMe')"
+          @input="this.appStore.validSend(this.appStore.vallue.reaboutMe, 'aboutMe', 'reaboutMe')"
           :id="textArea.id"
           :placeholder="textArea.placeHolder"
           class="w-full h-52 bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
@@ -48,7 +48,7 @@
           :placeholder="i.placeHolder"
           class="w-full bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
           v-model="this.appStore.vallue[i.val]"
-          @input="validSend(this.appStore.vallue[i.val], i.buttonStatus, i.val)"
+          @input="this.appStore.validSend(this.appStore.vallue[i.val], i.buttonStatus, i.val)"
         />
       </div>
       <div class="flex items-end gap-2" v-if="this.appStore.reWorkStatus[i.buttonStatus]">
@@ -124,25 +124,6 @@ export default {
     loader,
   },
   methods: {
-    validSend(value, status, valName) {
-      const maxWords = 50
-
-      const words = value.trim().split(/\s+/).filter(Boolean)
-
-      if (words.length === 0) {
-        this.appStore.reWorkStatus[status] = false
-        return
-      }
-
-      if (words.length <= maxWords) {
-        this.appStore.reWorkStatus[status] = true
-      } else {
-        // аккуратно обрезаем до лимита
-        this.appStore.vallue[valName] = words.slice(0, maxWords).join(' ')
-
-        this.appStore.message(`Ошибка: превышено количество слов (макс. ${maxWords})`, 'yellow')
-      }
-    },
     clearForm(valName, status) {
       this.appStore.vallue[valName] = this.appStore.userProfile.aboutPerson || ''
       this.appStore.reWorkStatus[status] = false

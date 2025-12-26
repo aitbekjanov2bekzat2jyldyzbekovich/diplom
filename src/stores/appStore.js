@@ -57,6 +57,11 @@ export const useAppStore = defineStore('app', {
       firstname: '',
       lastName: '',
       group: '',
+      coursName: '',
+      aboutCours: '',
+      nameLession: '',
+      urlLession: '',
+      zipFile: null,
     },
     reWorkStatus: {
       img: false,
@@ -64,6 +69,7 @@ export const useAppStore = defineStore('app', {
       firstname: false,
       lastName: false,
       group: false,
+      nameLession: false,
     },
     statusEmail: false,
     userProfile: null,
@@ -365,6 +371,25 @@ export const useAppStore = defineStore('app', {
       Object.keys(this.error).forEach((key) => {
         this.error[key] = ''
       })
+    },
+    validSend(value, status, valName) {
+      const maxWords = 50
+
+      const words = value.trim().split(/\s+/).filter(Boolean)
+
+      if (words.length === 0) {
+        this.reWorkStatus[status] = false
+        return
+      }
+
+      if (words.length <= maxWords) {
+        this.reWorkStatus[status] = true
+      } else {
+        // аккуратно обрезаем до лимита
+        this.vallue[valName] = words.slice(0, maxWords).join(' ')
+        this.reWorkStatus[status] = false
+        this.message(`Ошибка: превышено количество слов (макс. ${maxWords})`, 'yellow')
+      }
     },
   },
 })
