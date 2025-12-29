@@ -1,8 +1,14 @@
 <template>
   <div
-    class="bg-[#fff] border rounded-2xl shadow-md p-8 flex justify-center appText"
+    class="bg-[#fff] border rounded-2xl shadow-md p-8 flex justify-center flex-col items-center gap-4 appText"
     data-aos="zoom-in"
   >
+    <div v-for="i in courses">
+      <h4>{{ i.name }}</h4>
+      <span>{{ i.url }}</span>
+
+      
+    </div>
     <div class="w-1/2 flex justify-center border p-4 rounded-xl flex-wrap border-[#E6A421]">
       <div>
         <p class="text-blue-500 text-center">{{ create.message }}</p>
@@ -53,7 +59,7 @@
         <span>{{ create.filePlaceHolder }}</span>
       </div>
       <div>
-        <buttonV @click="addCours">{{ create.btn }}</buttonV>
+        <buttonV @click="corectCours">{{ create.btn }}</buttonV>
       </div>
     </div>
   </div>
@@ -87,14 +93,26 @@ export default {
       this.create.filePlaceHolder = file.name
       this.appStore.vallue.zipFile = file
     },
-    addCours() {
+    corectCours() {
       if (!this.appStore.reWorkStatus.nameLession) {
         this.appStore.message('Введите название темы  корекно пожалуста!', 'red')
       } else if (!this.appStore.vallue.zipFile) {
         this.appStore.message('Выберите zip file!', 'red')
+      } else if (!this.appStore.reWorkStatus.nameCours) {
+        this.appStore.message('Введите название курса пожалуста!', 'red')
+      } else if (!this.appStore.reWorkStatus.aboutCours) {
+        this.appStore.message('Напишите информатцию о курсе', 'red')
       } else {
-        alert('ok')
+        this.createCours()
       }
+    },
+    createCours() {
+      this.courses.push({
+        id: this.courses.length + 1,
+        name: this.appStore.vallue.nameLession,
+        url: this.appStore.vallue.urlLession,
+        zip: this.appStore.vallue.zipFile,
+      })
     },
   },
 }

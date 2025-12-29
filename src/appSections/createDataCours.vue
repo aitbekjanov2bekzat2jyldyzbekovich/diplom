@@ -8,7 +8,7 @@
         :id="input.id"
         :placeholder="input.placeHolder"
         v-model="this.appStore.vallue[input.model]"
-        @input="this.appStore.validSend(this.appStore.vallue[input.model], 'nan', input.model)"
+        @input="this.appStore.validSend(this.appStore.vallue[input.model], 'nameCours', input.model)"
       />
     </div>
     <div class="flex flex-col gap-1">
@@ -18,7 +18,7 @@
         :id="textArea.id"
         :placeholder="textArea.placeHolder"
         @input="
-          this.appStore.validSend(this.appStore.vallue[textArea.model], 'nan', textArea.model)
+          this.appStore.validSend(this.appStore.vallue[textArea.model], 'aboutCours', textArea.model)
         "
         v-model="this.appStore.vallue[textArea.model]"
       />

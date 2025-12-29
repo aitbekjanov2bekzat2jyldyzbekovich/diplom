@@ -70,6 +70,8 @@ export const useAppStore = defineStore('app', {
       lastName: false,
       group: false,
       nameLession: false,
+      nameCours: false,
+      aboutCours: false,
     },
     statusEmail: false,
     userProfile: null,
