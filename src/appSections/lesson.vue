@@ -3,12 +3,20 @@
     class="bg-[#fff] border rounded-2xl shadow-md p-8 flex justify-center flex-col items-center gap-4 appText"
     data-aos="zoom-in"
   >
-    <div v-for="i in courses">
-      <h4>{{ i.name }}</h4>
-      <span>{{ i.url }}</span>
+    <TransitionGroup class="w-1/2 flex flex-col gap-3" name="list" tag="ul">
+      <li v-for="i in courses" class="flex items-center gap-4 w-full h-max" :key="i.id">
+        <div class="w-full h-full flex">
+          <span class="p-4 border">{{ i.id }}</span>
+          <span class="p-4 w-full border overflow-hidden">{{ i.name }}</span>
+          <span class="p-4 w-full border overflow-hidden">{{ i.url || 'Нет данных' }}</span>
+          <span class="p-4 w-full border overflow-hidden">{{ i.zip.name }}</span>
+        </div>
+        <buttonV class="bg-red-500" @click="courses = courses.filter((it) => it.id !== i.id)"
+          >-</buttonV
+        >
+      </li>
+    </TransitionGroup>
 
-      
-    </div>
     <div class="w-1/2 flex justify-center border p-4 rounded-xl flex-wrap border-[#E6A421]">
       <div>
         <p class="text-blue-500 text-center">{{ create.message }}</p>
@@ -113,7 +121,39 @@ export default {
         url: this.appStore.vallue.urlLession,
         zip: this.appStore.vallue.zipFile,
       })
+      this.appStore.vallue.nameLession = ''
+      this.appStore.vallue.urlLession = ''
+      this.appStore.vallue.zipFile = null
+      this.appStore.reWorkStatus.nameLession = false
     },
   },
 }
 </script>
+<style scoped>
+/* enter / leave */
+.list-enter-active,
+.list-leave-active {
+  @apply transition-all duration-300 ease-out;
+}
+
+.list-enter-from {
+  @apply opacity-0 translate-y-4;
+}
+
+.list-enter-to {
+  @apply opacity-100 translate-y-0;
+}
+
+.list-leave-from {
+  @apply opacity-100 translate-y-0;
+}
+
+.list-leave-to {
+  @apply opacity-0 -translate-y-4;
+}
+
+/* move (important for v-for) */
+.list-move {
+  @apply transition-transform duration-300;
+}
+</style>
