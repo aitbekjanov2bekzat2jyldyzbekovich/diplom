@@ -11,6 +11,7 @@ export default {
   mounted() {
     this.appStore.resizeWindow()
     this.appStore.initAuthListener()
+    this.appStore.fetchCourses()
   },
 }
 </script>

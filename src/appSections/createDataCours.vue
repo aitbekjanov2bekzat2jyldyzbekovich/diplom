@@ -8,7 +8,9 @@
         :id="input.id"
         :placeholder="input.placeHolder"
         v-model="this.appStore.vallue[input.model]"
-        @input="this.appStore.validSend(this.appStore.vallue[input.model], 'nameCours', input.model)"
+        @input="
+          this.appStore.validSend(this.appStore.vallue[input.model], 'nameCours', input.model)
+        "
       />
     </div>
     <div class="flex flex-col gap-1">
@@ -18,16 +20,42 @@
         :id="textArea.id"
         :placeholder="textArea.placeHolder"
         @input="
-          this.appStore.validSend(this.appStore.vallue[textArea.model], 'aboutCours', textArea.model)
+          this.appStore.validSend(
+            this.appStore.vallue[textArea.model],
+            'aboutCours',
+            textArea.model,
+          )
         "
         v-model="this.appStore.vallue[textArea.model]"
       />
+    </div>
+    <div class="flex gap-2">
+      <label :for="dateC.id" class="appText font-semibold">{{ dateC.label }}</label>
+      <input
+        :type="dateC.type"
+        :id="dateC.id"
+        class="appText border px-2 border-[#E6A421] rounded-xl"
+        v-model="this.appStore.vallue[dateC.model]"
+      />
+    </div>
+    <div
+      class="w-full flex justify-end"
+      v-if="this.appStore.reWorkStatus.nameCours && this.appStore.reWorkStatus.aboutCours"
+    >
+      <buttonV class="bg-green-500" @click="createCours">
+        <span v-if="!this.appStore.loader.createCors">{{ btn }}</span>
+        <loader v-else />
+      </buttonV>
     </div>
   </div>
 </template>
 
 <script>
+import loader from '@/components/loader.vue'
 export default {
+  components: {
+    loader,
+  },
   data() {
     return {
       input: {
@@ -43,7 +71,26 @@ export default {
         placeHolder: 'Введите информацию о курсе',
         model: 'aboutCours',
       },
+      btn: 'Создать',
+      dateC: {
+        id: 'c3',
+        label: 'Выберите дату окончания курса:',
+        model: 'dateCours',
+        type: 'date',
+      },
     }
+  },
+  methods: {
+    createCours() {
+      this.appStore.addCourse({
+        id: this.appStore.courses.length + 1,
+        title: this.appStore.vallue.coursName,
+        img: this.appStore.userProfile.avatar,
+        end: this.appStore.vallue.dateCours || Date.now() + Date.now(),
+        about: this.appStore.vallue.aboutCours,
+        uid: this.appStore.userProfile.uid,
+      })
+    },
   },
 }
 </script>

@@ -13,7 +13,8 @@
       </div>
     </div>
     <div class="flex flex-col justify-between gap-2 items-start flex-wrap">
-      <span class="text-[#E6A421] font-bold appText">{{ item.date }}</span>
+      <span class="text-[#E6A421] font-bold appText">{{
+        Object.values(item.folowers).length}}</span>
 
       <div class="flex gap-5 w-full">
         <buttonV class="text-lg" @click="this.appStore.toRout(`/cours/${item.id}`)">{{
@@ -21,7 +22,7 @@
         }}</buttonV>
         <buttonV
           class="text-lg"
-          @click="this.appStore.message(`Добавлено в избранное ${item.id}`, 'green')"
+          @click="this.appStore.message(`Добавлено в избранное ${item.title}`, 'green')"
         >
           <i class="pi pi-bookmark-fill" />
         </buttonV>

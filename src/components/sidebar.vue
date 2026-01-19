@@ -75,6 +75,15 @@ export default {
       },
       {
         id: 3,
+        vall: 'Мои курсы',
+        rout: {
+          to: '/cours/my-cours',
+          name: 'myCours',
+        },
+        icon: '<i class="pi pi-book "/>',
+      },
+      {
+        id: 4,
         vall: 'Мой профиль',
         rout: {
           to: '/cours/my-profile',

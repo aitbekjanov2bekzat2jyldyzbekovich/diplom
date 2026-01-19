@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import { auth, fdb } from '@/firebase/firebase'
+import { auth, fdb, db } from '@/firebase/firebase'
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
+import { ref, push, set, onValue } from 'firebase/database'
 
 import {
   signInWithEmailAndPassword,
@@ -30,6 +31,7 @@ export const useAppStore = defineStore('app', {
       lastName: false,
       group: false,
       ollUpdateProfile: false,
+      createCors: false,
     },
 
     sizeWindow: window.innerWidth,
@@ -59,9 +61,7 @@ export const useAppStore = defineStore('app', {
       group: '',
       coursName: '',
       aboutCours: '',
-      nameLession: '',
-      urlLession: '',
-      zipFile: null,
+      dateCours: null,
     },
     reWorkStatus: {
       img: false,
@@ -69,15 +69,49 @@ export const useAppStore = defineStore('app', {
       firstname: false,
       lastName: false,
       group: false,
-      nameLession: false,
       nameCours: false,
       aboutCours: false,
     },
     statusEmail: false,
     userProfile: null,
     resetPasswordStatus: false,
+    courses: [],
   }),
   actions: {
+    fetchCourses() {
+      const coursesRef = ref(db, 'courses')
+      onValue(coursesRef, (snapshot) => {
+        const data = snapshot.val()
+        this.courses = data ? Object.values(data) : []
+      })
+    },
+    async addCourse(corse) {
+      try {
+        this.loader.createCors = true
+        const coursesRef = ref(db, 'courses')
+
+        const newCourseRef = push(coursesRef)
+
+        await set(newCourseRef, {
+          title: corse.title || '',
+          id: corse.id,
+          img: corse.img || '',
+          endCourse: corse.end || '',
+          lessons: '',
+          about: corse.about || '',
+          folowers: '',
+          createdId: corse.uid || '',
+          createdAt: Date.now(),
+        })
+        this.message(`Создано успешно: ${this.vallue.coursName}`, 'green')
+        this.toRout('/cours/my-cours')
+      } catch (err) {
+        this.validate(err.message)
+      } finally {
+        this.clearForm()
+        this.loader.createCors = false
+      }
+    },
     async ollUpdateProfile(data) {
       this.loader.ollUpdateProfile = true
       const userRef = doc(fdb, 'users', this.userProfile.uid)
@@ -389,7 +423,7 @@ export const useAppStore = defineStore('app', {
       } else {
         // аккуратно обрезаем до лимита
         this.vallue[valName] = words.slice(0, maxWords).join(' ')
-        this.reWorkStatus[status] = false
+
         this.message(`Ошибка: превышено количество слов (макс. ${maxWords})`, 'yellow')
       }
     },
