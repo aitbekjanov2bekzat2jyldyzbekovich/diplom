@@ -32,6 +32,7 @@
     <div class="flex gap-2">
       <label :for="dateC.id" class="appText font-semibold">{{ dateC.label }}</label>
       <input
+        :min="minDate"
         :type="dateC.type"
         :id="dateC.id"
         class="appText border px-2 border-[#E6A421] rounded-xl"
@@ -57,6 +58,7 @@ export default {
     loader,
   },
   data() {
+    const today = new Date()
     return {
       input: {
         label: 'Название курса:',
@@ -78,6 +80,7 @@ export default {
         model: 'dateCours',
         type: 'date',
       },
+      minDate: today.toISOString().split('T')[0],
     }
   },
   methods: {

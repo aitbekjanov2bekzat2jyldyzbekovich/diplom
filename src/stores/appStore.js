@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { auth, fdb, db } from '@/firebase/firebase'
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
-import { ref, push, set, onValue } from 'firebase/database'
+import { ref, push, set, onValue, getDatabase, remove } from 'firebase/database'
 
 import {
   signInWithEmailAndPassword,
@@ -23,7 +23,7 @@ export const useAppStore = defineStore('app', {
       user: false,
       isEmail: false,
       resetPassword: false,
-      page: false,
+      page: true,
       profile: false,
       reworkImg: false,
       reAboutMe: false,
@@ -78,12 +78,55 @@ export const useAppStore = defineStore('app', {
     courses: [],
   }),
   actions: {
-    fetchCourses() {
-      const coursesRef = ref(db, 'courses')
-      onValue(coursesRef, (snapshot) => {
-        const data = snapshot.val()
-        this.courses = data ? Object.values(data) : []
-      })
+    async fetchUserProfile(uid) {
+      if (!uid) return
+
+      this.loading = true
+
+      try {
+        const userRef = doc(db, 'users', uid)
+        const snap = await getDoc(userRef)
+
+        if (snap.exists()) {
+          this.userProfile = {
+            uid: snap.id,
+            ...snap.data(),
+          }
+        } else {
+          this.userProfile = null
+          console.warn('Пользователь не найден')
+        }
+      } catch (error) {
+        console.error('Ошибка получения профиля:', error)
+      } finally {
+        this.loading = false
+      }
+    },
+    async deleteCourse(courseId) {
+      try {
+        const db = getDatabase()
+        const courseRef = ref(db, `courses/${courseId}`)
+
+        await remove(courseRef)
+
+        this.courses = this.courses.filter((course) => course.id !== courseId)
+
+        this.message(`Курс удален: ${courseId}`, 'green')
+      } catch (error) {
+        this.validate(error.massage)
+      }
+    },
+    async fetchCourses() {
+      try {
+        const coursesRef = ref(db, 'courses')
+        onValue(coursesRef, (snapshot) => {
+          const data = snapshot.val()
+          this.courses = data ? Object.values(data) : []
+        })
+      } catch {
+      } finally {
+        this.loader.page = false
+      }
     },
     async addCourse(corse) {
       try {
@@ -91,10 +134,10 @@ export const useAppStore = defineStore('app', {
         const coursesRef = ref(db, 'courses')
 
         const newCourseRef = push(coursesRef)
-
+        const courseId = newCourseRef.key
         await set(newCourseRef, {
           title: corse.title || '',
-          id: corse.id,
+          id: courseId,
           img: corse.img || '',
           endCourse: corse.end || '',
           lessons: '',

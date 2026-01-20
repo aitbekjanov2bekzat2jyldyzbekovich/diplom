@@ -66,6 +66,15 @@ export default {
       },
       {
         id: 2,
+        vall: 'Курс',
+        rout: {
+          to: '/cours/page/null',
+          name: 'cours',
+        },
+        icon: '<i class="pi pi-graduation-cap "/>',
+      },
+      {
+        id: 3,
         vall: 'Создать курс',
         rout: {
           to: '/cours/create-cours',
@@ -74,7 +83,7 @@ export default {
         icon: '<i class="pi pi-file-plus "/>',
       },
       {
-        id: 3,
+        id: 4,
         vall: 'Мои курсы',
         rout: {
           to: '/cours/my-cours',
@@ -83,7 +92,7 @@ export default {
         icon: '<i class="pi pi-book "/>',
       },
       {
-        id: 4,
+        id: 5,
         vall: 'Мой профиль',
         rout: {
           to: '/cours/my-profile',

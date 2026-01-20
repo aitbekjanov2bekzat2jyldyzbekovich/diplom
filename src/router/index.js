@@ -68,6 +68,12 @@ const router = createRouter({
       component: () => import('@/views/MyCours.vue'),
       meta: { mainRout: 'cours', requiresAuth: true, requiresVerifiedEmail: true },
     },
+    {
+      path: '/cours/page/:id',
+      name: 'cours',
+      component: () => import('@/views/Cours.vue'),
+      meta: { mainRout: 'cours', requiresAuth: true, requiresVerifiedEmail: true },
+    },
   ],
 
   scrollBehavior(to, from, savedPosition) {
