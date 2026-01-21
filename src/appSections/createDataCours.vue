@@ -89,11 +89,21 @@ export default {
         id: this.appStore.courses.length + 1,
         title: this.appStore.vallue.coursName,
         img: this.appStore.userProfile.avatar,
-        end: this.appStore.vallue.dateCours || Date.now() + Date.now(),
+        end: this.appStore.vallue.dateCours
+          ? this.appStore.vallue.dateCours
+          : (() => {
+              const d = new Date()
+              d.setFullYear(d.getFullYear() + 1)
+              return d.getTime()
+            })(),
         about: this.appStore.vallue.aboutCours,
         uid: this.appStore.userProfile.uid,
       })
     },
+  },
+  mounted() {
+    this.appStore.reWorkStatus.aboutCours = false
+    this.appStore.reWorkStatus.nameCours = false
   },
 }
 </script>

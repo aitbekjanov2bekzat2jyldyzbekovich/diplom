@@ -1,11 +1,13 @@
 <template>
   <section-layout :title="`Курс: ${this.$route.params.id} `" class="py-14" v-if="cours">
-    <headCours v-if="this.appStore.userProfile.uid === cours.createdId" />
+    <headCours v-if="this.appStore.userProfile.uid === cours.createdId && !cours.lesson" />
     <coursIntro :dataIntro="cours" />
+    <lessions />
   </section-layout>
 </template>
 
 <script>
+import lessions from '@/appSections/lessions.vue'
 import coursIntro from '@/appSections/coursIntro.vue'
 import headCours from '@/appSections/headCours.vue'
 export default {
@@ -18,11 +20,13 @@ export default {
   components: {
     headCours,
     coursIntro,
+    lessions,
   },
   methods: {
     isData() {
       if (!this.cours) {
         this.$router.push('/')
+        this.appStore.message('Курс не найден!', 'yellow')
       }
     },
   },
