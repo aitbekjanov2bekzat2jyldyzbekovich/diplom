@@ -62,6 +62,7 @@ export const useAppStore = defineStore('app', {
       coursName: '',
       aboutCours: '',
       dateCours: null,
+      nameLesson: '',
     },
     reWorkStatus: {
       img: false,
@@ -71,6 +72,7 @@ export const useAppStore = defineStore('app', {
       group: false,
       nameCours: false,
       aboutCours: false,
+      nameLesson: false,
     },
     statusEmail: false,
     userProfile: null,
@@ -78,6 +80,20 @@ export const useAppStore = defineStore('app', {
     courses: [],
   }),
   actions: {
+    async addField(courseId, fieldPath, data) {
+      try {
+        const fieldRef = ref(db, `courses/${courseId}/${fieldPath}`)
+        const newItemRef = push(fieldRef)
+
+        await set(newItemRef, data)
+
+        return newItemRef.key // вернёт ID созданной записи
+      } catch (error) {
+        this.validate(error.message)
+      } finally {
+        this.message(`Добавленно ${data?.title}`)
+      }
+    },
     async fetchUserProfile(uid) {
       if (!uid) return
 
@@ -153,7 +169,6 @@ export const useAppStore = defineStore('app', {
       } finally {
         this.clearForm()
         this.loader.createCors = false
-        
       }
     },
     async ollUpdateProfile(data) {
