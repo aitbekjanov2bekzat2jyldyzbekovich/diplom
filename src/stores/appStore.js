@@ -91,7 +91,7 @@ export const useAppStore = defineStore('app', {
       } catch (error) {
         this.validate(error.message)
       } finally {
-        this.message(`Добавленно ${data?.title}`)
+        this.message(`Добавленно ${data?.title}`, 'green')
       }
     },
     async fetchUserProfile(uid) {

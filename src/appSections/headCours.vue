@@ -1,18 +1,28 @@
 <template>
   <div class="bg-[#fff] p-4 rounded-2xl shadow-md border flex justify-center">
-    <buttonV>Добавить уроки </buttonV>
+    <buttonV @click="active" >Добавить уроки </buttonV>
   </div>
-  <addLessons />
+  <addLessons :status="status"  @closeAdd="active"/>
 </template>
 <script>
 import addLessons from '@/components/addLessons.vue'
 export default {
   data() {
-    return {}
+    return {
+      status: false
+    }
   },
-  methods: {},
+  methods: {
+    active() {
+      this.status = !this.status
+      document.body.style.overflow = this.status? 'hidden' : ''
+    }
+  },
   components: {
     addLessons,
+  },
+  unmounted() {
+  this.active()
   },
 }
 </script>

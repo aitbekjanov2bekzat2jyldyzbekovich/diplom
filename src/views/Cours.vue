@@ -1,6 +1,6 @@
 <template>
   <section-layout :title="`Курс: ${this.$route.params.id} `" class="py-14" v-if="cours">
-    <headCours v-if="this.appStore.userProfile.uid === cours.createdId && !cours.lesson" />
+    <headCours v-if="this.appStore.userProfile.uid === cours.createdId && !cours.lessons" />
     <coursIntro :dataIntro="cours" />
     <lessions />
   </section-layout>
@@ -30,6 +30,7 @@ export default {
       }
     },
   },
+  
   mounted() {
     this.isData()
   },
