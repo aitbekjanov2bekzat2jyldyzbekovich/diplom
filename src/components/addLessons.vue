@@ -5,9 +5,15 @@
     @click="$emit('closeAdd', '')"
   >
     <div class="container mx-auto px-4">
-      <div class="w-full bg-[#fff] border rounded-2xl shadow-md p-10 flex flex-col gap-14" @click.stop>
-        <div class="border p-8 appText border-blue-500 rounded-2xl font-semibold text-blue-500 text-center">
-          <p>Добавленный урок не подлежит последующему редактированию. </p>
+      <div
+        class="w-full bg-[#fff] border rounded-2xl shadow-md p-10 flex flex-col gap-14"
+        @click.stop
+        data-aos="zoom-in"
+      >
+        <div
+          class="border p-8 appText border-blue-500 rounded-2xl font-semibold text-blue-500 text-center"
+        >
+          <p>Добавленный урок не подлежит последующему редактированию.</p>
         </div>
         <div class="flex items-center gap-5 justify-between">
           <div class="flex gap-1 flex-col w-full appText">
@@ -46,15 +52,12 @@
             <i class="pi pi-plus" />
           </buttonV>
         </div>
-        <TransitionGroup  
-        name="list"
-        tag="div" 
-        class="flex flex-col gap-3 items-start">
+        <TransitionGroup name="list" tag="div" class="flex flex-col gap-3 items-start">
           <buttonV v-if="lessons.length" class="bg-green-500" @click="addDb">
             <span v-if="!load">Сохранить</span>
-            <loader v-else/>
+            <loader v-else />
           </buttonV>
-          <div v-for="i in lessons" :key="i.id"  class="w-full flex gap-3">
+          <div v-for="i in lessons" :key="i.id" class="w-full flex gap-3">
             <div class="w-full bg-[#F2F2F2] rounded-md appText flex items-center px-8 gap-4">
               <span class="font-semibold heading text-lg">{{ i.id }}</span>
               <span>{{ i.title }}</span>
@@ -70,21 +73,21 @@
 </template>
 
 <script>
-import loader from './loader.vue';
+import loader from './loader.vue'
 export default {
   data() {
     return {
       zip: null,
       base64Zip: null,
       lessons: [],
-      load: false
+      load: false,
     }
   },
   components: {
-    loader
+    loader,
   },
   props: {
-    status: Boolean
+    status: Boolean,
   },
 
   methods: {
@@ -123,18 +126,17 @@ export default {
         this.lessons.forEach((i) => {
           this.appStore.addField(this.$route.params.id, 'lessons', i)
         })
-      } catch(err){
+      } catch (err) {
         this.appStore.validate(err.message)
-      }
-      finally{
-       this.load = false
+      } finally {
+        this.load = false
+        document.body.style.overflow = ''
       }
     },
     deleteLesson(id) {
       this.lessons = this.lessons.filter((lesson) => lesson.id !== id)
     },
   },
-
 }
 </script>
 
@@ -155,4 +157,3 @@ export default {
   transition: transform 0.3s ease;
 }
 </style>
-

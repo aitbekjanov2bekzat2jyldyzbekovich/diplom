@@ -1,12 +1,14 @@
 <template>
-  <div class="bg-[#fff] p-8 rounded-2xl shadow-md border flex flex-col gap-24">
+  <div class="bg-[#fff] p-8 rounded-2xl shadow-md border flex flex-col gap-24" data-aos="zoom-in">
     <div v-if="load" class="border w-full p-2 flex justify-center">
       <Loader />
     </div>
 
-    <div class="flex w-full justify-between items-center" v-else>
+    <div class="flex w-full justify-between items-center flex-wrap gap-3" v-else>
       <div class="flex items-center gap-3 border p-2 rounded-2xl border-[#E6A421]">
-        <div class="w-16 h-16 rounded-full overflow-hidden border-[#E6A421] border-2">
+        <div
+          class="w-16 h-16 rounded-full overflow-hidden border-[#E6A421] border-2 max-sm:w-8 max-sm:h-8"
+        >
           <img :src="profile.avatar" alt="avatar" class="object-cover w-full h-full" />
         </div>
         <div class="flex items-center heading text-lg gap-1">
@@ -24,8 +26,8 @@
         <span class="appText">{{ formattedDate(dataIntro.createdAt) }}</span>
         <buttonV v-if="dataIntro.createdId !== this.appStore.userProfile.uid">Подписаться</buttonV>
       </div>
-      <div class="flex items-start justify-between gap-10">
-        <div class="w-1/2 overflow-hidden rounded-2xl border-2 border-[#E6A421]">
+      <div class="flex items-start justify-between gap-10 max-lg:flex-wrap">
+        <div class="w-1/2 overflow-hidden rounded-2xl border-2 border-[#E6A421] max-md:w-full">
           <img
             class="object-cover w-full h-full"
             :src="dataIntro.img"
@@ -39,8 +41,8 @@
             v-else
           />
         </div>
-        <ul class="w-full px-24 appText flex flex-col gap-5">
-          <li class="text-center heading text-xl">
+        <ul class="w-full max-sm:p-0 px-24 appText flex flex-col gap-5">
+          <li class="text-center heading text-xl max-sm:text-base max-sm:text-start">
             <h3>{{ dataIntro.title }}</h3>
           </li>
           <li class="flex gap-3 items-center">

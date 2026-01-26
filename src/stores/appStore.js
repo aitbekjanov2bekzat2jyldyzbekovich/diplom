@@ -94,30 +94,7 @@ export const useAppStore = defineStore('app', {
         this.message(`Добавленно ${data?.title}`, 'green')
       }
     },
-    async fetchUserProfile(uid) {
-      if (!uid) return
 
-      this.loading = true
-
-      try {
-        const userRef = doc(db, 'users', uid)
-        const snap = await getDoc(userRef)
-
-        if (snap.exists()) {
-          this.userProfile = {
-            uid: snap.id,
-            ...snap.data(),
-          }
-        } else {
-          this.userProfile = null
-          console.warn('Пользователь не найден')
-        }
-      } catch (error) {
-        console.error('Ошибка получения профиля:', error)
-      } finally {
-        this.loading = false
-      }
-    },
     async deleteCourse(courseId) {
       try {
         const db = getDatabase()
@@ -156,9 +133,7 @@ export const useAppStore = defineStore('app', {
           id: courseId,
           img: corse.img || '',
           endCourse: corse.end || '',
-          lessons: '',
           about: corse.about || '',
-          folowers: '',
           createdId: corse.uid || '',
           createdAt: Date.now(),
         })
@@ -284,7 +259,6 @@ export const useAppStore = defineStore('app', {
         aboutPerson: null,
         skills: null,
         avatar: null,
-        test: null,
         group: null,
       })
 

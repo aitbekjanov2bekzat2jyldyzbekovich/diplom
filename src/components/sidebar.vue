@@ -52,56 +52,58 @@
 
 <script>
 export default {
-  data: () => ({
-    status: true,
-    sidebar: [
-      {
-        id: 1,
-        vall: 'Для вас',
-        rout: {
-          to: '/cours/recommendation',
-          name: 'recommendation',
+  data() {
+    return {
+      status: true,
+      sidebar: [
+        {
+          id: 1,
+          vall: 'Для вас',
+          rout: {
+            to: '/cours/recommendation',
+            name: 'recommendation',
+          },
+          icon: '<i class="pi pi-microchip-ai "/>',
         },
-        icon: '<i class="pi pi-microchip-ai "/>',
-      },
-      {
-        id: 2,
-        vall: 'Курс',
-        rout: {
-          to: '/cours/page/null',
-          name: 'cours',
+        {
+          id: 2,
+          vall: 'Курс',
+          rout: {
+            to: `/cours/page/${this.appStore.courses[0]?.id}`,
+            name: 'cours',
+          },
+          icon: '<i class="pi pi-graduation-cap "/>',
         },
-        icon: '<i class="pi pi-graduation-cap "/>',
-      },
-      {
-        id: 3,
-        vall: 'Создать курс',
-        rout: {
-          to: '/cours/create-cours',
-          name: 'createCours',
+        {
+          id: 3,
+          vall: 'Создать курс',
+          rout: {
+            to: '/cours/create-cours',
+            name: 'createCours',
+          },
+          icon: '<i class="pi pi-file-plus "/>',
         },
-        icon: '<i class="pi pi-file-plus "/>',
-      },
-      {
-        id: 4,
-        vall: 'Мои курсы',
-        rout: {
-          to: '/cours/my-cours',
-          name: 'myCours',
+        {
+          id: 4,
+          vall: 'Мои курсы',
+          rout: {
+            to: '/cours/my-cours',
+            name: 'myCours',
+          },
+          icon: '<i class="pi pi-book "/>',
         },
-        icon: '<i class="pi pi-book "/>',
-      },
-      {
-        id: 5,
-        vall: 'Мой профиль',
-        rout: {
-          to: '/cours/my-profile',
-          name: 'myProfile',
+        {
+          id: 5,
+          vall: 'Мой профиль',
+          rout: {
+            to: '/cours/my-profile',
+            name: 'myProfile',
+          },
+          icon: '<i class="pi pi-user "/>',
         },
-        icon: '<i class="pi pi-user "/>',
-      },
-    ],
-  }),
+      ],
+    }
+  },
   mounted() {
     this.status = this.appStore.sizeWindow < 641 ? false : true
   },

@@ -2,7 +2,7 @@
   <section-layout :title="`Курс: ${this.$route.params.id} `" class="py-14" v-if="cours">
     <headCours v-if="this.appStore.userProfile.uid === cours.createdId && !cours.lessons" />
     <coursIntro :dataIntro="cours" />
-    <lessions />
+    <lessions :lesson="cours.lessons || {}" />
   </section-layout>
 </template>
 
@@ -30,9 +30,12 @@ export default {
       }
     },
   },
-  
+
   mounted() {
     this.isData()
+  },
+  unmounted() {
+    document.body.style.overflow = ''
   },
 }
 </script>

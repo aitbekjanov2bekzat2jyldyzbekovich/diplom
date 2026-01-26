@@ -14,7 +14,7 @@
         <headerV />
       </div>
     </header>
-    <div class="flex gap-1">
+    <div class="flex gap-1 min-h-screen ">
       <transition
         enter-active-class="transition-all duration-300 "
         leave-active-class="transition-all duration-300"

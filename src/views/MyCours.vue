@@ -7,7 +7,7 @@
       <TransitionGroup
         name="list"
         tag="div"
-        class="grid grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-[480px]:grid-cols-1 gap-3"
+        class="grid grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-[480px]:grid-cols-1 gap-3 "
         v-if="cours.length"
       >
         <div v-for="i in cours" :key="i.id" class="group">

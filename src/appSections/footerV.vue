@@ -2,7 +2,7 @@
   <div class="w-full py-9 flex flex-col gap-5 items-center">
     <div class="flex gap-3">
       <a :href="i.src" target="_blank" v-for="i in medias" class="p-2 bg-white rounded-full">
-        <component :is="i.name" class="w-6 h-6 fill-[#E6A421]"  />
+        <component :is="i.name" class="w-6 h-6 fill-[#E6A421]" />
       </a>
     </div>
     <div class="flex gap-2 items-center">
