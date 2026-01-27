@@ -14,7 +14,10 @@
         <div class="border-x-2 p-2 w-full">
           <h5>{{ i.title }}</h5>
         </div>
-        <div class="text-[#E6A421] p-2 flex flex-col items-center gap-1 cursor-pointer">
+        <div
+          class="text-[#E6A421] p-2 flex flex-col items-center gap-1 cursor-pointer"
+          @click="downloadBase64Zip(i.zip)"
+        >
           <i class="pi pi-download" />
           <span>Материалы </span>
         </div>
@@ -28,6 +31,28 @@
 export default {
   props: {
     lesson: Object,
+  },
+  methods: {
+    downloadBase64Zip(zip) {
+      const base64 = zip.data.split(',')[1]
+
+      const binary = atob(base64)
+      const bytes = new Uint8Array(binary.length)
+
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i)
+      }
+
+      const blob = new Blob([bytes], { type: 'application/zip' })
+      const url = URL.createObjectURL(blob)
+
+      const a = document.createElement('a')
+      a.href = url
+      a.download = zip.name
+      a.click()
+
+      URL.revokeObjectURL(url)
+    },
   },
 }
 </script>

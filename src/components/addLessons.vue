@@ -57,12 +57,12 @@
             <span v-if="!load">Сохранить</span>
             <loader v-else />
           </buttonV>
-          <div v-for="i in lessons" :key="i.id" class="w-full flex gap-3">
+          <div v-for="(i, index) in lessons" :key="index + 1" class="w-full flex gap-3">
             <div class="w-full bg-[#F2F2F2] rounded-md appText flex items-center px-8 gap-4">
-              <span class="font-semibold heading text-lg">{{ i.id }}</span>
+              <span class="font-semibold heading text-lg">{{ index + 1 }}</span>
               <span>{{ i.title }}</span>
             </div>
-            <buttonV class="bg-red-500" @click="deleteLesson(i.id)">
+            <buttonV class="bg-red-500" @click="deleteLesson(index)">
               <i class="pi pi-trash" />
             </buttonV>
           </div>
@@ -78,7 +78,6 @@ export default {
   data() {
     return {
       zip: null,
-      base64Zip: null,
       lessons: [],
       load: false,
     }
@@ -98,33 +97,37 @@ export default {
 
       if (!file.name.endsWith('.zip')) {
         this.appStore.message('Только ZIP файлы', 'yellow')
-        this.$refs.t3.value = null
         return
       }
 
       const reader = new FileReader()
       reader.onload = () => {
-        this.base64Zip = reader.result // data:application/zip;base64,...
+        this.zip = {
+          name: file.name,
+          data: reader.result,
+        }
       }
+
       reader.readAsDataURL(file)
-      this.zip = file
     },
     addlesson() {
       this.lessons.push({
-        id: this.lessons.length + 1,
         title: this.appStore.vallue.nameLesson,
-        zip: this.base64Zip,
+        zip: this.zip,
       })
       this.appStore.vallue.nameLesson = ''
       this.appStore.reWorkStatus.nameLesson = false
-      this.base64Zip = null
       this.zip = null
     },
     async addDb() {
       try {
         this.load = true
-        this.lessons.forEach((i) => {
-          this.appStore.addField(this.$route.params.id, 'lessons', i)
+        this.lessons.forEach((i, index) => {
+          const item = {
+            ...i,
+            id: index + 1,
+          }
+          this.appStore.addField(this.$route.params.id, 'lessons', item)
         })
       } catch (err) {
         this.appStore.validate(err.message)
@@ -133,8 +136,8 @@ export default {
         document.body.style.overflow = ''
       }
     },
-    deleteLesson(id) {
-      this.lessons = this.lessons.filter((lesson) => lesson.id !== id)
+    deleteLesson(i) {
+      this.lessons = this.lessons.filter((lesson, index) => index !== i)
     },
   },
 }

@@ -69,7 +69,7 @@ export default {
           id: 2,
           vall: 'Курс',
           rout: {
-            to: `/cours/page/${this.appStore.courses[0]?.id}`,
+            to: `/cours/page/null`,
             name: 'cours',
           },
           icon: '<i class="pi pi-graduation-cap "/>',

@@ -9,16 +9,16 @@
         <div
           class="w-16 h-16 rounded-full overflow-hidden border-[#E6A421] border-2 max-sm:w-8 max-sm:h-8"
         >
-          <img :src="profile.avatar" alt="avatar" class="object-cover w-full h-full" />
+          <img :src="profile?.avatar" alt="avatar" class="object-cover w-full h-full" />
         </div>
         <div class="flex items-center heading text-lg gap-1">
-          <h5>{{ profile.name || 'нет данных' }}</h5>
-          <h5>{{ profile.surname || 'нет данных' }}</h5>
+          <h5>{{ profile?.name || 'нет данных' }}</h5>
+          <h5>{{ profile?.surname || 'нет данных' }}</h5>
         </div>
       </div>
       <div class="flex gap-1 appText border items-center px-10 py-3 rounded-2xl border-[#E6A421]">
         <span class="font-semibold text-[#E6A421]">Группа:</span>
-        <span>{{ profile.group || 'Нет данных' }}</span>
+        <span>{{ profile?.group || 'Нет данных' }}</span>
       </div>
     </div>
     <div class="border-t border-b p-4 py-14 flex flex-col gap-24">
@@ -99,8 +99,14 @@ export default {
     },
   },
   async mounted() {
-    this.profile = await this.appStore.getUserProfile(this.dataIntro.createdId)
-    this.load = await false
+    try {
+      this.profile = await this.appStore.getUserProfile(this.dataIntro?.createdId)
+    } catch (err) {
+      this.profile = null
+      this.appStore.validate(err.massage)
+    } finally {
+      this.load = false
+    }
   },
 }
 </script>

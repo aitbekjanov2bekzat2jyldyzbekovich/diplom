@@ -277,6 +277,7 @@ export const useAppStore = defineStore('app', {
       const snap = await getDoc(userRef)
 
       if (snap.exists()) {
+        
         return snap.data()
       } else {
         console.error('Профиль не найден')

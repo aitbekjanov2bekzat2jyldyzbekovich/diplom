@@ -4,6 +4,9 @@
     <coursIntro :dataIntro="cours" />
     <lessions :lesson="cours.lessons || {}" />
   </section-layout>
+  <div v-else>
+    <h2>Not found page 400</h2>
+  </div>
 </template>
 
 <script>
@@ -25,7 +28,7 @@ export default {
   methods: {
     isData() {
       if (!this.cours) {
-        this.$router.push('/')
+        this.$router.push({ name: 'NotFound' })
         this.appStore.message('Курс не найден!', 'yellow')
       }
     },

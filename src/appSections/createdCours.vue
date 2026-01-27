@@ -51,63 +51,12 @@ export default {
       title: 'Новые курсы',
       btn: 'Все новые курсы',
       status: false,
-      cours: [
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-        {
-          id: 1,
-          title: 'информатика изучение о области окружности.',
-          date: 'Авг 08. 2024 до Сен 8. 2025',
-          img: '/images/ImgnotFound.jpg',
-        },
-      ],
     }
+  },
+  computed: {
+    cours() {
+      return this.appStore.courses.slice().reverse()
+    },
   },
   components: {
     createdCoursSwiper,
