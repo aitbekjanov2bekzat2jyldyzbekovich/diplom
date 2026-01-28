@@ -63,6 +63,8 @@ export const useAppStore = defineStore('app', {
       aboutCours: '',
       dateCours: null,
       nameLesson: '',
+      urlVideo: '',
+      dopUrl: '',
     },
     reWorkStatus: {
       img: false,
@@ -73,6 +75,7 @@ export const useAppStore = defineStore('app', {
       nameCours: false,
       aboutCours: false,
       nameLesson: false,
+      urlVideo: false,
     },
     statusEmail: false,
     userProfile: null,
@@ -80,18 +83,21 @@ export const useAppStore = defineStore('app', {
     courses: [],
   }),
   actions: {
-    async addField(courseId, fieldPath, data) {
+    async addField(courseId, fieldPath, data, message) {
       try {
         const fieldRef = ref(db, `courses/${courseId}/${fieldPath}`)
         const newItemRef = push(fieldRef)
-
-        await set(newItemRef, data)
+        const item = await {
+          id: newItemRef.key,
+          ...data,
+        }
+        await set(newItemRef, item)
 
         return newItemRef.key // вернёт ID созданной записи
       } catch (error) {
         this.validate(error.message)
       } finally {
-        this.message(`Добавленно ${data?.title}`, 'green')
+        this.message(`${message} `, 'green')
       }
     },
 
@@ -277,7 +283,6 @@ export const useAppStore = defineStore('app', {
       const snap = await getDoc(userRef)
 
       if (snap.exists()) {
-        
         return snap.data()
       } else {
         console.error('Профиль не найден')

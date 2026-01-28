@@ -6,20 +6,46 @@
     <div v-if="Object.values(lesson).length" class="flex flex-col gap-3">
       <div
         v-for="(i, index) in Object.values(lesson)"
-        class="border flex items-center rounded-md appText justify-between"
+        class="border flex flex-col gap-12 rounded-md appText"
       >
-        <div class="font-bold p-2 text-[#E6A421]">
-          <span>{{ index + 1 }}</span>
+        <div class="border flex items-center rounded-md justify-between w-full">
+          <div class="font-bold p-2 text-[#E6A421]">
+            <span>{{ index + 1 }}</span>
+          </div>
+          <div class="border-x-2 p-2 w-full heading text-lg">
+            <h5>{{ i.title || 'Нет данных' }}</h5>
+          </div>
+          <div
+            class="text-[#E6A421] p-2 flex flex-col items-center gap-1 cursor-pointer"
+            @click="downloadBase64Zip(i.zip)"
+          >
+            <i class="pi pi-download" />
+            <span>Материалы </span>
+          </div>
         </div>
-        <div class="border-x-2 p-2 w-full">
-          <h5>{{ i.title }}</h5>
+        <div class="w-full">
+          <iframe
+            v-if="isYouTube(i.urlVideo)"
+            :src="getYouTubeEmbed(i.urlVideo)"
+            class="w-full h-[400px]"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+
+          <!-- Обычное видео -->
+          <video v-else-if="isVideo(i.urlVideo)" :src="i.urlVideo" controls class="w-full"></video>
+          <video
+            v-else
+            src="https://example.com/video/demo-video.mp4"
+            controls
+            class="w-full"
+          ></video>
         </div>
         <div
-          class="text-[#E6A421] p-2 flex flex-col items-center gap-1 cursor-pointer"
-          @click="downloadBase64Zip(i.zip)"
+          class="whitespace-pre-wrap p-4 h-96 overflow-hidden overflow-y-auto bg-[#F2F2F2] mx-3 rounded-2xl"
         >
-          <i class="pi pi-download" />
-          <span>Материалы </span>
+          {{ i.about || 'Нет данных' }}
         </div>
       </div>
     </div>
@@ -52,6 +78,19 @@ export default {
       a.click()
 
       URL.revokeObjectURL(url)
+    },
+    isYouTube(url) {
+      return /youtu\.be|youtube\.com/.test(url)
+    },
+
+    getYouTubeEmbed(url) {
+      const regExp = /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+      const match = url.match(regExp)
+      return match ? `https://www.youtube.com/embed/${match[1]}` : null
+    },
+
+    isVideo(url) {
+      return /\.(mp4|webm|ogg)$/i.test(url)
     },
   },
 }

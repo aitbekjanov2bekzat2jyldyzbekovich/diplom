@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-0 bg-black bg-opacity-90 z-50 overflow-y-auto flex items-center justify-center"
+    class="fixed inset-0 bg-black bg-opacity-90 z-50 overflow-y-auto py-10"
     v-if="status"
     @click="$emit('closeAdd', '')"
   >
@@ -15,7 +15,7 @@
         >
           <p>Добавленный урок не подлежит последующему редактированию.</p>
         </div>
-        <div class="flex items-center gap-5 justify-between">
+        <div class="flex items-center gap-5 flex-col">
           <div class="flex gap-1 flex-col w-full appText">
             <label for="t1" class="font-semibold">Тема урока: </label>
             <input
@@ -29,28 +29,72 @@
               "
             />
           </div>
-          <div>
-            <label
-              for="t2"
-              class="h-full border-[#E6A421] border p-6 bg-[#F2F2F2] rounded-md pi pi-file-plus text-[#E6A421] cursor-pointer"
-            />
-            <span class="appText">{{ zip?.name }}</span>
+          <div class="flex gap-1 flex-col w-full appText">
+            <label for="t3" class="font-semibold">URL видио урока: </label>
+
             <input
-              type="file"
-              ref="t3"
-              id="t2"
-              v-show="false"
-              accept=".zip"
-              @change="onFileChange"
+              type="text"
+              id="t3"
+              placeholder="Введите URL Видио"
+              class="bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
+              v-model="this.appStore.vallue.urlVideo"
+              @input="
+                this.appStore.validSend(this.appStore.vallue.urlVideo, 'urlVideo', 'urlVideo')
+              "
             />
           </div>
-          <buttonV
-            class="bg-green-500"
-            v-if="this.appStore.reWorkStatus.nameLesson && zip"
-            @click="addlesson"
-          >
-            <i class="pi pi-plus" />
-          </buttonV>
+          <div class="flex gap-1 flex-col w-full appText">
+            <label for="t5" class="font-semibold"> Ссылки: </label>
+
+            <input
+              type="text"
+              id="t5"
+              placeholder="Введите доп. ссылки"
+              v-model="this.appStore.vallue.dopUrl"
+              class="bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
+              @input="this.appStore.validSend(this.appStore.vallue.dopUrl, '', 'dopUrl')"
+            />
+          </div>
+          <div class="flex gap-1 flex-col w-full appText">
+            <label for="t4" class="font-semibold">О уроке </label>
+
+            <textarea
+              v-model="aboutLess"
+              id="t4"
+              placeholder="Введите о уроке"
+              class="bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md h-96"
+            />
+          </div>
+          <div class="flex items-center gap-5">
+            <div class="flex flex-col">
+              <label
+                for="t2"
+                class="h-full border-[#E6A421] border p-6 bg-[#F2F2F2] rounded-md pi pi-file-plus text-[#E6A421] cursor-pointer"
+              />
+              <span class="appText">{{ zip?.name }}</span>
+              <input
+                type="file"
+                ref="t3"
+                id="t2"
+                v-show="false"
+                accept=".zip"
+                @change="onFileChange"
+              />
+            </div>
+            <buttonV
+              class="bg-green-500"
+              v-if="
+                this.appStore.reWorkStatus.nameLesson &&
+                zip &&
+                aboutLess &&
+                aboutLess.trim() !== '' &&
+                this.appStore.reWorkStatus.urlVideo
+              "
+              @click="addlesson"
+            >
+              <i class="pi pi-plus" />
+            </buttonV>
+          </div>
         </div>
         <TransitionGroup name="list" tag="div" class="flex flex-col gap-3 items-start">
           <buttonV v-if="lessons.length" class="bg-green-500" @click="addDb">
@@ -80,6 +124,7 @@ export default {
       zip: null,
       lessons: [],
       load: false,
+      aboutLess: null,
     }
   },
   components: {
@@ -114,20 +159,20 @@ export default {
       this.lessons.push({
         title: this.appStore.vallue.nameLesson,
         zip: this.zip,
+        about: this.aboutLess,
+        dopUrl: this.appStore.vallue.dopUrl,
+        urlVideo: this.appStore.vallue.urlVideo,
       })
-      this.appStore.vallue.nameLesson = ''
-      this.appStore.reWorkStatus.nameLesson = false
+      this.aboutLess = null
+      ;((this.appStore.vallue.dopUrl = ''), (this.appStore.vallue.nameLesson = ''))
+      ;((this.appStore.vallue.urlVideo = ''), (this.appStore.reWorkStatus.nameLesson = false))
       this.zip = null
     },
     async addDb() {
       try {
         this.load = true
-        this.lessons.forEach((i, index) => {
-          const item = {
-            ...i,
-            id: index + 1,
-          }
-          this.appStore.addField(this.$route.params.id, 'lessons', item)
+        this.lessons.forEach((i) => {
+          this.appStore.addField(this.$route.params.id, 'lessons', i, `Добавленно ${i.title}`)
         })
       } catch (err) {
         this.appStore.validate(err.message)
