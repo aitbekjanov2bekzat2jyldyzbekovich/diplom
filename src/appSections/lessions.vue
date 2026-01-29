@@ -8,7 +8,10 @@
         v-for="(i, index) in Object.values(lesson)"
         class="border flex flex-col gap-12 rounded-md appText"
       >
-        <div class="border flex items-center rounded-md justify-between w-full">
+        <div
+          class="border flex items-center rounded-md justify-between w-full cursor-pointer"
+          @click="i.status = !i.status"
+        >
           <div class="font-bold p-2 text-[#E6A421]">
             <span>{{ index + 1 }}</span>
           </div>
@@ -23,30 +26,55 @@
             <span>Материалы </span>
           </div>
         </div>
-        <div class="w-full">
-          <iframe
-            v-if="isYouTube(i.urlVideo)"
-            :src="getYouTubeEmbed(i.urlVideo)"
-            class="w-full h-[400px]"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-
-          <!-- Обычное видео -->
-          <video v-else-if="isVideo(i.urlVideo)" :src="i.urlVideo" controls class="w-full"></video>
-          <video
-            v-else
-            src="https://example.com/video/demo-video.mp4"
-            controls
-            class="w-full"
-          ></video>
-        </div>
-        <div
-          class="whitespace-pre-wrap p-4 h-96 overflow-hidden overflow-y-auto bg-[#F2F2F2] mx-3 rounded-2xl"
+        <transition
+          enter-active-class="transition-v"
+          leave-active-class="transition-v"
+          enter-from-class="max-h-0 opacity-0"
+          enter-to-class="max-h-40 opacity-100"
+          leave-from-class="max-h-40 opacity-100"
+          leave-to-class="max-h-0 opacity-0"
         >
-          {{ i.about || 'Нет данных' }}
-        </div>
+          <div class="flex flex-col gap-10 p-3" v-if="i.status">
+            <ul>
+              <li class="flex gap-3">
+                <span class="font-semibold">Доп. информация:</span>
+                <a :href="i.dopUrl" target="_blank" class="underline text-[#E6A421]">{{
+                  i.dopUrl || 'нет данных'
+                }}</a>
+              </li>
+            </ul>
+            <div class="w-full">
+              <iframe
+                v-if="isYouTube(i.urlVideo)"
+                :src="getYouTubeEmbed(i.urlVideo)"
+                class="w-full h-[400px]"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+
+              <!-- Обычное видео -->
+              <iframe
+                v-else-if="isVideo(i.urlVideo)"
+                :src="i.urlVideo"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                class="w-full h-96"
+              ></iframe>
+              <video
+                v-else
+                src="https://example.com/video/demo-video.mp4"
+                controls
+                class="w-full"
+              ></video>
+            </div>
+            <div
+              class="whitespace-pre-wrap p-4 h-96 overflow-hidden overflow-y-auto bg-[#F2F2F2] rounded-2xl"
+            >
+              {{ i.about || 'Нет данных' }}
+            </div>
+          </div>
+        </transition>
       </div>
     </div>
     <div v-else class="appText p-4 border rounded-2xl text-center">Нет данных</div>

@@ -54,19 +54,23 @@
             <span>{{ Object.values(dataIntro.lessons || {}).length }}</span>
           </li>
           <li class="flex gap-3 items-center">
-            <span class="heading text-lg">Время:</span>
+            <span class="heading text-lg">Дата:</span>
             <span
               >{{ formattedDate(dataIntro.createdAt) }} до
               {{ formattedDate(dataIntro.endCourse) }}</span
             >
           </li>
+          <li class="flex gap-3 items-center">
+            <span class="heading text-lg">Доп. информация:</span>
+            <span>{{ dataIntro.dopInfo || 'нет данных' }}</span>
+          </li>
         </ul>
       </div>
     </div>
     <div class="flex flex-col gap-6">
-      <h5 class="heading text-lg">О курсе</h5>
-      <div class="border p-6 rounded-2xl h-96 overflow-y-auto appText">
-        <p>{{ dataIntro.about || 'Нет данных' }}</p>
+      <h5 class="heading text-lg">Цель курса</h5>
+      <div class="border p-6 rounded-2xl h-96 overflow-y-auto appText whitespace-pre-wrap">
+        {{ dataIntro.about || 'Нет данных' }}
       </div>
     </div>
   </div>

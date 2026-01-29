@@ -20,20 +20,22 @@
     <div class="flex flex-col justify-between gap-2 items-start flex-wrap">
       <span class="text-[#E6A421] font-bold appText">
         <i class="pi pi-users" />
-        Подписчики {{ Object.values(item.folowers || {}).length }}
+        Подписчики {{ Object.values(item.followers || {}).length }}
       </span>
 
       <div class="flex gap-5 w-full">
         <buttonV class="text-lg" @click="this.appStore.toRout(`/cours/page/${item.id}`)">{{
           btn
         }}</buttonV>
-        <buttonV
-          v-if="this.appStore.userProfile && item.createdId !== this.appStore.userProfile.uid"
-          class="text-lg"
-          @click="this.appStore.message(`Вы подписались ${item.title}`, 'green')"
-        >
-          <i class="pi pi-bookmark-fill" />
-        </buttonV>
+        <div v-if="this.appStore.userProfile && item.createdId !== this.appStore.userProfile.uid">
+          <buttonV
+            v-if="!this.appStore.isFollowed(item)"
+            class="text-lg"
+            @click="this.appStore.following(item.id)"
+          >
+            <i class="pi pi-bookmark-fill" />
+          </buttonV>
+        </div>
       </div>
     </div>
   </div>

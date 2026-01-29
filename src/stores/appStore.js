@@ -60,11 +60,12 @@ export const useAppStore = defineStore('app', {
       lastName: '',
       group: '',
       coursName: '',
-      aboutCours: '',
+      aboutCours: null,
       dateCours: null,
       nameLesson: '',
       urlVideo: '',
       dopUrl: '',
+      dopInfo: '',
     },
     reWorkStatus: {
       img: false,
@@ -73,9 +74,10 @@ export const useAppStore = defineStore('app', {
       lastName: false,
       group: false,
       nameCours: false,
-      aboutCours: false,
+
       nameLesson: false,
       urlVideo: false,
+      dopInfo: false,
     },
     statusEmail: false,
     userProfile: null,
@@ -83,6 +85,35 @@ export const useAppStore = defineStore('app', {
     courses: [],
   }),
   actions: {
+    isFollowed(course) {
+      if (!course.followers) return false
+      return course.followers.some((f) => f.uid === this.userProfile.uid)
+    },
+    following(id) {
+      const course = this.courses.find((c) => c.id === id)
+      if (!course) return
+      if (!course.followers) {
+        this.addField(
+          id,
+          'followers',
+          { uid: this.userProfile.uid, courseId: id },
+          `Вы подписались: ${id}`,
+        )
+        return
+      }
+
+      const isFollowed = course.followers.some((f) => f.uid === this.userProfile.uid)
+
+      // если НЕ подписан — подписываем
+      if (!isFollowed) {
+        this.addField(
+          id,
+          'followers',
+          [...course.followers, { uid: this.userProfile.uid, courseId: id }],
+          `Вы подписались: ${id}`,
+        )
+      }
+    },
     async addField(courseId, fieldPath, data, message) {
       try {
         const fieldRef = ref(db, `courses/${courseId}/${fieldPath}`)
@@ -142,6 +173,7 @@ export const useAppStore = defineStore('app', {
           about: corse.about || '',
           createdId: corse.uid || '',
           createdAt: Date.now(),
+          dopInfo: corse.dopInfo,
         })
         this.message(`Создано успешно: ${this.vallue.coursName}`, 'green')
         this.toRout('/cours/my-cours')

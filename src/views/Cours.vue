@@ -17,6 +17,9 @@ export default {
   computed: {
     cours() {
       const id = this.$route.params.id
+      this.appStore.courses.forEach((i) => {
+        i.status = false
+      })
       return this.appStore.courses.find((i) => i.id === id) || null
     },
   },

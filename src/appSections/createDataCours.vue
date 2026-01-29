@@ -14,18 +14,24 @@
       />
     </div>
     <div class="flex flex-col gap-1">
+      <label :for="input2.id" class="appText font-semibold">{{ input2.label }}</label>
+      <input
+        class="w-full bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md"
+        :type="input2.type"
+        :id="input2.id"
+        :placeholder="input2.placeHolder"
+        v-model="this.appStore.vallue[input2.model]"
+        @input="
+          this.appStore.validSend(this.appStore.vallue[input2.model], 'dopInfo', input2.model)
+        "
+      />
+    </div>
+    <div class="flex flex-col gap-1">
       <label :for="textArea.id" class="appText font-semibold">{{ textArea.label }}</label>
       <textarea
         class="w-full bg-[#F2F2F2] p-4 appText outline-[#E6A421] rounded-md h-96"
         :id="textArea.id"
         :placeholder="textArea.placeHolder"
-        @input="
-          this.appStore.validSend(
-            this.appStore.vallue[textArea.model],
-            'aboutCours',
-            textArea.model,
-          )
-        "
         v-model="this.appStore.vallue[textArea.model]"
       />
     </div>
@@ -41,7 +47,12 @@
     </div>
     <div
       class="w-full flex justify-end"
-      v-if="this.appStore.reWorkStatus.nameCours && this.appStore.reWorkStatus.aboutCours"
+      v-if="
+        appStore.reWorkStatus.nameCours &&
+        appStore.reWorkStatus.dopInfo &&
+        appStore.vallue.aboutCours &&
+        appStore.vallue.aboutCours.trim() !== ''
+      "
     >
       <buttonV class="bg-green-500" @click="createCours">
         <span v-if="!this.appStore.loader.createCors">{{ btn }}</span>
@@ -67,10 +78,17 @@ export default {
         type: 'text',
         model: 'coursName',
       },
+      input2: {
+        label: 'Доп. информация:',
+        id: 'c4',
+        placeHolder: 'Например курс идет офлай и онлай  в кабинете 104 итд.',
+        type: 'text',
+        model: 'dopInfo',
+      },
       textArea: {
         id: 'c2',
-        label: 'О курсе:',
-        placeHolder: 'Введите информацию о курсе',
+        label: 'Цель курса:',
+        placeHolder: 'Введите цель курса',
         model: 'aboutCours',
       },
       btn: 'Создать',
@@ -98,11 +116,11 @@ export default {
             })(),
         about: this.appStore.vallue.aboutCours,
         uid: this.appStore.userProfile.uid,
+        dopInfo: this.appStore.vallue.dopInfo,
       })
     },
   },
   mounted() {
-    this.appStore.reWorkStatus.aboutCours = false
     this.appStore.reWorkStatus.nameCours = false
   },
 }
