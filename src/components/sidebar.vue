@@ -85,6 +85,15 @@ export default {
         },
         {
           id: 4,
+          vall: 'Подписки',
+          rout: {
+            to: '/cours/my-follow',
+            name: 'follow',
+          },
+          icon: ' <i class="pi pi-bookmark-fill" />',
+        },
+        {
+          id: 5,
           vall: 'Мои курсы',
           rout: {
             to: '/cours/my-cours',
@@ -93,7 +102,7 @@ export default {
           icon: '<i class="pi pi-book "/>',
         },
         {
-          id: 5,
+          id: 6,
           vall: 'Мой профиль',
           rout: {
             to: '/cours/my-profile',

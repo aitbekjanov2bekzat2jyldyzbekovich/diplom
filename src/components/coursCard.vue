@@ -35,6 +35,9 @@
           >
             <i class="pi pi-bookmark-fill" />
           </buttonV>
+          <buttonV v-else class="text-lg !bg-[#336799]" @click="this.appStore.unsubscribe(item)">
+            <i class="pi pi-bookmark-fill text-[#E6A421]" />
+          </buttonV>
         </div>
       </div>
     </div>

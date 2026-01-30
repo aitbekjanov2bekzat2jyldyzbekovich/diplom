@@ -85,12 +85,23 @@ export const useAppStore = defineStore('app', {
     courses: [],
   }),
   actions: {
+    async unsubscribe(course) {
+      const userUid = this.userProfile.uid
+      const followerEntry = Object.entries(course.followers || {}).find(
+        ([_, f]) => f.uid === userUid,
+      )
+      if (!followerEntry) return
+      const followerId = followerEntry[0]
+      const db = getDatabase()
+      await remove(ref(db, `courses/${course.id}/followers/${followerId}`))
+      this.message(`Вы отписались: ${course.id}`, 'green')
+    },
     isFollowed(course) {
       if (!course.followers) return false
-      return course.followers.some((f) => f.uid === this.userProfile.uid)
+      return Object.values(course.followers).some((f) => f.uid === this.userProfile.uid)
     },
     following(id) {
-      const course = this.courses.find((c) => c.id === id)
+      const course = Object.values(this.courses).find((c) => c.id === id)
       if (!course) return
       if (!course.followers) {
         this.addField(
@@ -102,7 +113,7 @@ export const useAppStore = defineStore('app', {
         return
       }
 
-      const isFollowed = course.followers.some((f) => f.uid === this.userProfile.uid)
+      const isFollowed = Object.values(course.followers).some((f) => f.uid === this.userProfile.uid)
 
       // если НЕ подписан — подписываем
       if (!isFollowed) {
@@ -138,8 +149,6 @@ export const useAppStore = defineStore('app', {
         const courseRef = ref(db, `courses/${courseId}`)
 
         await remove(courseRef)
-
-        this.courses = this.courses.filter((course) => course.id !== courseId)
 
         this.message(`Курс удален: ${courseId}`, 'green')
       } catch (error) {

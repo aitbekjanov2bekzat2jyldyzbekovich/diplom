@@ -49,9 +49,17 @@ export default {
     cours() {
       return this.appStore.courses.filter((i) => i.createdId === this.appStore.userProfile.uid)
     },
+    followers() {
+      const uid = this.appStore.userProfile?.uid
+      if (!uid) return []
+
+      return this.appStore.courses.filter((course) =>
+        Object.values(course.followers || {}).some((f) => f.uid === uid),
+      )
+    },
     chartData() {
       const myCourses = this.cours.length
-      const subs = 0
+      const subs = this.followers.length
 
       if (myCourses === 0 && subs === 0) {
         return [1]
@@ -61,14 +69,14 @@ export default {
     },
 
     chartLabels() {
-      if (this.cours.length === 0) {
+      if (this.cours.length === 0 && this.followers.length === 0) {
         return ['Нет данных']
       }
       return ['Мои курсы', 'Подписки']
     },
 
     chartColors() {
-      if (this.cours.length === 0) {
+      if (this.cours.length === 0 && this.followers.length === 0) {
         return ['#E0E0E0']
       }
       return ['#E6A421', '#336799']

@@ -24,7 +24,20 @@
     <div class="border-t border-b p-4 py-14 flex flex-col gap-24">
       <div class="flex justify-between items-start">
         <span class="appText">{{ formattedDate(dataIntro.createdAt) }}</span>
-        <buttonV v-if="dataIntro.createdId !== this.appStore.userProfile.uid">Подписаться</buttonV>
+        <div v-if="dataIntro.createdId !== this.appStore.userProfile.uid">
+          <buttonV
+            v-if="!this.appStore.isFollowed(dataIntro)"
+            @click="this.appStore.following(dataIntro.id)"
+            >Подписаться</buttonV
+          >
+          <div v-else class="flex items-center gap-3">
+            <buttonV class="!bg-[#336799]">
+              <i class="pi pi-bookmark-fill text-[#E6A421]" />
+            </buttonV>
+
+            <buttonV  @click="this.appStore.unsubscribe(dataIntro)">отписатся</buttonV>
+          </div>
+        </div>
       </div>
       <div class="flex items-start justify-between gap-10 max-lg:flex-wrap">
         <div class="w-1/2 overflow-hidden rounded-2xl border-2 border-[#E6A421] max-md:w-full">
@@ -47,7 +60,7 @@
           </li>
           <li class="flex gap-3 items-center">
             <span class="heading text-lg">Подписчики:</span>
-            <span>{{ Object.values(dataIntro.folowers || {}).length }}</span>
+            <span>{{ Object.values(dataIntro.followers || {}).length }}</span>
           </li>
           <li class="flex gap-3 items-center">
             <span class="heading text-lg">Уроки:</span>
