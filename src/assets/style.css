@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  
+}
+body {
+  background-color: #e5e5e5;
+}
+@layer components {
+  .appText {
+    @apply max-lg:text-sm max-md:text-xs text-base  leading-relaxed  font-medium text-[#000];
+    font-family: 'Montserrat';
+  }
+}
+
+@layer components {
+  .heading {
+    @apply max-lg:text-4xl  max-md:text-3xl max-sm:text-2xl leading-tight  text-5xl   font-bold text-[#E6A421] tracking-wide;
+    font-family: 'Roboto';
+  }
+}
+/* styles.css */
+.shadow-top {
+  @apply shadow-none;
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.transition-v {
+  @apply transition-all duration-300 ease-out;
+}
