@@ -25,7 +25,7 @@ export default {
         {
           id: 2,
           name: 'Найти курсы',
-          rout: '/cours/recommendation',
+          rout: '/cours/search',
         },
       ],
     }

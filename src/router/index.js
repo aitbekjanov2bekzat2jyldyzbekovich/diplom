@@ -39,15 +39,15 @@ const router = createRouter({
 
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/views/NotFound.vue') },
     {
-      path: '/cours/:name',
-      name: 'test',
-      component: () => import('@/views/Test.vue'),
-      meta: { mainRout: 'cours', requiresAuth: true, requiresVerifiedEmail: true },
-    },
-    {
-      path: '/cours/recommendation',
+      path: '/cours/all',
       name: 'recommendation',
       component: () => import('@/views/Recommendation.vue'),
+      meta: { mainRout: 'cours' },
+    },
+    {
+      path: '/cours/search',
+      name: 'search',
+      component: () => import('@/views/Search.vue'),
       meta: { mainRout: 'cours' },
     },
     {

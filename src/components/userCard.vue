@@ -120,12 +120,7 @@ export default {
           rout: '/cours/create-cours',
           icon: '<i class="pi pi-file-plus "/>',
         },
-        {
-          id: 4,
-          name: 'Уведомление',
-          rout: '/cours/notification',
-          icon: '<i class="pi pi-bell "/>',
-        },
+      
       ],
       btn: 'Выйти',
     }

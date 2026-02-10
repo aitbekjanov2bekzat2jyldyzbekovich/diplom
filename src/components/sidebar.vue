@@ -58,15 +58,24 @@ export default {
       sidebar: [
         {
           id: 1,
-          vall: 'Для вас',
+          vall: 'Все куосы',
           rout: {
-            to: '/cours/recommendation',
+            to: '/cours/all',
             name: 'recommendation',
           },
-          icon: '<i class="pi pi-microchip-ai "/>',
+          icon: '<i class="pi pi-qrcode "/>',
+        },
+          {
+          id: 2,
+          vall: 'Поиск',
+          rout: {
+            to: '/cours/search',
+            name: 'search',
+          },
+          icon: '<i class="pi pi-search "/>',
         },
         {
-          id: 2,
+          id: 3,
           vall: 'Курс',
           rout: {
             to: `/cours/page/null`,
@@ -75,7 +84,7 @@ export default {
           icon: '<i class="pi pi-graduation-cap "/>',
         },
         {
-          id: 3,
+          id: 4,
           vall: 'Создать курс',
           rout: {
             to: '/cours/create-cours',
@@ -84,7 +93,7 @@ export default {
           icon: '<i class="pi pi-file-plus "/>',
         },
         {
-          id: 4,
+          id: 5,
           vall: 'Подписки',
           rout: {
             to: '/cours/my-follow',
@@ -93,7 +102,7 @@ export default {
           icon: ' <i class="pi pi-bookmark-fill" />',
         },
         {
-          id: 5,
+          id: 6,
           vall: 'Мои курсы',
           rout: {
             to: '/cours/my-cours',
@@ -102,7 +111,7 @@ export default {
           icon: '<i class="pi pi-book "/>',
         },
         {
-          id: 6,
+          id: 7,
           vall: 'Мой профиль',
           rout: {
             to: '/cours/my-profile',

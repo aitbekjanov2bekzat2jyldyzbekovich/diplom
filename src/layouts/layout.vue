@@ -1,14 +1,9 @@
 <template>
   <workEmail />
   <alertMessage />
-  <div
-    v-if="this.appStore.loader.page"
-    class="w-full bg-[#fff] h-screen flex justify-center items-center"
-  >
-    <loader class="!fill-[#E6A421]" />
-  </div>
+ 
 
-  <div v-else class="relative w-full">
+  <div  class="relative w-full">
     <header class="w-full h-20 bg-[#fff] shadow-md border-b sticky top-0 z-50">
       <div class="container mx-auto px-4 h-full">
         <headerV />
@@ -42,14 +37,12 @@
 import workEmail from '@/components/workEmail.vue'
 import footerV from '@/appSections/footerV.vue'
 import headerV from '@/appSections/headerV.vue'
-import loader from '@/components/loader.vue'
 import alertMessage from '@/components/alertMessage.vue'
 import sidebar from '@/components/sidebar.vue'
 export default {
   components: {
     headerV,
     footerV,
-    loader,
     alertMessage,
     sidebar,
     workEmail,

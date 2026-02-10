@@ -23,7 +23,7 @@ export const useAppStore = defineStore('app', {
       user: false,
       isEmail: false,
       resetPassword: false,
-      page: true,
+
       profile: false,
       reworkImg: false,
       reAboutMe: false,
@@ -85,15 +85,6 @@ export const useAppStore = defineStore('app', {
     courses: [],
   }),
   actions: {
-    async sendUid(uid) {
-      if (!uid) return
-
-      await fetch('http://localhost:3001/recommend', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ uid }),
-      })
-    },
     async unsubscribe(course) {
       const userUid = this.userProfile.uid
       const followerEntry = Object.entries(course.followers || {}).find(
@@ -164,17 +155,12 @@ export const useAppStore = defineStore('app', {
         this.validate(error.massage)
       }
     },
-    async fetchCourses() {
-      try {
-        const coursesRef = ref(db, 'courses')
-        onValue(coursesRef, (snapshot) => {
-          const data = snapshot.val()
-          this.courses = data ? Object.values(data) : []
-        })
-      } catch {
-      } finally {
-        this.loader.page = false
-      }
+    fetchCourses() {
+      const coursesRef = ref(db, 'courses')
+      onValue(coursesRef, (snapshot) => {
+        const data = snapshot.val()
+        this.courses = data ? Object.values(data) : []
+      })
     },
     async addCourse(corse) {
       try {
