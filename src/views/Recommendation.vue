@@ -3,7 +3,7 @@
     <div class="flex flex-col gap-4">
       <div
         class="grid grid-cols-4 max-xl:grid-cols-3 max-lg:grid-cols-2 max-[480px]:grid-cols-1 gap-3"
-        v-if="this.appStore.courses"
+        v-if="this.appStore.courses.length"
       >
         <div v-for="i in this.appStore.courses" :key="i.id" class="group">
           <coursCard :item="i" />
