@@ -427,6 +427,13 @@ export const useAppStore = defineStore('app', {
           this.vallue.password = ''
           this.vallue.newPassword = ''
           break
+        case 'auth/password-does-not-meet-requirements':
+          this.error.password = 'Пароль должен содержать не менее 6 символов. Например: secure5a'
+          this.vallue.password = ''
+          this.vallue.newPassword = ''
+          this.message('Пароль слишком слабый !!', 'yellow')
+
+          break
         case 'auth/weak-password':
           this.error.password = 'Введите минимум 6 символов!'
           this.vallue.newPassword = ''
@@ -455,6 +462,8 @@ export const useAppStore = defineStore('app', {
         default:
           this.message(`code: ${err}!`, 'red')
           this.clearForm()
+          console.log(err)
+
           break
       }
     },

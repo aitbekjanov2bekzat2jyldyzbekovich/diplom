@@ -43,6 +43,13 @@
           <h5 class="heading text-lg">{{ group }}:</h5>
           <p class="appText">{{ this.appStore.userProfile.group || 'Нет данных' }}</p>
         </li>
+        <li
+          v-if="this.appStore.userProfile.createrIs === 'От коледжа'"
+          class="flex gap-2 items-center max-[450px]:flex-col"
+        >
+          <h5 class="heading text-lg">Должность:</h5>
+          <p class="appText">{{ this.appStore.userProfile.group || 'Нет данных' }}</p>
+        </li>
         <li class="flex gap-2 flex-wrap items-center max-[450px]:flex-col">
           <h5 class="heading text-lg">{{ email }}:</h5>
           <p class="appText">{{ this.appStore.userProfile.email || 'Нет данных' }}</p>

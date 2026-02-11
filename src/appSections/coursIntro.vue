@@ -9,15 +9,29 @@
         <div
           class="w-16 h-16 rounded-full overflow-hidden border-[#E6A421] border-2 max-sm:w-8 max-sm:h-8"
         >
-          <img :src="profile?.avatar" alt="avatar" class="object-cover w-full h-full" />
+          <img
+            :src="profile?.avatar || '/images/avatar.png'"
+            alt="avatar"
+            class="object-cover w-full h-full"
+          />
         </div>
         <div class="flex items-center heading text-lg gap-1">
           <h5>{{ profile?.name || 'нет данных' }}</h5>
           <h5>{{ profile?.surname || 'нет данных' }}</h5>
         </div>
       </div>
-      <div class="flex gap-1 appText border items-center px-10 py-3 rounded-2xl border-[#E6A421]">
+      <div
+        class="flex gap-1 appText border items-center px-10 py-3 rounded-2xl border-[#E6A421]"
+        v-if="profile.createrIs !== 'От коледжа'"
+      >
         <span class="font-semibold text-[#E6A421]">Группа:</span>
+        <span>{{ profile?.group || 'Нет данных' }}</span>
+      </div>
+      <div
+        class="flex gap-1 appText border items-center px-10 py-3 rounded-2xl border-[#E6A421]"
+        v-else
+      >
+        <span class="font-semibold text-[#E6A421]">Должность:</span>
         <span>{{ profile?.group || 'Нет данных' }}</span>
       </div>
     </div>

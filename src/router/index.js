@@ -83,18 +83,30 @@ const router = createRouter({
   ],
 
   scrollBehavior(to, from, savedPosition) {
+    // если нажали "назад"
+    if (savedPosition) {
+      return savedPosition
+    }
+
+    // если есть #anchor
     if (to.hash) {
       return new Promise((resolve) => {
         setTimeout(() => {
           const el = document.querySelector(to.hash)
           if (el) {
-            resolve({ el, behavior: 'smooth' })
+            resolve({
+              el,
+              behavior: 'smooth',
+            })
           } else {
-            resolve({ left: 0, top: 0 })
+            resolve({ top: 0 })
           }
         }, 200)
       })
     }
+
+    // если обычный переход — скролл наверх
+    return { top: 0 }
   },
 })
 router.afterEach((to) => {

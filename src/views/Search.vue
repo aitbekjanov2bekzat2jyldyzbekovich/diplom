@@ -5,7 +5,7 @@
         type="text"
         placeholder="Введите название курса"
         id="s1"
-        class="bg-[#F2F2F2]  p-4 outline-[#E6A421] rounded-md w-full "
+        class="bg-[#F2F2F2] p-4 outline-[#E6A421] rounded-md w-full"
         v-model="query"
       />
       <label for="s1" class="p-4 bg-[#E6A421] rounded-md">
@@ -52,20 +52,18 @@ export default {
   },
 
   computed: {
-    // курсы берём напрямую из глобального appStore
     appCourses() {
       return this.appStore.courses || []
     },
 
     filteredCourses() {
-      // если Fuse ещё не создан или query пустой → возвращаем все курсы
+      this.query = this.query?.trim() || null
       if (!this.fuse || !this.query) return []
       return this.fuse.search(this.query).map((r) => r.item)
     },
   },
 
   watch: {
-    // пересоздаём Fuse, когда курсы обновились
     appCourses: {
       handler(newCourses) {
         if (!newCourses.length) return

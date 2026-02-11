@@ -5,8 +5,8 @@
       <coursIntro :dataIntro="cours" />
       <lessions :lesson="cours.lessons || {}" />
     </section-layout>
-    <div v-else>
-      <h2>Not found page 400</h2>
+    <div v-else class="w-full flex items-center appText h-screen justify-center font-semibold">
+      Нету данных
     </div>
   </div>
   <div class="w-full bg-[#fff] h-screen flex justify-center items-center" v-else>

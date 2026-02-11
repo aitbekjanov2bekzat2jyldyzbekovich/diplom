@@ -34,7 +34,10 @@
       </div>
     </div>
     <div class="flex gap-2 h-max" v-for="i in inputs">
-      <div class="flex flex-col gap-2 w-full relative">
+      <div
+        class="flex flex-col gap-2 w-full relative"
+        v-if="i.status !== this.appStore.userProfile.createrIs"
+      >
         <div
           class="absolute top-0 left-0 w-full h-full flex items-center justify-center"
           v-if="this.appStore.loader[i.loader]"
@@ -51,7 +54,13 @@
           @input="this.appStore.validSend(this.appStore.vallue[i.val], i.buttonStatus, i.val)"
         />
       </div>
-      <div class="flex items-end gap-2" v-if="this.appStore.reWorkStatus[i.buttonStatus]">
+      <div
+        class="flex items-end gap-2"
+        v-if="
+          this.appStore.reWorkStatus[i.buttonStatus] &&
+          i.status !== this.appStore.userProfile.createrIs
+        "
+      >
         <buttonV
           class="bg-green-500"
           v-html="btn"
@@ -110,10 +119,22 @@ export default {
         {
           id: 3,
           label: 'Группа:',
+          status: 'От коледжа',
           buttonStatus: 'group',
           loader: 'group',
           val: 'group',
           placeHolder: 'Введите факультет группу!',
+          type: 'text',
+          upName: 'group',
+        },
+        {
+          id: 4,
+          label: 'Должность',
+          buttonStatus: 'group',
+          loader: 'group',
+          val: 'group',
+          status: 'Студент',
+          placeHolder: 'Введите свою должность',
           type: 'text',
           upName: 'group',
         },
