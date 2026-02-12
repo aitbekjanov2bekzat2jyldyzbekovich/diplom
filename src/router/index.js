@@ -80,6 +80,12 @@ const router = createRouter({
       component: () => import('@/views/myFollowing.vue'),
       meta: { mainRout: 'cours', requiresAuth: true, requiresVerifiedEmail: true },
     },
+    {
+      path: '/cours/user-profile/:uid',
+      name: 'userProfile',
+      component: () => import('@/views/UserProfile.vue'),
+      meta: { mainRout: 'cours', requiresAuth: true, requiresVerifiedEmail: true },
+    },
   ],
 
   scrollBehavior(to, from, savedPosition) {
