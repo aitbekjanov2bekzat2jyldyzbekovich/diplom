@@ -9,7 +9,7 @@ import addLessons from '@/components/addLessons.vue'
 export default {
   data() {
     return {
-      status: false,
+      status: true,
     }
   },
   methods: {

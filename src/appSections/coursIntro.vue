@@ -99,7 +99,7 @@
       </div>
     </div>
     <div class="flex flex-col gap-6">
-      <h5 class="heading text-lg">Цель курса</h5>
+      <h5 class="heading text-lg">О курсе</h5>
       <div class="border p-6 rounded-2xl h-96 overflow-y-auto appText whitespace-pre-wrap">
         {{ dataIntro.about || 'Нет данных' }}
       </div>
