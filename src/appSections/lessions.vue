@@ -69,9 +69,23 @@
               ></video>
             </div>
             <div
-              class="whitespace-pre-wrap p-4 h-96 overflow-hidden overflow-y-auto bg-[#F2F2F2] rounded-2xl"
+              v-for="(value, index) in Object.values(i.content || {})"
+              class=" flex flex-col gap-6 "
             >
-              {{ i.about || 'Нет данных' }}
+              <div class="text-lg p-2">{{ value.title || 'Нет данных' }}</div>
+              <div
+                class="w-full h-auto border rounded-md p-14 whitespace-pre-wrap font-bold bg-[#ffffff6e]"
+              >
+                <AutoDisplay :content="value.about" />
+              </div>
+              <div class="code-example" style="display: flex; gap: 10px">
+                <div class="example-output">
+                  <!-- здесь будет результат, например iframe -->
+                </div>
+                <div class="editor-container">
+                  <MonacoEditor v-model="code" language="html" theme="vs-dark" height="400" />
+                </div>
+              </div>
             </div>
           </div>
         </transition>
@@ -82,9 +96,14 @@
 </template>
 
 <script>
+
+import AutoDisplay from '@/components/AutoDisplay.vue'
 export default {
   props: {
     lesson: Object,
+  },
+  components: {
+    AutoDisplay,
   },
   methods: {
     downloadBase64Zip(zip) {

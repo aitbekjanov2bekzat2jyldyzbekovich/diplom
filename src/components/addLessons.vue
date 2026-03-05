@@ -11,13 +11,14 @@
         data-aos="zoom-in"
       >
         <!-- Информация о блоке -->
-        <div class="border p-8 appText border-blue-500 rounded-2xl font-semibold text-blue-500 text-center">
+        <div
+          class="border p-8 appText border-blue-500 rounded-2xl font-semibold text-blue-500 text-center"
+        >
           <p>Добавленный урок не подлежит последующему редактированию.</p>
         </div>
 
         <!-- Основная форма -->
         <div class="flex flex-col gap-5">
-
           <!-- Название урока -->
           <div class="flex flex-col w-full gap-1 appText">
             <label class="font-semibold">Название урока:</label>
@@ -62,18 +63,19 @@
               class="flex flex-col gap-3 bg-[#F9F9F9] p-4 rounded-md"
             >
               <label class="font-semibold">Заголовок</label>
-              <input
+              <textarea
                 type="text"
                 v-model="block.title"
                 placeholder="Введите заголовок"
-                class="bg-[#F2F2F2] p-3 rounded-md"
+                class="bg-[#F2F2F2] p-3 rounded-md h-32 outline-[#E6A421]"
               />
 
-              <label class="font-semibold">О уроке</label>
+              <label class="font-semibold"> Пример:</label>
               <textarea
                 v-model="block.about"
-                placeholder="Введите описание урока"
-                class="bg-[#F2F2F2] p-3 rounded-md h-32"
+                placeholder="def say_hello(name):
+    return f'Привет, {name}!'"
+                class="bg-[#F2F2F2] p-3 rounded-md h-32 outline-[#E6A421]"
               ></textarea>
 
               <button
@@ -85,10 +87,7 @@
               </button>
             </div>
 
-            <button
-              @click="addBlock"
-              class="bg-blue-500 text-white px-4 py-2 rounded-md w-fit "
-            >
+            <button @click="addBlock" class="bg-blue-500 text-white px-4 py-2 rounded-md w-fit">
               + Добавить блок
             </button>
           </div>
@@ -114,22 +113,14 @@
             </div>
 
             <!-- Кнопка добавить урок в массив -->
-            <button
-              class="bg-green-500 text-white px-4 py-2 rounded-md"
-              :disabled="!canAddLesson"
-              @click="addlesson"
-            >
+            <button class="bg-green-500 text-white px-4 py-2 rounded-md" @click="addlesson">
               <i class="pi pi-plus"></i> Добавить урок
             </button>
           </div>
         </div>
 
         <!-- Список добавленных уроков -->
-        <TransitionGroup
-          name="list"
-          tag="div"
-          class="flex flex-col gap-3 mt-10"
-        >
+        <TransitionGroup name="list" tag="div" class="flex flex-col gap-3 mt-10">
           <button
             v-if="lessons.length"
             class="bg-green-500 text-white px-4 py-2 rounded-md w-fit"
@@ -186,9 +177,7 @@ export default {
         this.appStore.vallue.nameLesson &&
         this.appStore.vallue.urlVideo &&
         this.zip &&
-        this.contentBlocks.every(
-          (block) => block.title.trim() && block.about.trim()
-        )
+        this.contentBlocks.every((block) => block.title.trim() && block.about.trim())
       )
     },
   },
@@ -221,6 +210,10 @@ export default {
 
     // Добавление урока в массив
     addlesson() {
+      if (!this.canAddLesson) {
+        this.appStore.message('Пожалуйста, заполните все поля и добавьте ZIP файл', 'yellow')
+        return
+      }
       this.lessons.push({
         title: this.appStore.vallue.nameLesson,
         zip: this.zip,
@@ -247,7 +240,7 @@ export default {
             this.$route.params.id,
             'lessons',
             lesson,
-            `Добавлено ${lesson.title}`
+            `Добавлено ${lesson.title}`,
           )
         }
       } catch (err) {
