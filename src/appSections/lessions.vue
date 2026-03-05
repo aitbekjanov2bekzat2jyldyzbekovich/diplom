@@ -70,21 +70,13 @@
             </div>
             <div
               v-for="(value, index) in Object.values(i.content || {})"
-              class=" flex flex-col gap-6 "
+              class="flex flex-col gap-6 border p-4 rounded-md"
             >
-              <div class="text-lg p-2">{{ value.title || 'Нет данных' }}</div>
+              <div class="text-lg p-2 whitespace-pre-wrap">{{ value.title || 'Нет данных' }}</div>
               <div
-                class="w-full h-auto border rounded-md p-14 whitespace-pre-wrap font-bold bg-[#ffffff6e]"
+                class="w-full h-auto border rounded-md p-2 border-l-blue-700 border-l-2 whitespace-pre-wrap  bg-[#ffffff6e] text-[#E6A421]"
               >
                 <AutoDisplay :content="value.about" />
-              </div>
-              <div class="code-example" style="display: flex; gap: 10px">
-                <div class="example-output">
-                  <!-- здесь будет результат, например iframe -->
-                </div>
-                <div class="editor-container">
-                  <MonacoEditor v-model="code" language="html" theme="vs-dark" height="400" />
-                </div>
               </div>
             </div>
           </div>
@@ -96,7 +88,6 @@
 </template>
 
 <script>
-
 import AutoDisplay from '@/components/AutoDisplay.vue'
 export default {
   props: {
