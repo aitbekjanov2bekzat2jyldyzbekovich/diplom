@@ -1,9 +1,9 @@
 <template>
   <workEmail />
   <alertMessage />
- 
+  <router-view v-if="this.$route.name === 'codeEditor'"/>
 
-  <div  class="relative w-full">
+  <div  class="relative w-full" v-if="this.$route.name !== 'codeEditor'">
     <header class="w-full h-20 bg-[#fff] shadow-md border-b sticky top-0 z-50">
       <div class="container mx-auto px-4 h-full">
         <headerV />

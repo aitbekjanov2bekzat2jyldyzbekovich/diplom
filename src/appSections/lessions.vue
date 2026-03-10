@@ -70,13 +70,20 @@
             </div>
             <div
               v-for="(value, index) in Object.values(i.content || {})"
-              class="flex flex-col gap-6 border p-4 rounded-md"
+              class="flex flex-col gap-6 border p-4 rounded-md bg-[#f2f2f2]"
             >
               <div class="text-lg p-2 whitespace-pre-wrap">{{ value.title || 'Нет данных' }}</div>
               <div
-                class="w-full h-auto border rounded-md p-2 border-l-blue-700 border-l-2 whitespace-pre-wrap  bg-[#ffffff6e] text-[#E6A421]"
+                class="w-full h-auto border rounded-md p-2 border-l-blue-700 border-l-2 whitespace-pre-wrap bg-[#fff] text-[#E6A421]"
               >
                 <AutoDisplay :content="value.about" />
+              </div>
+              <div>
+                <buttonV
+                  class="float-end"
+                  @click="this.appStore.toRout(`/codeEditor/${this.$route.params.id}`)"
+                  >Попробовать</buttonV
+                >
               </div>
             </div>
           </div>
