@@ -6,7 +6,7 @@
         <button
           v-for="tab in tabs"
           :key="tab"
-          @click="currentTab = tab"
+          @click="changeTab(tab)"
           class="px-4 py-1 rounded text-sm"
           :class="currentTab === tab ? 'bg-green-500' : 'bg-gray-700'"
         >
@@ -16,7 +16,6 @@
 
       <div class="flex gap-2">
         <button @click="runCode" class="bg-green-500 px-4 py-1 rounded">Run</button>
-
         <button @click="resetCode" class="bg-red-500 px-4 py-1 rounded">Reset</button>
       </div>
     </div>
@@ -32,7 +31,7 @@
           </div>
         </div>
 
-        <!-- EDITOR -->
+        <!-- TEXTAREA -->
         <textarea
           v-model="codes[currentTab]"
           @input="updateLines"
@@ -49,9 +48,7 @@
         <pre
           v-if="currentTab === 'Python'"
           class="flex-1 p-4 overflow-auto bg-gray-900 text-green-400 font-mono"
-          >{{ pythonOutput }}
-    </pre
-        >
+        >{{ pythonOutput }}</pre>
       </div>
     </div>
   </div>
@@ -68,46 +65,63 @@ export default {
       pythonOutput: '',
 
       defaultCodes: {
-        HTML: `<h1>Hello</h1>`,
-
-        CSS: `body{
-font-family:sans-serif;
-text-align:center;
-}`,
-
-        JS: `console.log("Hello JS")`,
-
-        Python: `print("Hello Python")`,
+        HTML: '',
+        CSS: '',
+        JS: '',
+        Python: ''
       },
 
-      codes: {},
+      codes: {
+        HTML: '',
+        CSS: '',
+        JS: '',
+        Python: ''
+      }
     }
   },
+
   computed: {
     cours() {
       const id = this.$route.params.id
-      this.appStore.courses.forEach((i) => {
-        i.status = false
-      })
-      return this.appStore.courses.find((i) => i.id === id) || null
+      const cours = this.appStore.courses.find((i) => i.id === id)
+      return cours?.lessons || null
     },
+
     lesson() {
-      return this.cours.lessons ? Object.values(this.cours.lessons)[0] : null
-    },
+      const lessonIndex = parseInt(this.$route.params.lessonIndex)
+      if (!this.cours) return null
+      const lesson = this.cours[this.$route.params.lessonId]
+      return lesson?.content?.[lessonIndex] || null
+    }
   },
 
   async mounted() {
-    this.codes = JSON.parse(JSON.stringify(this.defaultCodes))
+    // Инициализируем коды всех вкладок
+    this.codes = {
+      ...JSON.parse(JSON.stringify(this.defaultCodes)),
+      HTML: this.lesson?.about || this.defaultCodes.HTML
+    }
 
-    this.runCode()
     this.updateLines()
     this.pyodide = await loadPyodide()
+    this.runCode()
   },
 
   methods: {
-    updateLines() {
-      this.lineCount = this.codes[this.currentTab].split('\n').length
+    changeTab(tab) {
+      this.currentTab = tab
+      // Если для новой вкладки кода нет, используем default
+      if (!this.codes[tab]) {
+        this.codes[tab] = this.defaultCodes[tab] || ''
+      }
+      this.updateLines()
     },
+
+    updateLines() {
+      const code = this.codes[this.currentTab] || ''
+      this.lineCount = code.split('\n').length
+    },
+
     runCode() {
       if (this.currentTab === 'Python') {
         this.runPython()
@@ -137,7 +151,6 @@ ${this.codes.Python}
 
 sys.stdout.getvalue()
 `)
-
         this.pythonOutput = result
       } catch (e) {
         this.pythonOutput = e.toString()
@@ -145,9 +158,13 @@ sys.stdout.getvalue()
     },
 
     resetCode() {
-      this.codes = JSON.parse(JSON.stringify(this.defaultCodes))
+      this.codes = {
+        ...JSON.parse(JSON.stringify(this.defaultCodes)),
+        HTML: this.lesson?.about || this.defaultCodes.HTML
+      }
+      this.updateLines()
       this.runCode()
-    },
-  },
+    }
+  }
 }
 </script>

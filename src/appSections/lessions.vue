@@ -81,7 +81,7 @@
               <div>
                 <buttonV
                   class="float-end"
-                  @click="this.appStore.toRout(`/codeEditor/${this.$route.params.id}`)"
+                  @click="this.appStore.toRout(`/codeEditor/${this.$route.params.id}/${i.id}/${index}`)"
                   >Попробовать</buttonV
                 >
               </div>

@@ -57,7 +57,7 @@ const router = createRouter({
       meta: { mainRout: 'cours', requiresAuth: true, requiresVerifiedEmail: true },
     },
     {
-      path: '/codeEditor/:id/:lesson/:tab',
+      path: '/codeEditor/:id/:lessonId/:lessonIndex',
       name: 'codeEditor',
       component: () => import('@/views/CodeEditor.vue'),
       meta: { mainRout: 'cours', requiresAuth: true, requiresVerifiedEmail: true },
