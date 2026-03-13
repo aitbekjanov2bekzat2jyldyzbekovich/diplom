@@ -35,6 +35,7 @@
         <textarea
           v-model="codes[currentTab]"
           @input="updateLines"
+          @scroll="syncScroll"
           class="flex-1 bg-gray-900 text-green-400 font-mono text-sm p-4 outline-none resize-none leading-6 h-screen overflow-y-auto"
         ></textarea>
       </div>
@@ -48,7 +49,8 @@
         <pre
           v-if="currentTab === 'Python'"
           class="flex-1 p-4 overflow-auto bg-gray-900 text-green-400 font-mono"
-        >{{ pythonOutput }}</pre>
+          >{{ pythonOutput }}</pre
+        >
       </div>
     </div>
   </div>
@@ -68,15 +70,15 @@ export default {
         HTML: '',
         CSS: '',
         JS: '',
-        Python: ''
+        Python: '',
       },
 
       codes: {
         HTML: '',
         CSS: '',
         JS: '',
-        Python: ''
-      }
+        Python: '',
+      },
     }
   },
 
@@ -92,22 +94,42 @@ export default {
       if (!this.cours) return null
       const lesson = this.cours[this.$route.params.lessonId]
       return lesson?.content?.[lessonIndex] || null
-    }
+    },
   },
 
   async mounted() {
-    // Инициализируем коды всех вкладок
-    this.codes = {
-      ...JSON.parse(JSON.stringify(this.defaultCodes)),
-      HTML: this.lesson?.about || this.defaultCodes.HTML
-    }
-
     this.updateLines()
     this.pyodide = await loadPyodide()
-    this.runCode()
+  },
+  watch: {
+    lesson: {
+      immediate: true,
+      handler(val) {
+        console.log('fgfgf')
+
+        if (val) {
+          this.initCode(val)
+        }
+      },
+    },
   },
 
   methods: {
+    initCode(lesson) {
+      this.codes = {
+        HTML: lesson?.about || '',
+        CSS: lesson?.about || '',
+        JS: lesson?.about || '',
+        Python: lesson?.about || '',
+      }
+
+      this.updateLines()
+      this.runCode()
+    },
+    syncScroll(e) {
+      const lineNumbers = e.target.previousElementSibling
+      lineNumbers.scrollTop = e.target.scrollTop
+    },
     changeTab(tab) {
       this.currentTab = tab
       // Если для новой вкладки кода нет, используем default
@@ -159,12 +181,14 @@ sys.stdout.getvalue()
 
     resetCode() {
       this.codes = {
-        ...JSON.parse(JSON.stringify(this.defaultCodes)),
-        HTML: this.lesson?.about || this.defaultCodes.HTML
+        HTML: this.lesson?.about || this.defaultCodes.HTML,
+        CSS: this.lesson?.about || this.defaultCodes.CSS,
+        JS: this.lesson?.about || this.defaultCodes.JS,
+        Python: this.lesson?.about || this.defaultCodes.Python,
       }
       this.updateLines()
       this.runCode()
-    }
-  }
+    },
+  },
 }
 </script>

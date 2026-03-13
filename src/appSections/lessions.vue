@@ -79,11 +79,10 @@
                 <AutoDisplay :content="value.about" />
               </div>
               <div>
-                <buttonV
-                  class="float-end"
-                  @click="this.appStore.toRout(`/codeEditor/${this.$route.params.id}/${i.id}/${index}`)"
-                  >Попробовать</buttonV
-                >
+                <buttonV class="float-end" @click="openInNewTab(i.id, index)">
+                  Попробовать
+                </buttonV>
+        
               </div>
             </div>
           </div>
@@ -104,6 +103,10 @@ export default {
     AutoDisplay,
   },
   methods: {
+    openInNewTab(id, index) {
+      const url = `/codeEditor/${this.$route.params.id}/${id}/${index}`
+      window.open(url, '_blank')
+    },
     downloadBase64Zip(zip) {
       const base64 = zip.data.split(',')[1]
 
