@@ -77,7 +77,15 @@
     return f'Привет, {name}!'"
                 class="bg-[#F2F2F2] p-3 rounded-md h-32 outline-[#E6A421]"
               ></textarea>
-
+              <select
+                v-model="block.language"
+                class="bg-[#F2F2F2] p-3 rounded-md w-40 outline-[#E6A421]"
+              >
+                <option value="HTML">HTML</option>
+                <option value="CSS">CSS</option>
+                <option value="python">Python</option>
+                <option value="javaScript">JavaScript</option>
+              </select>
               <button
                 v-if="contentBlocks.length > 1"
                 @click="removeBlock(index)"
@@ -161,7 +169,7 @@ export default {
       zip: null,
       lessons: [],
       load: false,
-      contentBlocks: [{ title: '', about: '' }],
+      contentBlocks: [{ title: '', about: '', language: 'HTML' }],
     }
   },
   props: {
@@ -184,7 +192,7 @@ export default {
   methods: {
     // Добавление блока
     addBlock() {
-      this.contentBlocks.push({ title: '', about: '' })
+      this.contentBlocks.push({ title: '', about: '', language: 'HTML' })
     },
     removeBlock(index) {
       this.contentBlocks.splice(index, 1)
@@ -223,7 +231,7 @@ export default {
       })
 
       // Очистка формы
-      this.contentBlocks = [{ title: '', about: '' }]
+      this.contentBlocks = [{ title: '', about: '', language: 'HTML' }]
       this.zip = null
       this.appStore.vallue.nameLesson = ''
       this.appStore.vallue.urlVideo = ''

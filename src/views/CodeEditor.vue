@@ -60,6 +60,7 @@
 export default {
   data() {
     return {
+      status: true,
       tabs: ['HTML', 'CSS', 'JS', 'Python'],
       currentTab: 'HTML',
       lineCount: 1,
@@ -67,10 +68,10 @@ export default {
       pythonOutput: '',
 
       defaultCodes: {
-        HTML: '',
-        CSS: '',
-        JS: '',
-        Python: '',
+        HTML: '<h1 class="demo" id="demo">Hello, World!</h1>',
+        CSS: '.demo {\n  color: red;\n  text-align: center;\n}',
+        JS: 'document.getElementById("demo").addEventListener("click", function() {\n  alert("Hello, World!");\n});',
+        Python: 'print("Hello, World!")',
       },
 
       codes: {
@@ -109,6 +110,7 @@ export default {
 
         if (val) {
           this.initCode(val)
+          this.status = false
         }
       },
     },
@@ -117,11 +119,16 @@ export default {
   methods: {
     initCode(lesson) {
       this.codes = {
-        HTML: lesson?.about || '',
-        CSS: lesson?.about || '',
-        JS: lesson?.about || '',
-        Python: lesson?.about || '',
+        HTML: lesson?.about && lesson?.language === 'HTML' ? lesson?.about : this.defaultCodes.HTML,
+        CSS: lesson?.about && lesson?.language === 'CSS' ? lesson?.about : this.defaultCodes.CSS,
+        JS:
+          lesson?.about && lesson?.language === 'javaScript' ? lesson?.about : this.defaultCodes.JS,
+        Python:
+          lesson?.about && lesson?.language === 'python' ? lesson?.about : this.defaultCodes.Python,
       }
+      this.currentTab = lesson?.language === 'python' ? 'Python' : 'HTML'
+      this.currentTab = lesson?.language === 'CSS' ? 'CSS' : this.currentTab
+      this.currentTab = lesson?.language === 'javaScript' ? 'JS' : this.currentTab
 
       this.updateLines()
       this.runCode()
@@ -180,14 +187,7 @@ sys.stdout.getvalue()
     },
 
     resetCode() {
-      this.codes = {
-        HTML: this.lesson?.about || this.defaultCodes.HTML,
-        CSS: this.lesson?.about || this.defaultCodes.CSS,
-        JS: this.lesson?.about || this.defaultCodes.JS,
-        Python: this.lesson?.about || this.defaultCodes.Python,
-      }
-      this.updateLines()
-      this.runCode()
+      window.location.reload()
     },
   },
 }
