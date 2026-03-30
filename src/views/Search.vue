@@ -57,7 +57,6 @@ export default {
     },
 
     filteredCourses() {
-      this.query = this.query?.trim() || null
       if (!this.fuse || !this.query) return []
       return this.fuse.search(this.query).map((r) => r.item)
     },
