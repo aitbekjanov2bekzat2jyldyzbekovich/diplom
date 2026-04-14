@@ -1,0 +1,20 @@
+import{_ as g,c as i,a as o,F as d,e as c,j as p,H as y,f as h,t as a,o as l,E as f}from"./index-D5AmE89y.js";const b={data(){return{status:!0,tabs:["HTML","CSS","JS","Python"],currentTab:"HTML",lineCount:1,pyodide:null,pythonOutput:"",defaultCodes:{HTML:'<h1 class="demo" id="demo">Hello, World!</h1>',CSS:`.demo {
+  color: red;
+  text-align: center;
+}`,JS:`document.getElementById("demo").addEventListener("click", function() {
+  alert("Hello, World!");
+});`,Python:'print("Hello, World!")'},codes:{HTML:"",CSS:"",JS:"",Python:""}}},computed:{cours(){const t=this.$route.params.id;return this.appStore.courses.find(u=>u.id===t)?.lessons||null},lesson(){const t=parseInt(this.$route.params.lessonIndex);return this.cours&&this.cours[this.$route.params.lessonId]?.content?.[t]||null}},async mounted(){this.updateLines(),this.pyodide=await loadPyodide()},watch:{lesson:{immediate:!0,handler(t){console.log("fgfgf"),t&&(this.initCode(t),this.status=!1)}}},methods:{initCode(t){this.codes={HTML:t?.about&&t?.language==="HTML"?t?.about:this.defaultCodes.HTML,CSS:t?.about&&t?.language==="CSS"?t?.about:this.defaultCodes.CSS,JS:t?.about&&t?.language==="javaScript"?t?.about:this.defaultCodes.JS,Python:t?.about&&t?.language==="python"?t?.about:this.defaultCodes.Python},this.currentTab=t?.language==="python"?"Python":"HTML",this.currentTab=t?.language==="CSS"?"CSS":this.currentTab,this.currentTab=t?.language==="javaScript"?"JS":this.currentTab,this.updateLines(),this.runCode()},syncScroll(t){const e=t.target.previousElementSibling;e.scrollTop=t.target.scrollTop},changeTab(t){this.currentTab=t,this.codes[t]||(this.codes[t]=this.defaultCodes[t]||""),this.updateLines()},updateLines(){const t=this.codes[this.currentTab]||"";this.lineCount=t.split(`
+`).length},runCode(){if(this.currentTab==="Python"){this.runPython();return}const t=this.codes.HTML,e=`<style>${this.codes.CSS}</style>`,u=`<script>${this.codes.JS}<\/script>`;this.$refs.preview.srcdoc=`
+${t}
+${e}
+${u}
+`},async runPython(){try{const t=await this.pyodide.runPythonAsync(`
+import sys
+from io import StringIO
+
+sys.stdout = StringIO()
+
+${this.codes.Python}
+
+sys.stdout.getvalue()
+`);this.pythonOutput=t}catch(t){this.pythonOutput=t.toString()}},resetCode(){window.location.reload()}}},m={class:"h-screen flex flex-col bg-gray-900 text-white"},x={class:"flex justify-between items-center bg-gray-800 px-4 py-2"},S={class:"flex gap-2"},C=["onClick"],T={class:"flex gap-2"},v={class:"flex flex-1"},_={class:"w-1/2 border-r border-gray-700 flex"},w={class:"bg-gray-950 text-gray-500 text-sm font-mono px-3 py-4 select-none"},L={class:"w-1/2 bg-white text-black flex flex-col overflow-y-auto h-screen"},P={key:0,ref:"preview",class:"flex-1 w-full"},H={key:1,class:"flex-1 p-4 overflow-auto bg-gray-900 text-green-400 font-mono"};function k(t,e,u,M,n,r){return l(),i("div",m,[o("div",x,[o("div",S,[(l(!0),i(d,null,c(n.tabs,s=>(l(),i("button",{key:s,onClick:I=>r.changeTab(s),class:f(["px-4 py-1 rounded text-sm",n.currentTab===s?"bg-green-500":"bg-gray-700"])},a(s),11,C))),128))]),o("div",T,[o("button",{onClick:e[0]||(e[0]=(...s)=>r.runCode&&r.runCode(...s)),class:"bg-green-500 px-4 py-1 rounded"},"Run"),o("button",{onClick:e[1]||(e[1]=(...s)=>r.resetCode&&r.resetCode(...s)),class:"bg-red-500 px-4 py-1 rounded"},"Reset")])]),o("div",v,[o("div",_,[o("div",w,[(l(!0),i(d,null,c(n.lineCount,s=>(l(),i("div",{key:s,class:"leading-6"},a(s),1))),128))]),p(o("textarea",{"onUpdate:modelValue":e[2]||(e[2]=s=>n.codes[n.currentTab]=s),onInput:e[3]||(e[3]=(...s)=>r.updateLines&&r.updateLines(...s)),onScroll:e[4]||(e[4]=(...s)=>r.syncScroll&&r.syncScroll(...s)),class:"flex-1 bg-gray-900 text-green-400 font-mono text-sm p-4 outline-none resize-none leading-6 h-screen overflow-y-auto"},null,544),[[y,n.codes[n.currentTab]]])]),o("div",L,[e[5]||(e[5]=o("div",{class:"bg-gray-200 px-3 py-1 text-xs"},"Output",-1)),n.currentTab!=="Python"?(l(),i("iframe",P,null,512)):h("",!0),n.currentTab==="Python"?(l(),i("pre",H,a(n.pythonOutput),1)):h("",!0)])])])}const O=g(b,[["render",k]]);export{O as default};
