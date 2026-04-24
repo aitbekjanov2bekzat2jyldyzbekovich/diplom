@@ -32,8 +32,3 @@ server/serviceAccount.json.json
 server/node_modules
 
 dist/*
-!dist/*.html
-!dist/*.css
-!dist/*.js
-!dist/assets
-!dist/images
