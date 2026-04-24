@@ -1,4 +1,4 @@
-import{_ as g,c as i,a as o,F as d,e as c,j as p,H as y,f as h,t as a,o as l,E as f}from"./index-D5AmE89y.js";const b={data(){return{status:!0,tabs:["HTML","CSS","JS","Python"],currentTab:"HTML",lineCount:1,pyodide:null,pythonOutput:"",defaultCodes:{HTML:'<h1 class="demo" id="demo">Hello, World!</h1>',CSS:`.demo {
+import{_ as g,c as i,a as o,F as d,e as c,j as p,H as y,f as h,t as a,o as l,E as f}from"./index-DYyiCVEh.js";const b={data(){return{status:!0,tabs:["HTML","CSS","JS","Python"],currentTab:"HTML",lineCount:1,pyodide:null,pythonOutput:"",defaultCodes:{HTML:'<h1 class="demo" id="demo">Hello, World!</h1>',CSS:`.demo {
   color: red;
   text-align: center;
 }`,JS:`document.getElementById("demo").addEventListener("click", function() {
