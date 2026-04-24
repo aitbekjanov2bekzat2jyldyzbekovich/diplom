@@ -31,4 +31,4 @@ server/serviceAccount.json.json
 *.json
 server/node_modules
 
-dist/*
+
