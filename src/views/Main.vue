@@ -27,7 +27,7 @@ import createdCours from '@/appSections/createdCours.vue'
 export default {
   data() {
     return {
-      bg: '/images/intro.jpg',
+      bg: '/deploy-diplom/images/intro.jpg',
     }
   },
   components: {

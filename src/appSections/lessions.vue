@@ -82,7 +82,6 @@
                 <buttonV class="float-end" @click="openInNewTab(i.id, index)">
                   Попробовать
                 </buttonV>
-        
               </div>
             </div>
           </div>
@@ -104,7 +103,7 @@ export default {
   },
   methods: {
     openInNewTab(id, index) {
-      const url = `/codeEditor/${this.$route.params.id}/${id}/${index}`
+      const url = `/deploy-diplom/codeEditor/${this.$route.params.id}/${id}/${index}`
       window.open(url, '_blank')
     },
     downloadBase64Zip(zip) {

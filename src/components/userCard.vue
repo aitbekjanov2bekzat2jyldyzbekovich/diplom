@@ -92,7 +92,7 @@ export default {
       openStatus: false,
       user: {
         name: 'Пользователь',
-        img: '/images/avatar.png',
+        img: '/deploy-diplom/images/avatar.png',
         type: 'Неизвестно',
       },
       nav: [
